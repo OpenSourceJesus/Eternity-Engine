@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 namespace Frogger
 {
 	public class _SceneManager : SingletonMonoBehaviour<_SceneManager>
 	{
-		public float transitionRate;
 		public static bool isLoading;
 		public static Scene CurrentScene
 		{
