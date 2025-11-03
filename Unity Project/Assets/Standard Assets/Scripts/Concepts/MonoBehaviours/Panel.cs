@@ -23,6 +23,7 @@ namespace Frogger
 		bool isDragging;
 		DragUpdater dragUpdater;
 		Vector2 sizeOnStartDrag;
+		RectTransform contentsRectTrsCopy;
 
 		void Awake ()
 		{
@@ -76,6 +77,7 @@ namespace Frogger
 			if (tabOptionsUpdater != null)
 				GameManager.updatables = GameManager.updatables.Remove(tabOptionsUpdater);
 			sizeOnStartDrag = contentsRectTrs.sizeDelta;
+			contentsRectTrsCopy = Instantiate(contentsRectTrs, contentsRectTrs.parent);
 			dragUpdater = new DragUpdater(this);
 			GameManager.updatables = GameManager.updatables.Add(dragUpdater);
 		}
@@ -86,17 +88,40 @@ namespace Frogger
 				return;
 			tabRectTrs.position = dragOffset + Mouse.current.position.ReadValue();
 			if (panelOfContentsMouseIsInside == null)
-				contentsRectTrs.sizeDelta = sizeOnStartDrag;
+				contentsRectTrsCopy.sizeDelta = sizeOnStartDrag;
 			else if (panelOfContentsMouseIsInside != this)
 			{
-				Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-				Rect contentsWorldRect = panelOfContentsMouseIsInside.contentsRectTrs.GetWorldRect();
-				if (worldMousePos.x < contentsWorldRect.xMin + contentsWorldRect.width / 3)
+				Vector2 mousePos = Mouse.current.position.ReadValue();
+				RectTransform contentsRectTrsMouseIsInside = panelOfContentsMouseIsInside.contentsRectTrs;
+				Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.x - contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.position.x + contentsRectTrsMouseIsInside.sizeDelta.x / 2, mousePos.x),
+					Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.y - contentsRectTrsMouseIsInside.sizeDelta.y / 2, contentsRectTrsMouseIsInside.position.y + contentsRectTrsMouseIsInside.sizeDelta.y / 2, mousePos.y));
+				if (normalizedMousePosInContents.x < 1f / 3)
 				{
-					print(true);
+					if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+					{
+						
+					}
+					else
+					{
+						contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
+						contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x + contentsRectTrsCopy.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y);
+					}
+				}
+				else if (normalizedMousePosInContents.x < 2f / 3)
+				{
+					
 				}
 				else
-					print(false);
+				{
+					if (normalizedMousePosInContents.x > normalizedMousePosInContents.y)
+					{
+						
+					}
+					else
+					{
+
+					}
+				}
 			}
 		}
 
@@ -104,6 +129,7 @@ namespace Frogger
 		{
 			isDragging = false;
 			GameManager.updatables = GameManager.updatables.Remove(dragUpdater);
+			Destroy(contentsRectTrsCopy.gameObject);
 			if (mouseIsInsideTab && tabOptionsUpdater == null)
 				OnMouseEnterTab ();
 		}
@@ -131,14 +157,21 @@ namespace Frogger
 		public void OnMouseEnterContents ()
 		{
 			panelOfContentsMouseIsInside = this;
-			print(panelOfContentsMouseIsInside);
 		}
 
 		public void OnMouseExitContents ()
 		{
-			if (panelOfContentsMouseIsInside == this)
-				panelOfContentsMouseIsInside = null;
-			print(panelOfContentsMouseIsInside);
+			Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+			for (int i = 0; i < instances.Count; i ++)
+			{
+				Panel panel = instances[i];
+				if (panel == this)
+					continue;
+				Rect contentsWorldRect = panel.contentsRectTrs.GetWorldRect();
+				if (contentsWorldRect.Contains(worldMousePos))
+					return;
+			}
+			panelOfContentsMouseIsInside = null;
 		}
 
 		public class DragUpdater : IUpdatable
