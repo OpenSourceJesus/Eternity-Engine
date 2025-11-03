@@ -1,8 +1,8 @@
+using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace Frogger
 {
@@ -87,7 +87,7 @@ namespace Frogger
 			if (!isDragging)
 				return;
 			tabRectTrs.position = dragOffset + Mouse.current.position.ReadValue();
-			if (panelOfContentsMouseIsInside == null)
+			if (panelOfContentsMouseIsInside == null || panelOfContentsMouseIsInside == this)
 				contentsRectTrsCopy.sizeDelta = sizeOnStartDrag;
 			else if (panelOfContentsMouseIsInside != this)
 			{
@@ -95,21 +95,35 @@ namespace Frogger
 				RectTransform contentsRectTrsMouseIsInside = panelOfContentsMouseIsInside.contentsRectTrs;
 				Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.x - contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.position.x + contentsRectTrsMouseIsInside.sizeDelta.x / 2, mousePos.x),
 					Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.y - contentsRectTrsMouseIsInside.sizeDelta.y / 2, contentsRectTrsMouseIsInside.position.y + contentsRectTrsMouseIsInside.sizeDelta.y / 2, mousePos.y));
+				Action joinLeft = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x - contentsRectTrsMouseIsInside.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y); };
+				Action joinRight = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x + contentsRectTrsMouseIsInside.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y); };
+				Action joinBott = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x, contentsRectTrsMouseIsInside.sizeDelta.y / 2);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x, contentsRectTrsMouseIsInside.position.y - contentsRectTrsMouseIsInside.sizeDelta.y / 4); };
+				Action joinTop = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x, contentsRectTrsMouseIsInside.sizeDelta.y / 2);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x, contentsRectTrsMouseIsInside.position.y + contentsRectTrsMouseIsInside.sizeDelta.y / 4); };
 				if (normalizedMousePosInContents.x < 1f / 3)
 				{
-					if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+					if (normalizedMousePosInContents.y < 1f / 3)
 					{
-						
+						if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+							joinLeft ();
+						else
+							joinBott ();
 					}
-					else
+					else if (normalizedMousePosInContents.y > 2f / 3)
 					{
-						contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
-						contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x + contentsRectTrsCopy.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y);
+						if (normalizedMousePosInContents.x < 1f - normalizedMousePosInContents.y)
+							joinLeft ();
+						else
+							joinTop ();
 					}
 				}
 				else if (normalizedMousePosInContents.x < 2f / 3)
 				{
-					
+					contentsRectTrsCopy.position = contentsRectTrsMouseIsInside.position;
+					contentsRectTrsCopy.sizeDelta = contentsRectTrsMouseIsInside.sizeDelta;
 				}
 				else
 				{
@@ -129,6 +143,61 @@ namespace Frogger
 		{
 			isDragging = false;
 			GameManager.updatables = GameManager.updatables.Remove(dragUpdater);
+			if (panelOfContentsMouseIsInside == null || panelOfContentsMouseIsInside == this)
+			{
+			}
+			else if (panelOfContentsMouseIsInside != this)
+			{
+				Vector2 mousePos = Mouse.current.position.ReadValue();
+				RectTransform contentsRectTrsMouseIsInside = panelOfContentsMouseIsInside.contentsRectTrs;
+				Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.x - contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.position.x + contentsRectTrsMouseIsInside.sizeDelta.x / 2, mousePos.x),
+					Mathf.InverseLerp(contentsRectTrsMouseIsInside.position.y - contentsRectTrsMouseIsInside.sizeDelta.y / 2, contentsRectTrsMouseIsInside.position.y + contentsRectTrsMouseIsInside.sizeDelta.y / 2, mousePos.y));
+				Action joinLeft = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x - contentsRectTrsMouseIsInside.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y); };
+				Action joinRight = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x / 2, contentsRectTrsMouseIsInside.sizeDelta.y);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x + contentsRectTrsMouseIsInside.sizeDelta.x / 4, contentsRectTrsMouseIsInside.position.y); };
+				Action joinBott = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x, contentsRectTrsMouseIsInside.sizeDelta.y / 2);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x, contentsRectTrsMouseIsInside.position.y - contentsRectTrsMouseIsInside.sizeDelta.y / 4); };
+				Action joinTop = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsInside.sizeDelta.x, contentsRectTrsMouseIsInside.sizeDelta.y / 2);
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsInside.position.x, contentsRectTrsMouseIsInside.position.y + contentsRectTrsMouseIsInside.sizeDelta.y / 4); };
+				if (normalizedMousePosInContents.x < 1f / 3)
+				{
+					if (normalizedMousePosInContents.y < 1f / 3)
+					{
+						if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+							joinLeft ();
+						else
+							joinBott ();
+					}
+					else if (normalizedMousePosInContents.y > 2f / 3)
+					{
+						if (normalizedMousePosInContents.x < 1f - normalizedMousePosInContents.y)
+							joinLeft ();
+						else
+							joinTop ();
+					}
+				}
+				else if (normalizedMousePosInContents.x < 2f / 3)
+				{
+					Vector2 prevPos = rectTrs.position;
+					Vector2 prevSize = rectTrs.sizeDelta;
+					rectTrs.position = panelOfContentsMouseIsInside.rectTrs.position;
+					rectTrs.sizeDelta = panelOfContentsMouseIsInside.rectTrs.sizeDelta;
+					panelOfContentsMouseIsInside.rectTrs.position = prevPos;
+					panelOfContentsMouseIsInside.rectTrs.sizeDelta = prevSize;
+				}
+				else
+				{
+					if (normalizedMousePosInContents.x > normalizedMousePosInContents.y)
+					{
+						
+					}
+					else
+					{
+
+					}
+				}
+			}
 			Destroy(contentsRectTrsCopy.gameObject);
 			if (mouseIsInsideTab && tabOptionsUpdater == null)
 				OnMouseEnterTab ();
