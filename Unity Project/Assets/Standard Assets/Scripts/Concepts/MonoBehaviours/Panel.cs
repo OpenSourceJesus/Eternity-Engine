@@ -63,10 +63,10 @@ namespace Frogger
 			Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(worldRect.xMin, worldRect.yMin));
 			Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(worldRect.xMax, worldRect.yMax));
 			Vector2 localSize = (Vector2) (localMax - localMin);
-			Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+			Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Abs(localSize.x));
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Abs(localSize.y));
-			rectTrs.localPosition = localCenter;
+			rectTrs.localPosition = localMid;
 			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
 		}
 
@@ -103,37 +103,37 @@ namespace Frogger
 					Vector3 localMin = previewParentRectTrs.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMin, leftHalfWorldRect.yMin));
 					Vector3 localMax = previewParentRectTrs.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMax, leftHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					contentsRectTrsCopy.localPosition = localCenter; };
+					contentsRectTrsCopy.localPosition = localMid; };
 				Action joinRight = () => { 
 					Rect rightHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.center.x, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
 					Vector3 localMin = previewParentRectTrs.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMin, rightHalfWorldRect.yMin));
 					Vector3 localMax = previewParentRectTrs.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMax, rightHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					contentsRectTrsCopy.localPosition = localCenter; };
+					contentsRectTrsCopy.localPosition = localMid; };
 				Action joinBott = () => { 
 					Rect bottomHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.center.y);
 					Vector3 localMin = previewParentRectTrs.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMin, bottomHalfWorldRect.yMin));
 					Vector3 localMax = previewParentRectTrs.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMax, bottomHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					contentsRectTrsCopy.localPosition = localCenter; };
+					contentsRectTrsCopy.localPosition = localMid; };
 				Action joinTop = () => { 
 					Rect topHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.center.y, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
 					Vector3 localMin = previewParentRectTrs.InverseTransformPoint(new Vector3(topHalfWorldRect.xMin, topHalfWorldRect.yMin));
 					Vector3 localMax = previewParentRectTrs.InverseTransformPoint(new Vector3(topHalfWorldRect.xMax, topHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					contentsRectTrsCopy.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					contentsRectTrsCopy.localPosition = localCenter; };
+					contentsRectTrsCopy.localPosition = localMid; };
 				Action swap = () => { contentsRectTrsCopy.position = contentsRectTrsMouseIsIn.position;
 					contentsRectTrsCopy.sizeDelta = contentsRectTrsMouseIsIn.sizeDelta; };
 				JoinOrSwapPanels (panelOfContentsMouseIsIn, joinLeft, joinRight, joinBott, joinTop, swap);
@@ -148,50 +148,92 @@ namespace Frogger
 			{
 				RectTransform contentsRectTrsMouseIsIn = panelOfContentsMouseIsIn.contentsRectTrs;
 				Rect contentsWorldRectMouseIsIn = contentsRectTrsMouseIsIn.GetWorldRect();
-				RectTransform parentRectTrs = (RectTransform) rectTrs.parent;
+				Transform parentRectTrs = rectTrs.parent;
+				RectTransform panelRectTrsMouseIsIn = panelOfContentsMouseIsIn.rectTrs;
+				Transform parentOfPanelMouseIsIn = panelRectTrsMouseIsIn.parent;
 				Action joinLeft = () => { 
 					Rect leftHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.center.x, contentsWorldRectMouseIsIn.yMax);
 					Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMin, leftHalfWorldRect.yMin));
 					Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMax, leftHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					rectTrs.localPosition = localCenter;
+					rectTrs.localPosition = localMid;
 					contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
+					
+					Rect rightHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.center.x, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
+					Vector3 targetLocalMin = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMin, rightHalfWorldRect.yMin));
+					Vector3 targetLocalMax = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMax, rightHalfWorldRect.yMax));
+					Vector2 targetLocalSize = (Vector2) (targetLocalMax - targetLocalMin);
+					Vector2 targetLocalMid = (Vector2) ((targetLocalMin + targetLocalMax) / 2);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetLocalSize.x);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetLocalSize.y);
+					panelRectTrsMouseIsIn.localPosition = targetLocalMid;
+					contentsRectTrsMouseIsIn.sizeDelta = panelRectTrsMouseIsIn.sizeDelta + (Vector2) contentsRectTrsMouseIsIn.localPosition * 2;
 				};
 				Action joinRight = () => { 
 					Rect rightHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.center.x, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
 					Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMin, rightHalfWorldRect.yMin));
 					Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(rightHalfWorldRect.xMax, rightHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					rectTrs.localPosition = localCenter;
+					rectTrs.localPosition = localMid;
 					contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
+					
+					Rect leftHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.center.x, contentsWorldRectMouseIsIn.yMax);
+					Vector3 targetLocalMin = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMin, leftHalfWorldRect.yMin));
+					Vector3 targetLocalMax = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(leftHalfWorldRect.xMax, leftHalfWorldRect.yMax));
+					Vector2 targetLocalSize = (Vector2) (targetLocalMax - targetLocalMin);
+					Vector2 targetLocalMid = (Vector2) ((targetLocalMin + targetLocalMax) / 2);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetLocalSize.x);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetLocalSize.y);
+					panelRectTrsMouseIsIn.localPosition = targetLocalMid;
+					contentsRectTrsMouseIsIn.sizeDelta = panelRectTrsMouseIsIn.sizeDelta + (Vector2) contentsRectTrsMouseIsIn.localPosition * 2;
 				};
 				Action joinBott = () => { 
 					Rect bottomHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.center.y);
 					Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMin, bottomHalfWorldRect.yMin));
 					Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMax, bottomHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax)/ 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					rectTrs.localPosition = localCenter;
+					rectTrs.localPosition = localMid;
 					contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
+					
+					Rect topHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.center.y, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
+					Vector3 targetLocalMin = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(topHalfWorldRect.xMin, topHalfWorldRect.yMin));
+					Vector3 targetLocalMax = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(topHalfWorldRect.xMax, topHalfWorldRect.yMax));
+					Vector2 targetLocalSize = (Vector2) (targetLocalMax - targetLocalMin);
+					Vector2 targetLocalMid = (Vector2) ((targetLocalMin + targetLocalMax) / 2);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetLocalSize.x);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetLocalSize.y);
+					panelRectTrsMouseIsIn.localPosition = targetLocalMid;
+					contentsRectTrsMouseIsIn.sizeDelta = panelRectTrsMouseIsIn.sizeDelta + (Vector2) contentsRectTrsMouseIsIn.localPosition * 2;
 				};
 				Action joinTop = () => { 
 					Rect topHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.center.y, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.yMax);
 					Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(topHalfWorldRect.xMin, topHalfWorldRect.yMin));
 					Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(topHalfWorldRect.xMax, topHalfWorldRect.yMax));
 					Vector2 localSize = (Vector2) (localMax - localMin);
-					Vector2 localCenter = (Vector2) ((localMin + localMax) / 2);
+					Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
 					rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
-					rectTrs.localPosition = localCenter;
+					rectTrs.localPosition = localMid;
 					contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
+					
+					Rect bottomHalfWorldRect = Rect.MinMaxRect(contentsWorldRectMouseIsIn.xMin, contentsWorldRectMouseIsIn.yMin, contentsWorldRectMouseIsIn.xMax, contentsWorldRectMouseIsIn.center.y);
+					Vector3 targetLocalMin = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMin, bottomHalfWorldRect.yMin));
+					Vector3 targetLocalMax = parentOfPanelMouseIsIn.InverseTransformPoint(new Vector3(bottomHalfWorldRect.xMax, bottomHalfWorldRect.yMax));
+					Vector2 targetLocalSize = (Vector2) (targetLocalMax - targetLocalMin);
+					Vector2 targetLocalMid = (Vector2) ((targetLocalMin + targetLocalMax) / 2);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetLocalSize.x);
+					panelRectTrsMouseIsIn.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetLocalSize.y);
+					panelRectTrsMouseIsIn.localPosition = targetLocalMid;
+					contentsRectTrsMouseIsIn.sizeDelta = panelRectTrsMouseIsIn.sizeDelta + (Vector2) contentsRectTrsMouseIsIn.localPosition * 2;
 				};
 				Action swap = () => { Vector2 prevPos = rectTrs.position;
 					Vector2 prevSize = rectTrs.sizeDelta;
