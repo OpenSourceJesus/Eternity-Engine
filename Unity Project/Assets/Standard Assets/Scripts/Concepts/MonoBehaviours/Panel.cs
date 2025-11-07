@@ -2,6 +2,7 @@ using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 namespace Frogger
@@ -22,7 +23,6 @@ namespace Frogger
 		Vector2 offDrag;
 		bool isDragging;
 		DragUpdater dragUpdater;
-		Vector2 sizeOnStartDrag;
 		RectTransform contentsRectTrsCopy;
 
 		void Awake ()
@@ -76,8 +76,8 @@ namespace Frogger
 			offDrag = (Vector2) tabRectTrs.position - Mouse.current.position.ReadValue();
 			if (tabOptionsUpdater != null)
 				GameManager.updatables = GameManager.updatables.Remove(tabOptionsUpdater);
-			sizeOnStartDrag = contentsRectTrs.sizeDelta;
 			contentsRectTrsCopy = Instantiate(contentsRectTrs, contentsRectTrs.parent);
+			Destroy(contentsRectTrsCopy.GetComponent<EventTrigger>());
 			dragUpdater = new DragUpdater(this);
 			GameManager.updatables = GameManager.updatables.Add(dragUpdater);
 		}
@@ -88,78 +88,29 @@ namespace Frogger
 				return;
 			tabRectTrs.position = offDrag + Mouse.current.position.ReadValue();
 			if (panelOfContentsMouseIsIn == null || panelOfContentsMouseIsIn == this)
-				contentsRectTrsCopy.sizeDelta = sizeOnStartDrag;
+			{
+				contentsRectTrsCopy.position = contentsRectTrs.position;
+				contentsRectTrsCopy.sizeDelta = contentsRectTrs.sizeDelta;
+			}
 			else if (panelOfContentsMouseIsIn != this)
 			{
-				Vector2 mousePos = Mouse.current.position.ReadValue();
 				RectTransform contentsRectTrsMouseIsIn = panelOfContentsMouseIsIn.contentsRectTrs;
-				Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(contentsRectTrsMouseIsIn.position.x - contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.position.x + contentsRectTrsMouseIsIn.sizeDelta.x / 2, mousePos.x),
-					Mathf.InverseLerp(contentsRectTrsMouseIsIn.position.y - contentsRectTrsMouseIsIn.sizeDelta.y / 2, contentsRectTrsMouseIsIn.position.y + contentsRectTrsMouseIsIn.sizeDelta.y / 2, mousePos.y));
 				Action joinLeft = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.sizeDelta.y);
-					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x - contentsRectTrsMouseIsIn.sizeDelta.x / 4, contentsRectTrsMouseIsIn.position.y); };
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x - contentsRectTrsMouseIsIn.sizeDelta.x / 4, contentsRectTrsMouseIsIn.position.y);
+					print("joinLeft"); };
 				Action joinRight = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.sizeDelta.y);
-					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x + contentsRectTrsMouseIsIn.sizeDelta.x / 4, contentsRectTrsMouseIsIn.position.y); };
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x + contentsRectTrsMouseIsIn.sizeDelta.x / 4, contentsRectTrsMouseIsIn.position.y);
+					print("joinRight"); };
 				Action joinBott = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x, contentsRectTrsMouseIsIn.sizeDelta.y / 2);
-					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y - contentsRectTrsMouseIsIn.sizeDelta.y / 4); };
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y - contentsRectTrsMouseIsIn.sizeDelta.y / 4);
+					print("joinBott"); };
 				Action joinTop = () => { contentsRectTrsCopy.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x, contentsRectTrsMouseIsIn.sizeDelta.y / 2);
-					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y + contentsRectTrsMouseIsIn.sizeDelta.y / 4); };
-				if (normalizedMousePosInContents.x < 1f / 3)
-				{
-					if (normalizedMousePosInContents.y < 1f / 3)
-					{
-						if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-							joinLeft ();
-						else
-							joinBott ();
-					}
-					else if (normalizedMousePosInContents.y > 2f / 3)
-					{
-						if (normalizedMousePosInContents.x < 1f - normalizedMousePosInContents.y)
-							joinLeft ();
-						else
-							joinTop ();
-					}
-					else
-						joinLeft ();
-				}
-				else if (normalizedMousePosInContents.x < 2f / 3)
-				{
-					if (normalizedMousePosInContents.y < 1f / 3)
-						joinBott ();
-					else if (normalizedMousePosInContents.y < 2f / 3)
-					{
-						contentsRectTrsCopy.position = contentsRectTrsMouseIsIn.position;
-						contentsRectTrsCopy.sizeDelta = contentsRectTrsMouseIsIn.sizeDelta;
-					}
-					else
-						joinTop ();
-				}
-				else if (normalizedMousePosInContents.y < 1f / 3)
-				{
-					if (1f - normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-						joinBott ();
-					else
-						joinRight ();
-				}
-				else if (normalizedMousePosInContents.y < 2f / 3)
-				{
-					if (normalizedMousePosInContents.x < 1f / 3)
-						joinLeft ();
-					else if (normalizedMousePosInContents.x < 2f / 3)
-					{
-						contentsRectTrsCopy.position = contentsRectTrsMouseIsIn.position;
-						contentsRectTrsCopy.sizeDelta = contentsRectTrsMouseIsIn.sizeDelta;
-					}
-					else
-						joinRight ();
-				}
-				else
-				{
-					if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-						joinTop ();
-					else
-						joinRight ();
-				}
+					contentsRectTrsCopy.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y + contentsRectTrsMouseIsIn.sizeDelta.y / 4);
+					print("joinTop"); };
+				Action swap = () => { contentsRectTrsCopy.position = contentsRectTrsMouseIsIn.position;
+					contentsRectTrsCopy.sizeDelta = contentsRectTrsMouseIsIn.sizeDelta;
+					print("swap"); };
+				JoinOrSwapPanels (panelOfContentsMouseIsIn, joinLeft, joinRight, joinBott, joinTop, swap);
 			}
 		}
 
@@ -167,15 +118,9 @@ namespace Frogger
 		{
 			isDragging = false;
 			GameManager.updatables = GameManager.updatables.Remove(dragUpdater);
-			if (panelOfContentsMouseIsIn == null || panelOfContentsMouseIsIn == this)
+			if (panelOfContentsMouseIsIn != null && panelOfContentsMouseIsIn != this)
 			{
-			}
-			else if (panelOfContentsMouseIsIn != this)
-			{
-				Vector2 mousePos = Mouse.current.position.ReadValue();
 				RectTransform contentsRectTrsMouseIsIn = panelOfContentsMouseIsIn.contentsRectTrs;
-				Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(contentsRectTrsMouseIsIn.position.x - contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.position.x + contentsRectTrsMouseIsIn.sizeDelta.x / 2, mousePos.x),
-					Mathf.InverseLerp(contentsRectTrsMouseIsIn.position.y - contentsRectTrsMouseIsIn.sizeDelta.y / 2, contentsRectTrsMouseIsIn.position.y + contentsRectTrsMouseIsIn.sizeDelta.y / 2, mousePos.y));
 				Action joinLeft = () => { rectTrs.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.sizeDelta.y);
 					rectTrs.position = new Vector2(contentsRectTrsMouseIsIn.position.x - contentsRectTrsMouseIsIn.sizeDelta.x / 4, contentsRectTrsMouseIsIn.position.y); };
 				Action joinRight = () => { rectTrs.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x / 2, contentsRectTrsMouseIsIn.sizeDelta.y);
@@ -184,75 +129,77 @@ namespace Frogger
 					rectTrs.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y - contentsRectTrsMouseIsIn.sizeDelta.y / 4); };
 				Action joinTop = () => { rectTrs.sizeDelta = new Vector2(contentsRectTrsMouseIsIn.sizeDelta.x, contentsRectTrsMouseIsIn.sizeDelta.y / 2);
 					rectTrs.position = new Vector2(contentsRectTrsMouseIsIn.position.x, contentsRectTrsMouseIsIn.position.y + contentsRectTrsMouseIsIn.sizeDelta.y / 4); };
-				if (normalizedMousePosInContents.x < 1f / 3)
-				{
-					if (normalizedMousePosInContents.y < 1f / 3)
-					{
-						if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-							joinLeft ();
-						else
-							joinBott ();
-					}
-					else if (normalizedMousePosInContents.y > 2f / 3)
-					{
-						if (normalizedMousePosInContents.x < 1f - normalizedMousePosInContents.y)
-							joinLeft ();
-						else
-							joinTop ();
-					}
-					else
-						joinLeft ();
-				}
-				else if (normalizedMousePosInContents.x < 2f / 3)
-				{
-					if (normalizedMousePosInContents.y < 1f / 3)
-						joinBott ();
-					else if (normalizedMousePosInContents.y < 2f / 3)
-					{
-						Vector2 prevPos = rectTrs.position;
-						Vector2 prevSize = rectTrs.sizeDelta;
-						rectTrs.position = panelOfContentsMouseIsIn.rectTrs.position;
-						rectTrs.sizeDelta = panelOfContentsMouseIsIn.rectTrs.sizeDelta;
-						panelOfContentsMouseIsIn.rectTrs.position = prevPos;
-						panelOfContentsMouseIsIn.rectTrs.sizeDelta = prevSize;
-					}
-					else
-						joinTop ();
-				}
-				else if (normalizedMousePosInContents.y < 1f / 3)
-				{
-					if (1f - normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-						joinBott ();
-					else
-						joinRight ();
-				}
-				else if (normalizedMousePosInContents.y < 2f / 3)
-				{
-					if (normalizedMousePosInContents.x < 1f / 3)
-						joinLeft ();
-					else if (normalizedMousePosInContents.x < 2f / 3)
-					{
-						Vector2 prevPos = rectTrs.position;
-						Vector2 prevSize = rectTrs.sizeDelta;
-						rectTrs.position = panelOfContentsMouseIsIn.rectTrs.position;
-						rectTrs.sizeDelta = panelOfContentsMouseIsIn.rectTrs.sizeDelta;
-						panelOfContentsMouseIsIn.rectTrs.position = prevPos;
-						panelOfContentsMouseIsIn.rectTrs.sizeDelta = prevSize;
-					}
-					else
-						joinRight ();
-				}
-				else
-				{
-					if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
-						joinTop ();
-					else
-						joinRight ();
-				}
+				Action swap = () => { Vector2 prevPos = rectTrs.position;
+					Vector2 prevSize = rectTrs.sizeDelta;
+					rectTrs.position = panelOfContentsMouseIsIn.rectTrs.position;
+					rectTrs.sizeDelta = panelOfContentsMouseIsIn.rectTrs.sizeDelta;
+					panelOfContentsMouseIsIn.rectTrs.position = prevPos;
+					panelOfContentsMouseIsIn.rectTrs.sizeDelta = prevSize; };
+				JoinOrSwapPanels (panelOfContentsMouseIsIn, joinLeft, joinRight, joinBott, joinTop, swap);
 			}
-			Destroy(contentsRectTrsCopy.gameObject);
+			if (contentsRectTrsCopy != null)
+				Destroy(contentsRectTrsCopy.gameObject);
 			if (mouseIsInTab && tabOptionsUpdater == null)
 				OnMouseEnterTab ();
+		}
+
+		void JoinOrSwapPanels (Panel panel, Action joinLeft, Action joinRight, Action joinBott, Action joinTop, Action swap)
+		{
+			Vector2 mousePos = Mouse.current.position.ReadValue();
+			RectTransform panelContentsRectTrs = panel.contentsRectTrs;
+			Vector2 normalizedMousePosInContents = new Vector2(Mathf.InverseLerp(panelContentsRectTrs.position.x - panelContentsRectTrs.sizeDelta.x / 2, panelContentsRectTrs.position.x + panelContentsRectTrs.sizeDelta.x / 2, mousePos.x),
+				Mathf.InverseLerp(panelContentsRectTrs.position.y - panelContentsRectTrs.sizeDelta.y / 2, panelContentsRectTrs.position.y + panelContentsRectTrs.sizeDelta.y / 2, mousePos.y));
+			if (normalizedMousePosInContents.x < 1f / 3)
+			{
+				if (normalizedMousePosInContents.y < 1f / 3)
+				{
+					if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+						joinLeft ();
+					else
+						joinBott ();
+				}
+				else if (normalizedMousePosInContents.y > 2f / 3)
+				{
+					if (normalizedMousePosInContents.x < 1f - normalizedMousePosInContents.y)
+						joinLeft ();
+					else
+						joinTop ();
+				}
+				else
+					joinLeft ();
+			}
+			else if (normalizedMousePosInContents.x < 2f / 3)
+			{
+				if (normalizedMousePosInContents.y < 1f / 3)
+					joinBott ();
+				else if (normalizedMousePosInContents.y < 2f / 3)
+					swap ();
+				else
+					joinTop ();
+			}
+			else if (normalizedMousePosInContents.y < 1f / 3)
+			{
+				if (1f - normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+					joinBott ();
+				else
+					joinRight ();
+			}
+			else if (normalizedMousePosInContents.y < 2f / 3)
+			{
+				if (normalizedMousePosInContents.x < 1f / 3)
+					joinLeft ();
+				else if (normalizedMousePosInContents.x < 2f / 3)
+					swap ();
+				else
+					joinRight ();
+			}
+			else
+			{
+				if (normalizedMousePosInContents.x < normalizedMousePosInContents.y)
+					joinTop ();
+				else
+					joinRight ();
+			}
 		}
 
 		public void OnMouseEnterTab ()
