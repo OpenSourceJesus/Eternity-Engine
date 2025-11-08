@@ -18,6 +18,7 @@ namespace Frogger
 		[HideInInspector]
 		public bool mouseIsInTab;
 		public RectTransform canvasRectTrs;
+		public Rect initNormalizedRect;
 		public static List<Panel> instances = new List<Panel>();
 		static Panel panelOfContentsMouseIsIn;
 		Vector2 offDrag;
@@ -37,41 +38,8 @@ namespace Frogger
 
 		void Start ()
 		{
-			SizePanelToFit ();
-		}
-
-		void SizePanelToFit ()
-		{
-			Rect canvasWorldRect = canvasRectTrs.GetWorldRect();
-			float leftHit = canvasWorldRect.xMin;
-			float rightHit = canvasWorldRect.xMax;
-			float bottHit = canvasWorldRect.yMin;
-			float topHit = canvasWorldRect.yMax;
-			Vector2 center = rectTrs.GetWorldRect().center;
-			for (int i = 0; i < instances.Count; i ++)
-			{
-				Panel panel = instances[i];
-				if (panel == this)
-					continue;
-				Rect panelRect = panel.rectTrs.GetWorldRect();
-				if (center.x >= panelRect.center.x)
-					leftHit = Mathf.Max(leftHit, panelRect.xMax);
-				if (center.x <= panelRect.center.x)
-					rightHit = Mathf.Min(rightHit, panelRect.xMin);
-				if (center.y >= panelRect.center.y)
-					bottHit = Mathf.Max(bottHit, panelRect.yMax);
-				if (center.y <= panelRect.center.y)
-					topHit = Mathf.Min(topHit, panelRect.yMin);
-			}
-			Rect worldRect = Rect.MinMaxRect(leftHit, bottHit, rightHit, topHit);
-			RectTransform parentRectTrs = (RectTransform) rectTrs.parent;
-			Vector2 localMin = parentRectTrs.InverseTransformPoint(worldRect.min);
-			Vector2 localMax = parentRectTrs.InverseTransformPoint(worldRect.max);
-			Vector2 localSize = localMax - localMin;
-			Vector2 localMid = (localMin + localMax) / 2;
-			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Abs(localSize.x));
-			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Abs(localSize.y));
-			rectTrs.localPosition = localMid;
+			rectTrs.sizeDelta = canvasRectTrs.sizeDelta * initNormalizedRect.size;
+			rectTrs.position = canvasRectTrs.sizeDelta * initNormalizedRect.center;
 			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
 		}
 
@@ -253,7 +221,7 @@ namespace Frogger
 				for (int i = 0; i < instances.Count; i ++)
 				{
 					Panel panel = instances[i];
-					panel.SizePanelToFit ();
+					panel.MakeFit ();
 				}
 			}
 			if (contentsRectTrsCopy != null)
@@ -319,6 +287,43 @@ namespace Frogger
 				else
 					joinRight ();
 			}
+		}
+
+		void MakeFit ()
+		{
+			Rect canvasWorldRect = canvasRectTrs.GetWorldRect();
+			float leftHit = canvasWorldRect.xMin;
+			float rightHit = canvasWorldRect.xMax;
+			float bottHit = canvasWorldRect.yMin;
+			float topHit = canvasWorldRect.yMax;
+			Rect worldRect = rectTrs.GetWorldRect();
+			Vector2 mid = worldRect.center;
+			for (int i = 0; i < instances.Count; i ++)
+			{
+				Panel panel = instances[i];
+				if (panel == this)
+					continue;
+				Rect panelRect = panel.rectTrs.GetWorldRect();
+				Vector2 panelMid = panelRect.center;
+				if (mid.x > panelMid.x && panelRect.xMax <= worldRect.xMin)
+					leftHit = Mathf.Max(leftHit, panelRect.xMax);
+				if (mid.x < panelMid.x && panelRect.xMin >= worldRect.xMax)
+					rightHit = Mathf.Min(rightHit, panelRect.xMin);
+				if (mid.y > panelMid.y && panelRect.yMax <= worldRect.yMin)
+					bottHit = Mathf.Max(bottHit, panelRect.yMax);
+				if (mid.y < panelMid.y && panelRect.yMin >= worldRect.yMax)
+					topHit = Mathf.Min(topHit, panelRect.yMin);
+			}
+			Rect newWorldRect = Rect.MinMaxRect(leftHit, bottHit, rightHit, topHit);
+			Transform parentRectTrs = rectTrs.parent;
+			Vector2 localMin = parentRectTrs.InverseTransformPoint(newWorldRect.min);
+			Vector2 localMax = parentRectTrs.InverseTransformPoint(newWorldRect.max);
+			Vector2 localSize = localMax - localMin;
+			Vector2 localMid = (localMin + localMax) / 2;
+			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Abs(localSize.x));
+			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Abs(localSize.y));
+			rectTrs.localPosition = localMid;
+			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
 		}
 
 		public void OnMouseEnterTab ()
