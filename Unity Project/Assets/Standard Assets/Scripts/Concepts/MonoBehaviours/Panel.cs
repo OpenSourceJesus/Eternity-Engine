@@ -305,13 +305,15 @@ namespace Frogger
 					continue;
 				Rect panelRect = panel.rectTrs.GetWorldRect();
 				Vector2 panelMid = panelRect.center;
-				if (mid.x > panelMid.x && panelRect.xMax <= worldRect.xMin)
+				bool overlapVertical = panelRect.yMax > worldRect.yMin && panelRect.yMin < worldRect.yMax;
+				bool overlapHorizontal = panelRect.xMax > worldRect.xMin && panelRect.xMin < worldRect.xMax;
+				if (mid.x > panelMid.x && overlapVertical)
 					leftHit = Mathf.Max(leftHit, panelRect.xMax);
-				if (mid.x < panelMid.x && panelRect.xMin >= worldRect.xMax)
+				if (mid.x < panelMid.x && overlapVertical)
 					rightHit = Mathf.Min(rightHit, panelRect.xMin);
-				if (mid.y > panelMid.y && panelRect.yMax <= worldRect.yMin)
+				if (mid.y > panelMid.y && overlapHorizontal)
 					bottHit = Mathf.Max(bottHit, panelRect.yMax);
-				if (mid.y < panelMid.y && panelRect.yMin >= worldRect.yMax)
+				if (mid.y < panelMid.y && overlapHorizontal)
 					topHit = Mathf.Min(topHit, panelRect.yMin);
 			}
 			Rect newWorldRect = Rect.MinMaxRect(leftHit, bottHit, rightHit, topHit);
