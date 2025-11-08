@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Frogger
 {
-	public class Panel : MonoBehaviour
+	public class Panel : UpdateWhileEnabled
 	{
 		public RectTransform rectTrs;
 		public RectTransform tabRectTrs;
@@ -25,17 +25,24 @@ namespace Frogger
 		public float borderRadius;
 		public static List<Panel> instances = new List<Panel>();
 		static Panel panelOfContentsMouseIsIn;
+		static Panel resizing;
 		Vector2 offDrag;
 		bool isDragging;
 		DragUpdater dragUpdater;
 		RectTransform contentsRectTrsCopy;
 		ResizeUpdater resizeUpdater;
+		const float MIN_SCREEN_NORMALIZED_SIZE = .05f;
 
 		void Awake ()
 		{
 			borderRadius = Mathf.Min(Screen.width * screenNormalizedBorderRadius, Screen.height * screenNormalizedBorderRadius);
 			borderRectTrs.sizeDelta = Vector2.one * borderRadius;
 			instances.Add(this);
+			rectTrs.sizeDelta = canvasRectTrs.sizeDelta * initNormalizedRect.size;
+			rectTrs.sizeDelta = new Vector2((int) rectTrs.sizeDelta.x, (int) rectTrs.sizeDelta.y);
+			rectTrs.position = canvasRectTrs.sizeDelta * initNormalizedRect.center;
+			rectTrs.position = new Vector2((int) rectTrs.position.x, (int) rectTrs.position.y);
+			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
 		}
 		
 		void OnDestroy ()
@@ -43,13 +50,21 @@ namespace Frogger
 			instances.Remove(this);
 		}
 
-		void Start ()
+		public override void DoUpdate ()
 		{
-			rectTrs.sizeDelta = canvasRectTrs.sizeDelta * initNormalizedRect.size;
-			rectTrs.sizeDelta = new Vector2((int) rectTrs.sizeDelta.x, (int) rectTrs.sizeDelta.y);
-			rectTrs.position = canvasRectTrs.sizeDelta * initNormalizedRect.center;
-			rectTrs.position = new Vector2((int) rectTrs.position.x, (int) rectTrs.position.y);
-			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
+			Vector2 mousePos = Mouse.current.position.ReadValue();
+			Rect borderWorldRect = borderRectTrs.GetWorldRect();
+			if (!borderWorldRect.Contains(mousePos))
+			{
+				GameManager.updatables = GameManager.updatables.Remove(resizeUpdater);
+				if (resizing == this)
+					MakeFit ();
+			}
+			else
+			{
+				resizeUpdater = new ResizeUpdater(this);
+				GameManager.updatables = GameManager.updatables.Add(resizeUpdater);
+			}
 		}
 
 		public void BeginDrag ()
@@ -331,8 +346,8 @@ namespace Frogger
 			Vector2 localMax = parentRectTrs.InverseTransformPoint(newWorldRect.max);
 			Vector2 localSize = localMax - localMin;
 			Vector2 localMid = (localMin + localMax) / 2;
-			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Abs(localSize.x));
-			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Abs(localSize.y));
+			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, localSize.x);
+			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, localSize.y);
 			rectTrs.localPosition = localMid;
 			contentsRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsRectTrs.localPosition * 2;
 		}
@@ -378,17 +393,6 @@ namespace Frogger
 			panelOfContentsMouseIsIn = null;
 		}
 
-		public void OnMouseEnterBorder ()
-		{
-			resizeUpdater = new ResizeUpdater(this);
-			GameManager.updatables = GameManager.updatables.Add(resizeUpdater);
-		}
-
-		public void OnMouseExitBorder ()
-		{
-			GameManager.updatables = GameManager.updatables.Remove(resizeUpdater);
-		}
-
 		public class DragUpdater : IUpdatable
 		{
 			public Panel panel;
@@ -411,27 +415,30 @@ namespace Frogger
 		public class ResizeUpdater : IUpdatable
 		{
 			public Panel panel;
-			Rect innerWorldRect;
-			bool resizing;
+			Rect contentsWorldRect;
+			bool isResizing;
 
 			public ResizeUpdater (Panel panel)
 			{
 				this.panel = panel;
-				innerWorldRect = panel.contentsRectTrs.GetWorldRect();
-				innerWorldRect = innerWorldRect.Grow(-Vector2.one * panel.borderRadius / 2);
+				contentsWorldRect = panel.contentsRectTrs.GetWorldRect();
 			}
 
 			public void DoUpdate ()
 			{
 				Vector2 mousePos = Mouse.current.position.ReadValue();
-				if (Mouse.current.leftButton.wasPressedThisFrame && !innerWorldRect.Contains(mousePos))
-					resizing = true;
-				else if (Mouse.current.leftButton.wasReleasedThisFrame)
-					resizing = false;
-				if (resizing)
+				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
-					Vector2 offNormalizedMousedPos = Rect.PointToNormalized(innerWorldRect, mousePos) - Vector2.one / 2;
-					print(offNormalizedMousedPos);
+					Rect innerWorldRect = contentsWorldRect.Grow(-Vector2.one * panel.borderRadius / 2);
+					isResizing = !innerWorldRect.Contains(mousePos);
+				}
+				else if (Mouse.current.leftButton.wasReleasedThisFrame)
+					isResizing = false;
+				if (isResizing)
+				{
+					resizing = panel;
+					contentsWorldRect = panel.contentsRectTrs.GetWorldRect();
+					Vector2 offNormalizedMousedPos = Rect.PointToNormalized(contentsWorldRect, mousePos) - Vector2.one / 2;
 					Rect worldRect = panel.rectTrs.GetWorldRect();
 					Rect newRect;
 					if (Mathf.Abs(offNormalizedMousedPos.x) > Mathf.Abs(offNormalizedMousedPos.y))
@@ -448,9 +455,19 @@ namespace Frogger
 						else
 							newRect = Rect.MinMaxRect(worldRect.xMin, mousePos.y, worldRect.xMax, worldRect.yMax);
 					}
-					panel.rectTrs.sizeDelta = newRect.size;
-					panel.rectTrs.localPosition = newRect.center;
-					panel.contentsRectTrs.sizeDelta = newRect.size + (Vector2) panel.contentsRectTrs.localPosition * 2;
+					if (newRect.size.x * newRect.size.y < panel.rectTrs.sizeDelta.x * panel.rectTrs.sizeDelta.y)
+					{
+						panel.rectTrs.sizeDelta = newRect.size;
+						panel.rectTrs.position = newRect.center;
+						panel.contentsRectTrs.sizeDelta = newRect.size + (Vector2) panel.contentsRectTrs.localPosition * 2;
+						panel.tabRectTrs.anchoredPosition = Vector3.zero;
+						for (int i = 0; i < instances.Count; i ++)
+						{
+							Panel _panel = instances[i];
+							if (_panel != panel)
+								_panel.MakeFit ();
+						}
+					}
 				}
 			}
 		}
