@@ -37,6 +37,11 @@ namespace Frogger
 
 		void Start ()
 		{
+			SizePanelToFit ();
+		}
+
+		void SizePanelToFit ()
+		{
 			Rect canvasWorldRect = canvasRectTrs.GetWorldRect();
 			float leftHit = canvasWorldRect.xMin;
 			float rightHit = canvasWorldRect.xMax;
@@ -60,10 +65,10 @@ namespace Frogger
 			}
 			Rect worldRect = Rect.MinMaxRect(leftHit, bottHit, rightHit, topHit);
 			RectTransform parentRectTrs = (RectTransform) rectTrs.parent;
-			Vector3 localMin = parentRectTrs.InverseTransformPoint(new Vector3(worldRect.xMin, worldRect.yMin));
-			Vector3 localMax = parentRectTrs.InverseTransformPoint(new Vector3(worldRect.xMax, worldRect.yMax));
-			Vector2 localSize = (Vector2) (localMax - localMin);
-			Vector2 localMid = (Vector2) ((localMin + localMax) / 2);
+			Vector2 localMin = parentRectTrs.InverseTransformPoint(worldRect.min);
+			Vector2 localMax = parentRectTrs.InverseTransformPoint(worldRect.max);
+			Vector2 localSize = localMax - localMin;
+			Vector2 localMid = (localMin + localMax) / 2;
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Abs(localSize.x));
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Abs(localSize.y));
 			rectTrs.localPosition = localMid;
@@ -245,6 +250,11 @@ namespace Frogger
 				};
 				JoinOrSwapPanels (panelOfContentsMouseIsIn, joinLeft, joinRight, joinBott, joinTop, swap);
 				tabRectTrs.anchoredPosition = Vector3.zero;
+				for (int i = 0; i < instances.Count; i ++)
+				{
+					Panel panel = instances[i];
+					panel.SizePanelToFit ();
+				}
 			}
 			if (contentsRectTrsCopy != null)
 				Destroy(contentsRectTrsCopy.gameObject);
