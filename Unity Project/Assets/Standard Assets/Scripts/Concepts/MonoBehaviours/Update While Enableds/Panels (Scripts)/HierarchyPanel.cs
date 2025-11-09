@@ -5,8 +5,10 @@ namespace EternityEngine
 {
 	public class HierarchyPanel : Panel
 	{
-		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 		public Transform entriesParent;
+		public HierarchyEntry[] entries = new HierarchyEntry[0];
+		public HierarchyEntry[] selected = new HierarchyEntry[0];
+		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
 		public override void Awake ()
 		{

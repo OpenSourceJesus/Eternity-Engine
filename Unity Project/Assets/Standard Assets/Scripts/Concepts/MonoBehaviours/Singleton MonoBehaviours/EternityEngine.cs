@@ -40,6 +40,8 @@ namespace EternityEngine
 				HierarchyEntry hierarchyEntry = Instantiate(hierarchyEntryPrefab, hierarchyPanel.entriesParent);
 				hierarchyEntry.nameText.text = ob.name;
 				hierarchyEntry.ob = ob;
+				hierarchyEntry.hierarchyPanel = hierarchyPanel;
+				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
 			}
 			obs = obs.Add(ob);
 			return ob;
