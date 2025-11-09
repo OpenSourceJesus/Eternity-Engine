@@ -8,6 +8,8 @@ namespace EternityEngine
 		public Transform entriesParent;
 		public HierarchyEntry[] entries = new HierarchyEntry[0];
 		public HierarchyEntry[] selected = new HierarchyEntry[0];
+		[HideInInspector]
+		public RectTransform insertionIndicator;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
 		public override void Awake ()

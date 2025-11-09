@@ -7,9 +7,12 @@ namespace EternityEngine
 {
 	public class HierarchyEntry : MonoBehaviour
 	{
+		public RectTransform rectTrs;
+		[HideInInspector]
 		public _Object ob;
 		public TMP_Text nameText;
 		public Image selectedIndicator;
+		[HideInInspector]
 		public HierarchyPanel hierarchyPanel;
 		[HideInInspector]
 		public bool selected;
@@ -19,7 +22,7 @@ namespace EternityEngine
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				HierarchyEntry whatToSelect = hierarchyPanel.entries[transform.GetSiblingIndex()];
+				HierarchyEntry whatToSelect = hierarchyPanel.entries[rectTrs.GetSiblingIndex()];
 				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 				{
 					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
@@ -29,6 +32,22 @@ namespace EternityEngine
 				if (!whatToSelect.selected)
 					whatToSelect.SetSelected (true);
 			}
+		}
+
+		public void BeginDrag ()
+		{
+			hierarchyPanel.insertionIndicator = Instantiate(EternityEngine.instance.insertionIndicatorPrefab);
+		}
+
+		public void Drag ()
+		{
+			
+		}
+
+		public void EndDrag ()
+		{
+			Destroy(hierarchyPanel.insertionIndicator.gameObject);
+			
 		}
 
 		void SetSelected (bool select)

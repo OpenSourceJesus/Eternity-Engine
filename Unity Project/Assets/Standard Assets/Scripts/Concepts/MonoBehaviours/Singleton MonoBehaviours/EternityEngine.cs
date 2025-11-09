@@ -8,6 +8,7 @@ namespace EternityEngine
 	{
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
+		public RectTransform insertionIndicatorPrefab;
 		static _Object[] obs = new _Object[0];
 
 #if UNITY_EDITOR
