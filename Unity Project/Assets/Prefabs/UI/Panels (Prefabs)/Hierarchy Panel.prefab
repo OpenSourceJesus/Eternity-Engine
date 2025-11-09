@@ -398,11 +398,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9001294380424887999, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 9001294380424887999, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 9083338148910446831, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Name
@@ -424,8 +424,8 @@ PrefabInstance:
     - {fileID: 7663376363863723600, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1493289784501745410, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
-      insertIndex: -1
+    - targetCorrespondingSourceObject: {fileID: 291195865851220583, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
+      insertIndex: 0
       addedObject: {fileID: 9198462842884905944}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9083338148910446831, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
@@ -443,6 +443,11 @@ RectTransform:
 --- !u!224 &1424606391063128821 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 301302549315712098, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
+  m_PrefabInstance: {fileID: 1723549229645848215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1432654839362325744 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 291195865851220583, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
   m_PrefabInstance: {fileID: 1723549229645848215}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &2022764311156116716 stripped
@@ -516,10 +521,9 @@ MonoBehaviour:
   rectTrs: {fileID: 4142342605788552443}
   tabRectTrs: {fileID: 5392975328281383101}
   contentsParentRectTrs: {fileID: 2022764311156116716}
-  contentsRectTrs: {fileID: 7710236679470161960}
+  contentsRectTrs: {fileID: 1432654839362325744}
   tabOptionsRectTrs: {fileID: 5827922909187210841}
   borderRectTrs: {fileID: 1424606391063128821}
-  mouseIsInTab: 0
   canvasRectTrs: {fileID: 0}
   initScreenNormalizedRect:
     serializedVersion: 2
@@ -530,18 +534,13 @@ MonoBehaviour:
   screenNormalizedBorderRadius: 0.01
   borderRadius: 0
   entriesParent: {fileID: 239391998858127765}
---- !u!224 &7710236679470161960 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9001294380424887999, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
-  m_PrefabInstance: {fileID: 1723549229645848215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8691757024874505191
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 239391998858127765}
+    m_TransformParent: {fileID: 1432654839362325744}
     m_Modifications:
     - target: {fileID: 520398641906481215, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Pivot.x
