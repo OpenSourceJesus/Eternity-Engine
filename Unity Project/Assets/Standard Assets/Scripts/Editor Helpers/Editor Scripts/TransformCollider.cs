@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class TransformCollider : EditorScript
 	{
@@ -31,7 +31,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class TransformCollider : EditorScript
 	{

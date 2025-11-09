@@ -2,7 +2,7 @@
 using System.Collections;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class SnapPosition : EditorScript

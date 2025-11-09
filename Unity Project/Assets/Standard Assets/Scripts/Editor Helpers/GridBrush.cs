@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-using Frogger;
+using EternityEngine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;

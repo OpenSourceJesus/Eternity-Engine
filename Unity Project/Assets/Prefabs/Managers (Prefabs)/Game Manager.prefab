@@ -393,64 +393,64 @@ MonoBehaviour:
   - name: Windows x64
     enabled: 1
     target: 19
-    locationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    locationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x64)/Dodge And Shoot RPG.exe
     options: 00000800
     removeExtraDirs: 1
     makeZip: 0
-    directoryToZip: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    directoryToZip: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x64)
-    zipLocationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    zipLocationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x64).zip
     clearDataOnFirstStartup: 0
   - name: Windows x32
     enabled: 1
     target: 5
-    locationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    locationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x32)/Dodge And Shoot RPG.exe
     options: 00000800
     removeExtraDirs: 1
     makeZip: 0
-    directoryToZip: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    directoryToZip: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x32)
-    zipLocationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Windows
+    zipLocationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Windows
       x32).zip
     clearDataOnFirstStartup: 0
   - name: Mac
     enabled: 1
     target: 2
-    locationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Mac)/Dodge
+    locationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Mac)/Dodge
       And Shoot RPG
     options: 00000800
     removeExtraDirs: 1
     makeZip: 0
-    directoryToZip: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Mac Intel
+    directoryToZip: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Mac Intel
       x64 + Apple silicon)
-    zipLocationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Mac Intel
+    zipLocationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Mac Intel
       x64 + Apple silicon).zip
     clearDataOnFirstStartup: 0
   - name: Linux
     enabled: 1
     target: 24
-    locationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux)/Dodge
+    locationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux)/Dodge
       And Shoot RPG.x86_64
     options: 0000080008000000
     removeExtraDirs: 1
     makeZip: 0
-    directoryToZip: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux)
-    zipLocationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux).zip
+    directoryToZip: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux)
+    zipLocationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux).zip
     clearDataOnFirstStartup: 0
   - name: Linux (Dev)
     enabled: 1
     target: 24
-    locationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux Dev)/Dodge
+    locationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux Dev)/Dodge
       And Shoot RPG.x86_64
     options: 00000800
     removeExtraDirs: 1
     makeZip: 0
-    directoryToZip: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux
+    directoryToZip: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux
       Dev)
-    zipLocationPath: /home/gileadcosman/frogger/Builds/Dodge And Shoot RPG (Linux
+    zipLocationPath: /home/gileadcosman/EternityEngine/Builds/Dodge And Shoot RPG (Linux
       Dev).zip
     clearDataOnFirstStartup: 0
   versionNumberText: {fileID: 0}
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7147125092a04f48b0245e6f29895ed, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp-firstpass::Frogger.AudioManager
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.AudioManager
   handleMultipleInstances: 0
   persistant: 0
   soundEffectPrefab: {fileID: 7374817064891012007, guid: c24819795a8245de38c969a94478fcce, type: 3}

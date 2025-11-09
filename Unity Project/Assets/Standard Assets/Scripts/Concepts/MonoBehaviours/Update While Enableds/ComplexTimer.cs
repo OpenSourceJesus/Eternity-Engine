@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class ComplexTimer : UpdateWhileEnabled
 	{

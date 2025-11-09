@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 using UnityEditor;
 #endif
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class GameManager : SingletonMonoBehaviour<GameManager>
 	{

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SwapTilemapsTiles : EditorScript
 	{
@@ -23,7 +23,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SwapTilemapsTiles : EditorScript
 	{

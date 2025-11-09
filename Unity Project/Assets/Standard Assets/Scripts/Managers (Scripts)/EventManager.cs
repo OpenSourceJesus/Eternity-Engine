@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class EventManager : SingletonUpdateWhileEnabled<EventManager>
 	{

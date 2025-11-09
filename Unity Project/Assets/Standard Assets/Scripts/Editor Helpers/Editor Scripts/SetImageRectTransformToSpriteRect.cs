@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetImageRectTransformToSpriteRect : EditorScript
 	{
@@ -22,7 +22,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetImageRectTransformToSpriteRect : EditorScript
 	{

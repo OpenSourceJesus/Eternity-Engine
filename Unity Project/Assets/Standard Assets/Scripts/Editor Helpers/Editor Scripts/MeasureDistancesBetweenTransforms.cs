@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MeasureDistancesBetweenTransforms : EditorScript
 	{
@@ -27,7 +27,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MeasureDistanceBetweenTransforms : EditorScript
 	{

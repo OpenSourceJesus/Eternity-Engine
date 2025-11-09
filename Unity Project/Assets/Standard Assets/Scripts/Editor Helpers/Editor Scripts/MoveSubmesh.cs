@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MoveSubmesh : EditorScript
 	{
@@ -36,7 +36,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MoveSubmesh : EditorScript
 	{

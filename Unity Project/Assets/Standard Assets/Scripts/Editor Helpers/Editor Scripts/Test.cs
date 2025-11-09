@@ -2,7 +2,7 @@
 using Extensions;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class Test : EditorScript
 	{
@@ -25,7 +25,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class Test : EditorScript
 	{

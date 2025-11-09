@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 	{

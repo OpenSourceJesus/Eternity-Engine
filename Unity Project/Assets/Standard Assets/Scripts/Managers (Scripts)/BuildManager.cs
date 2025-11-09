@@ -11,7 +11,7 @@ using UnityEditor.SceneManagement;
 using UnityEditor.Build.Reporting;
 #endif
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class BuildManager : SingletonMonoBehaviour<BuildManager>
 	{

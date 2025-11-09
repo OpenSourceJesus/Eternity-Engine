@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Frogger;
+using EternityEngine;
 using UnityEditor;
 
 namespace Extensions

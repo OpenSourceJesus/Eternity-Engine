@@ -2,7 +2,7 @@
 using UnityEngine;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class ScaleMesh : EditorScript
 	{
@@ -30,7 +30,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class ScaleMesh : EditorScript
 	{

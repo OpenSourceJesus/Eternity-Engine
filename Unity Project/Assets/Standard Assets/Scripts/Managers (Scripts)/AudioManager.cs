@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class AudioManager : SingletonMonoBehaviour<AudioManager>
 	{

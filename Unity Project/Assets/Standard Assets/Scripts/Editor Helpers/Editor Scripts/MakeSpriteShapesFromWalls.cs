@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine.U2D;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeSpriteShapesFromWalls : EditorScript
 	{
@@ -49,7 +49,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeSpriteShapesFromWalls : EditorScript
 	{

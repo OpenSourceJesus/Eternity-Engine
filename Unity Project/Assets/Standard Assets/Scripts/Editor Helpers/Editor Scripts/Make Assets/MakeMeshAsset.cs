@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeMeshAsset : MakeAsset
 	{
@@ -23,7 +23,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeMeshAsset : EditorScript
 	{

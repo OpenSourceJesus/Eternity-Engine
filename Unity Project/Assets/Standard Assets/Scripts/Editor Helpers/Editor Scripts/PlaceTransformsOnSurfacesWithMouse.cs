@@ -5,7 +5,7 @@ using UnityEngine;
 using Extensions;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class PlaceTransformsOnSurfacesWithMouse : EditorScript
@@ -144,7 +144,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class PlaceTransformsOnSurfacesWithMouse : EditorScript
 	{

@@ -2,7 +2,7 @@
 using Extensions;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetLineRendererUseWorldSpace : EditorScript
 	{
@@ -18,7 +18,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetLineRendererUseWorldSpace : EditorScript
 	{

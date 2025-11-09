@@ -1,7 +1,7 @@
 using Extensions;
 using UnityEngine.InputSystem;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class ActivateObjectBasedOnUsingGamepad : UpdateWhileEnabled
 	{

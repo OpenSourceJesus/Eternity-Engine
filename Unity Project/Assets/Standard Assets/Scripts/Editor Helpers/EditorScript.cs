@@ -5,7 +5,7 @@ using System;
 using UnityEngine.Events;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class EditorScript : MonoBehaviour
@@ -188,7 +188,7 @@ namespace Frogger
 #else
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class EditorScript : MonoBehaviour
 	{

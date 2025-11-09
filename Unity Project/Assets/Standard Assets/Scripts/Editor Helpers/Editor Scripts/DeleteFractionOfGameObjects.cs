@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class DeleteFractionOfGameObjects : EditorScript
 	{
@@ -22,7 +22,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class DeleteFractionOfGameObjects : EditorScript
 	{

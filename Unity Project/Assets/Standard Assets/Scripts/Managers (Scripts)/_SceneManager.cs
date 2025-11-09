@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class _SceneManager : SingletonMonoBehaviour<_SceneManager>
 	{

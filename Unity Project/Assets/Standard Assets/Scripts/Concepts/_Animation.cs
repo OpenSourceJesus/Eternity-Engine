@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[Serializable]
 	public class _Animation

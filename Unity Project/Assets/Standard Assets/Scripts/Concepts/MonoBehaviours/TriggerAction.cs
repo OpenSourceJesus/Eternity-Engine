@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class TriggerAction : MonoBehaviour
 	{

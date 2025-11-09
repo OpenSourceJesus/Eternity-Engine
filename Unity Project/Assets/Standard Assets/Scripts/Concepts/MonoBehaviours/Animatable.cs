@@ -1,5 +1,5 @@
 using UnityEngine;
-using Frogger;
+using EternityEngine;
 
 public class Animatable : UpdateWhileEnabled
 {

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeTilemapTileGameObjects : EditorScript
 	{
@@ -33,7 +33,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeTilemapTileGameObjects : EditorScript
 	{

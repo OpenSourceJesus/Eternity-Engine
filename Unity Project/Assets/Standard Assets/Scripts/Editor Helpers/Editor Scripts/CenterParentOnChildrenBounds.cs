@@ -5,7 +5,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class CenterParentOnChildrenBounds : EditorScript
@@ -79,7 +79,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class CenterParentOnChildrenBounds : EditorScript
 	{

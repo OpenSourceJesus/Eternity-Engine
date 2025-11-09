@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class Spawnable : MonoBehaviour, ISpawnable

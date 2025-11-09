@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class SetWorldScale : EditorScript
@@ -19,7 +19,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetWorldScale : EditorScript
 	{

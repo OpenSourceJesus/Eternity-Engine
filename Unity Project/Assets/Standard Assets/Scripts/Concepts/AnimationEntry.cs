@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[Serializable]
 	public struct AnimationEntry

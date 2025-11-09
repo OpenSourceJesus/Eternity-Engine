@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetRectTransformAnchorsToRect : EditorScript
 	{
@@ -36,7 +36,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetRectTransformAnchorsToRect : EditorScript
 	{

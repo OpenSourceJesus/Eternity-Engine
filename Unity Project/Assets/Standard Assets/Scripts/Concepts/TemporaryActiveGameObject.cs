@@ -3,7 +3,7 @@
 */
 
 using System;
-using Frogger;
+using EternityEngine;
 using Extensions;
 using UnityEngine;
 using System.Collections;

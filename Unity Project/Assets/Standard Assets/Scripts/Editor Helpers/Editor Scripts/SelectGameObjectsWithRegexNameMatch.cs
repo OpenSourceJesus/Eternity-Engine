@@ -4,7 +4,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class SelectGameObjectsWithRegexNameMatch : EditorScript
@@ -26,7 +26,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SelectGameObjectsWithRegexNameMatch : EditorScript
 	{

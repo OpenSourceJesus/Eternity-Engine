@@ -6,7 +6,7 @@ using System;
 using Extensions;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SplitTransformAcrossItsBounds : EditorScript
 	{
@@ -47,7 +47,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SplitTransformAcrossItsBounds : EditorScript
 	{

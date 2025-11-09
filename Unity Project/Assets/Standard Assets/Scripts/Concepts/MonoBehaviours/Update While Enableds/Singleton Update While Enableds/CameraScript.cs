@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-namespace Frogger
+namespace EternityEngine
 {
 	//[ExecuteInEditMode]
 	[RequireComponent(typeof(Camera))]

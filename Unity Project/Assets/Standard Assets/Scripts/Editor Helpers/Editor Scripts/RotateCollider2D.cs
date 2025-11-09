@@ -2,7 +2,7 @@
 using Extensions;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class RotateCollider2D : EditorScript
 	{
@@ -27,7 +27,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class RotateCollider2D : EditorScript
 	{

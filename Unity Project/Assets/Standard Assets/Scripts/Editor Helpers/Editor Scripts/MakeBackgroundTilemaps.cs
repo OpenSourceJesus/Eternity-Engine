@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeBackgroundTilemaps : EditorScript
 	{
@@ -61,7 +61,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeBackgroundTilemaps : EditorScript
 	{

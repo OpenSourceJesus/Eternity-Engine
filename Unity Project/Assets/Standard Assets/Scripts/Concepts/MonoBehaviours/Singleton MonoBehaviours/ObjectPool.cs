@@ -1,12 +1,12 @@
 ﻿using System;
-using Frogger;
+using EternityEngine;
 using Extensions;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
 	{

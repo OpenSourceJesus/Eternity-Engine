@@ -1,7 +1,7 @@
 using Extensions;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class UpdateWhileEnabled : MonoBehaviour, IUpdatable
 	{

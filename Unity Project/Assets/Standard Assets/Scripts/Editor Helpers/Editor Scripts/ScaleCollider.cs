@@ -2,7 +2,7 @@
 using UnityEngine;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class ScaleCollider : EditorScript
 	{
@@ -25,7 +25,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class ScaleCollider : EditorScript
 	{

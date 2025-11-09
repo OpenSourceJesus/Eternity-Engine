@@ -4,7 +4,7 @@ using UnityEngine;
 using Extensions;
 using System;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SoundEffect : Spawnable
 	{

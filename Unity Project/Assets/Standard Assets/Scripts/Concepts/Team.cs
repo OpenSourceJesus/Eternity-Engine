@@ -1,6 +1,6 @@
 using System;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[Serializable]
 	public class Team<T>

@@ -5,7 +5,7 @@
 // using UnityEditor;
 // #endif
 
-// namespace Frogger
+// namespace EternityEngine
 // {
 // 	public class MakeTexture2DAssetFromURL : MakeAsset
 // 	{

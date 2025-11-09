@@ -6,7 +6,7 @@ using System;
 using Extensions;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeGridOfTransformPrefabsInBounds : EditorScript
 	{
@@ -58,7 +58,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeGridOfTransformPrefabsInBounds : EditorScript
 	{

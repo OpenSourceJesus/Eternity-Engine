@@ -2,7 +2,7 @@
 using Extensions;
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class RespaceTiledObjects : EditorScript
 	{
@@ -30,7 +30,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class RespaceTiledObjects : EditorScript
 	{

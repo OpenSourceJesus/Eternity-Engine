@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class UIButton : Button, IUpdatable
 	{

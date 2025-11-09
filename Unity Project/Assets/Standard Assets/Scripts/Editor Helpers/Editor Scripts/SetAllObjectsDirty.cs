@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetAllObjectsDirty : EditorScript
 	{
@@ -24,7 +24,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class SetAllObjectsDirty : EditorScript
 	{

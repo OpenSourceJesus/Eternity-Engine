@@ -1,6 +1,6 @@
 ﻿using UnityEngine.InputSystem;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class InputManager : SingletonMonoBehaviour<InputManager>
 	{

@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class MoveTransforms : EditorScript
 	{
@@ -16,7 +16,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MoveTransforms : EditorScript
 	{

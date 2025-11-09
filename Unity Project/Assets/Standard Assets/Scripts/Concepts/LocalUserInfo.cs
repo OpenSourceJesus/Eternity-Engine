@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public static class LocalUserInfo
 	{

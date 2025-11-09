@@ -10,7 +10,7 @@ using System;
 using Extensions;
 using UnityEngine.UI;
 
-namespace Frogger
+namespace EternityEngine
 {
 	//[ExecuteInEditMode]
 	public class ConfigurationManager : SingletonMonoBehaviour<ConfigurationManager>

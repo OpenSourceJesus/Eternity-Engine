@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class PrintObjectSize : EditorScript
 	{
@@ -29,7 +29,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class PrintObjectSize : EditorScript
 	{

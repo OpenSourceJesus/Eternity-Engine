@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using WrapMode = Frogger._Animation.WrapMode;
+using WrapMode = EternityEngine._Animation.WrapMode;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class _Animator : MonoBehaviour
 	{

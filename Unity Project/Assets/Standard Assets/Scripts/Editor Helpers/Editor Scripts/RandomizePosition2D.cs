@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class RandomizePosition2D : EditorScript
 	{
@@ -37,7 +37,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class RandomizePosition2D : EditorScript
 	{

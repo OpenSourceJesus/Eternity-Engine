@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using Extensions;
 
-namespace Frogger
+namespace EternityEngine
 {
 	[ExecuteInEditMode]
 	public class DeselectGameObject : EditorScript
@@ -37,7 +37,7 @@ namespace Frogger
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class DeselectObject : EditorScript
 	{

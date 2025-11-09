@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SwitchLineRendererToAndFromWorldSpace : EditorScript
 	{

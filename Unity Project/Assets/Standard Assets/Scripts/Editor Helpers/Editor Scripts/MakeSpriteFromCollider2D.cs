@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using System;
-using Frogger;
+using EternityEngine;
 using System.IO;
 using Extensions;
 using UnityEditor;
@@ -155,7 +155,7 @@ public class MakeSpriteFromCollider2D : EditorScript
 	}
 }
 #else
-namespace Frogger
+namespace EternityEngine
 {
 	public class MakeSpriteFromCollider2D : EditorScript
 	{

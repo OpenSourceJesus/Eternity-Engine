@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Frogger
+namespace EternityEngine
 {
 	public class SettingsMenu : SingletonMonoBehaviour<SettingsMenu>
 	{
