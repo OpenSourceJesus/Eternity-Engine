@@ -1,15 +1,19 @@
 using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace EternityEngine
 {
 	public class HierarchyPanel : Panel
 	{
-		public Transform entriesParent;
+		public RectTransform entriesParent;
+		[HideInInspector]
 		public HierarchyEntry[] entries = new HierarchyEntry[0];
+		[HideInInspector]
 		public HierarchyEntry[] selected = new HierarchyEntry[0];
 		[HideInInspector]
-		public RectTransform insertionIndicator;
+		public Image insertionIndicator;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
 		public override void Awake ()

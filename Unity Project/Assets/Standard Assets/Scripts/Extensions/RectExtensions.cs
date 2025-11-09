@@ -133,13 +133,12 @@ namespace Extensions
 			return point.ClampComponents(rect.min, rect.max);
 		}
 
-		public static Vector2 ToNormalizedPosition (this Rect rect, Vector2 point)
+		public static Vector2 ToNormalizedPoint (this Rect rect, Vector2 point)
 		{
-			return Rect.PointToNormalized(rect, point);
-			// return Vector2.one.Divide(rect.size) * (point - rect.min);
+			return Vector2.one.Divide(rect.size) * (point - rect.min);
 		}
 
-		public static Vector2 ToNormalizedPosition (this RectInt rect, Vector2Int point)
+		public static Vector2 ToNormalizedPoint (this RectInt rect, Vector2Int point)
 		{
 			return Vector2.one.Divide(rect.size.ToVec2()).Multiply(point.ToVec2() - rect.min.ToVec2());
 		}

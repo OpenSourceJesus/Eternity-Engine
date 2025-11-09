@@ -2,6 +2,7 @@ using TMPro;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace EternityEngine
 {
@@ -16,6 +17,7 @@ namespace EternityEngine
 		public HierarchyPanel hierarchyPanel;
 		[HideInInspector]
 		public bool selected;
+		int insertAt;
 
 		public void OnMouseDown ()
 		{
@@ -36,18 +38,53 @@ namespace EternityEngine
 
 		public void BeginDrag ()
 		{
-			hierarchyPanel.insertionIndicator = Instantiate(EternityEngine.instance.insertionIndicatorPrefab);
+			hierarchyPanel.insertionIndicator = Instantiate(EternityEngine.instance.insertionIndicatorPrefab, hierarchyPanel.entriesParent);
+			hierarchyPanel.insertionIndicator.rectTransform.sizeDelta = hierarchyPanel.insertionIndicator.rectTransform.sizeDelta.SetX(0);
 		}
 
 		public void Drag ()
 		{
-			
+			Vector2 mousePos = Mouse.current.position.ReadValue();
+			Rect parentWorldRect = hierarchyPanel.entriesParent.GetWorldRect();
+			hierarchyPanel.insertionIndicator.enabled = parentWorldRect.Contains(mousePos);
+			if (hierarchyPanel.insertionIndicator.enabled)
+				for (int i = 0; i < hierarchyPanel.entries.Length; i ++)
+				{
+					HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i];
+					Rect hierarchyEntryWorldRect = hierarchyEntry.rectTrs.GetWorldRect();
+					if (hierarchyEntryWorldRect.Contains(mousePos))
+					{
+						if (Rect.PointToNormalized(hierarchyEntryWorldRect, mousePos).y > .5f)
+						{
+							hierarchyPanel.insertionIndicator.rectTransform.position = new Vector3(hierarchyEntryWorldRect.center.x, hierarchyEntryWorldRect.yMax);
+							if (i > rectTrs.GetSiblingIndex())
+								insertAt = i - 1;
+							else
+								insertAt = i;
+						}
+						else
+						{
+							hierarchyPanel.insertionIndicator.rectTransform.position = new Vector3(hierarchyEntryWorldRect.center.x, hierarchyEntryWorldRect.yMin);
+							if (i > rectTrs.GetSiblingIndex())
+								insertAt = i;
+							else
+								insertAt = i + 1;
+						}
+					}
+				}
 		}
 
 		public void EndDrag ()
 		{
 			Destroy(hierarchyPanel.insertionIndicator.gameObject);
-			
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				HierarchyEntry hierarchyEntry = hierarchyPanel.entries[rectTrs.GetSiblingIndex()];
+				hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(rectTrs.GetSiblingIndex());
+				hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
+				hierarchyPanel.entriesParent.GetChild(rectTrs.GetSiblingIndex()).SetSiblingIndex(insertAt);
+			}
 		}
 
 		void SetSelected (bool select)

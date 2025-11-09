@@ -1,6 +1,7 @@
 using System;
 using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace EternityEngine
 {
@@ -8,12 +9,13 @@ namespace EternityEngine
 	{
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
-		public RectTransform insertionIndicatorPrefab;
+		public Image insertionIndicatorPrefab;
 		static _Object[] obs = new _Object[0];
 
 #if UNITY_EDITOR
-		void Awake ()
+		public override void Awake ()
 		{
+			base.Awake ();
 			obs = new _Object[0];
 		} 
 #endif

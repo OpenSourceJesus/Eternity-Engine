@@ -24,15 +24,15 @@ namespace Extensions
 		
 		public static Vector2 GetCenterInCanvasNormalized (this RectTransform rectTrs, RectTransform canvasRectTrs)
 		{
-			return canvasRectTrs.GetWorldRect().ToNormalizedPosition(rectTrs.GetWorldRect().center);
+			return canvasRectTrs.GetWorldRect().ToNormalizedPoint(rectTrs.GetWorldRect().center);
 		}
 
 		public static Rect GetRectInCanvasNormalized (this RectTransform rectTrs, RectTransform canvasRectTrs)
 		{
 			Rect output = rectTrs.GetWorldRect();
 			Rect canvasRect = canvasRectTrs.GetWorldRect();
-			Vector2 outputMin = canvasRect.ToNormalizedPosition(output.min);
-			Vector2 outputMax = canvasRect.ToNormalizedPosition(output.max);
+			Vector2 outputMin = canvasRect.ToNormalizedPoint(output.min);
+			Vector2 outputMax = canvasRect.ToNormalizedPoint(output.max);
 			return Rect.MinMaxRect(outputMin.x, outputMin.y, outputMax.x, outputMax.y);
 		}
 
@@ -42,8 +42,8 @@ namespace Extensions
 			Rect rect = rectTrs.GetWorldRect();
 			Vector2 previousLocalPosition = rectTrs.localPosition;
 			Vector2 previousSizeDelta = rectTrs.sizeDelta;
-			rectTrs.anchorMin = parentRect.ToNormalizedPosition(rect.min);
-			rectTrs.anchorMax = parentRect.ToNormalizedPosition(rect.max);
+			rectTrs.anchorMin = parentRect.ToNormalizedPoint(rect.min);
+			rectTrs.anchorMax = parentRect.ToNormalizedPoint(rect.max);
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, previousSizeDelta.x);
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, previousSizeDelta.y);
 			rectTrs.localPosition = previousLocalPosition;
