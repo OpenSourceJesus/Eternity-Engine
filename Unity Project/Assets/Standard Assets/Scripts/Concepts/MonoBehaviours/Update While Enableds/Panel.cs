@@ -16,8 +16,6 @@ namespace EternityEngine
 		public RectTransform borderRectTrs;
 		// public Type type;
 		public TabOptionsUpdater tabOptionsUpdater;
-		[HideInInspector]
-		public bool mouseIsInTab;
 		public RectTransform canvasRectTrs;
 		public Rect initScreenNormalizedRect;
 		public float screenNormalizedBorderRadius;
@@ -26,6 +24,7 @@ namespace EternityEngine
 		public static Panel[] instances = new Panel[0];
 		static Panel panelOfContentsParentMouseIsIn;
 		static Panel resizing;
+		static Panel panelOfTabMouseIsIn;
 		Vector2 offDrag;
 		bool isDragging;
 		DragUpdater dragUpdater;
@@ -55,11 +54,9 @@ namespace EternityEngine
 		{
 			Vector2 mousePos = Mouse.current.position.ReadValue();
 			Rect borderWorldRect = borderRectTrs.GetWorldRect();
-			bool mouseButtonPressed = Mouse.current.leftButton.isPressed;
-			bool isResizing = resizing == this;
 			if (!borderWorldRect.Contains(mousePos))
 			{
-				if (!mouseButtonPressed && !isResizing && resizeUpdater != null)
+				if (!Mouse.current.leftButton.isPressed && resizing != this && resizeUpdater != null)
 				{
 					GameManager.updatables = GameManager.updatables.Remove(resizeUpdater);
 					resizeUpdater = null;
@@ -67,8 +64,12 @@ namespace EternityEngine
 			}
 			else if (resizeUpdater == null)
 			{
-				resizeUpdater = new ResizeUpdater(this);
-				GameManager.updatables = GameManager.updatables.Add(resizeUpdater);
+				Rect tabWorldRect = tabRectTrs.GetWorldRect();
+				if (!tabWorldRect.Contains(mousePos))
+				{
+					resizeUpdater = new ResizeUpdater(this);
+					GameManager.updatables = GameManager.updatables.Add(resizeUpdater);
+				}
 			}
 		}
 
@@ -255,7 +256,7 @@ namespace EternityEngine
 			}
 			if (contentsParentRectTrsCopy != null)
 				Destroy(contentsParentRectTrsCopy.gameObject);
-			if (mouseIsInTab && tabOptionsUpdater == null)
+			if (panelOfTabMouseIsIn == this && tabOptionsUpdater == null)
 				OnMouseEnterTab ();
 		}
 
@@ -356,7 +357,7 @@ namespace EternityEngine
 
 		public void OnMouseEnterTab ()
 		{
-			mouseIsInTab = true;
+			panelOfTabMouseIsIn = this;
 			if (!isDragging)
 			{
 				tabOptionsUpdater = new TabOptionsUpdater(this);
@@ -366,7 +367,8 @@ namespace EternityEngine
 
 		public void OnMouseExitTab ()
 		{
-			mouseIsInTab = false;
+			if (panelOfTabMouseIsIn == this)
+				panelOfTabMouseIsIn = null;
 			if (!tabOptionsRectTrs.gameObject.activeSelf)
 			{
 				GameManager.updatables = GameManager.updatables.Remove(tabOptionsUpdater);
@@ -432,11 +434,11 @@ namespace EternityEngine
 				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
 					Rect innerWorldRect = contentsParentWorldRect.Grow(-Vector2.one * panel.borderRadius * 2);
-					isResizing = !innerWorldRect.Contains(mousePos);
+					Rect tabWorldRect = panel.tabRectTrs.GetWorldRect();
+					isResizing = !innerWorldRect.Contains(mousePos) && !tabWorldRect.Contains(mousePos);
 				}
 				else if (Mouse.current.leftButton.wasReleasedThisFrame)
 				{
-					// Finish resizing when button is released
 					if (isResizing)
 					{
 						isResizing = false;
@@ -501,13 +503,13 @@ namespace EternityEngine
 				if (Mouse.current.rightButton.wasPressedThisFrame)
 				{
 					panel.tabOptionsRectTrs.gameObject.SetActive(!panel.tabOptionsRectTrs.gameObject.activeSelf);
-					if (!panel.mouseIsInTab)
+					if (panelOfTabMouseIsIn != panel)
 						GameManager.updatables = GameManager.updatables.Remove(panel.tabOptionsUpdater);
 				}
 				else if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
 					panel.tabOptionsRectTrs.gameObject.SetActive(false);
-					if (!panel.mouseIsInTab)
+					if (panelOfTabMouseIsIn != panel)
 						GameManager.updatables = GameManager.updatables.Remove(panel.tabOptionsUpdater);
 				}
 			}
