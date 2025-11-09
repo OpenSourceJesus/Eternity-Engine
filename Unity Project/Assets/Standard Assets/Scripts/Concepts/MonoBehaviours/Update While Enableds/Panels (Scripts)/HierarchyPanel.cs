@@ -14,6 +14,8 @@ namespace EternityEngine
 		public HierarchyEntry[] selected = new HierarchyEntry[0];
 		[HideInInspector]
 		public Image insertionIndicator;
+		[HideInInspector]
+		public HierarchyEntry lastEntryChangedSelection;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
 		public override void Awake ()
