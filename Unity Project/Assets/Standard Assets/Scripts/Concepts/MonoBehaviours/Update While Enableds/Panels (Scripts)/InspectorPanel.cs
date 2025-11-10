@@ -32,7 +32,12 @@ namespace EternityEngine
 			for (int i = 0; i < selected.Length; i ++)
 			{
 				HierarchyEntry hierarchyEntry = selected[i];
-				
+				_Component[] components = hierarchyEntry.ob.components;
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					
+				}
 			}
 		}
 	}

@@ -9,9 +9,9 @@ namespace EternityEngine
 	{
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
-		public InspectorEntry inspectorEntryPrefab;
 		public Image insertionIndicatorPrefab;
 		public _Component[] componentsTypesPrefabs = new _Component[0];
+		public InspectorEntry[] inspectorEntriesPrefabs = new InspectorEntry[0];
 		static _Object[] obs = new _Object[0];
 
 #if UNITY_EDITOR
@@ -60,7 +60,7 @@ namespace EternityEngine
 			for (int i = 0; i < InspectorPanel.instances.Length; i ++)
 			{
 				InspectorPanel inspectorPanel = InspectorPanel.instances[i];
-				InspectorEntry inspectorEntry = Instantiate(inspectorEntryPrefab, inspectorPanel.entriesParent);
+				InspectorEntry inspectorEntry = Instantiate(inspectorEntriesPrefabs[componentTypeIdx], inspectorPanel.entriesParent);
 				inspectorEntry.component = component;
 				inspectorEntry.inspectorPanel = inspectorPanel;
 				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
