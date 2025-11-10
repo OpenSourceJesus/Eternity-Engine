@@ -166,9 +166,24 @@ namespace EternityEngine
 				{
 					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
 					int idx = hierarchyEntry.rectTrs.GetSiblingIndex();
-					hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
-					hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
-					hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+					if (idx > insertAt)
+					{
+						for (int i3 = hierarchyPanel.selected.Length - 1; i3 >= i2; i3 --)
+						{
+							hierarchyEntry = hierarchyPanel.selected[i3];
+							idx = hierarchyEntry.rectTrs.GetSiblingIndex();
+							hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
+							hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
+							hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+						}
+						break;
+					}
+					else
+					{
+						hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
+						hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
+						hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+					}
 				}
 			}
 			HierarchyPanel.isDraggingEntry = false;
