@@ -79,4 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
   ob: {fileID: 0}
-  pos: {x: 0, y: 0, z: 0}
+  inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
+  pos: {fileID: 0}
+  rot: {fileID: 0}

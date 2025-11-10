@@ -10,6 +10,21 @@ namespace EternityEngine
 		public _Component component;
 		[HideInInspector]
 		public InspectorPanel inspectorPanel;
+		public RectTransform collapButtonRectTrs;
+		public GameObject goToGetCollapsed;
 		int insertAt;
+		bool collapsed;
+
+		public void SetCollapsed (bool collapse)
+		{
+			goToGetCollapsed.SetActive(!collapse);
+			collapButtonRectTrs.eulerAngles = Vector3.forward * 180 * collapse.GetHashCode();
+			collapsed = collapse;
+		}
+
+		public void ToggleCollapse ()
+		{
+			SetCollapsed (!collapsed);
+		}
 	}
 }

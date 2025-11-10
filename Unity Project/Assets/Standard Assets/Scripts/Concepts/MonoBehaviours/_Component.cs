@@ -6,5 +6,6 @@ namespace EternityEngine
 	{
 		[HideInInspector]
         public _Object ob;
+        public InspectorEntry inspectorEntryPrefab;
 	}
 }

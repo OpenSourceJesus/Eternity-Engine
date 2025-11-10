@@ -50,6 +50,7 @@ namespace EternityEngine
 					i2 --;
 				}
 			}
+			InspectorPanel.ClearEntries ();
 		}
 
 		public class AddPresetObjectOptionsUpdater : IUpdatable

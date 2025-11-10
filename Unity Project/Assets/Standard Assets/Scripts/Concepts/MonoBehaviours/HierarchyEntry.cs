@@ -86,6 +86,7 @@ namespace EternityEngine
 					clickedHierarchyEntry.SetSelected (true);
 				}
 			}
+			InspectorPanel.RegenEntries ();
 		}
 
 		public void OnMouseUp ()
@@ -110,6 +111,7 @@ namespace EternityEngine
 				}
 				clickedHierarchyEntry.SetSelected (true);
 			}
+			InspectorPanel.RegenEntries ();
 		}
 
 		public void BeginDrag ()
