@@ -27,7 +27,56 @@ namespace EternityEngine
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
 				int idx = rectTrs.GetSiblingIndex();
 				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
-				if (!Keyboard.current.leftShiftKey.isPressed && !Keyboard.current.leftCtrlKey.isPressed)
+				if (Keyboard.current.leftShiftKey.isPressed)
+				{
+					int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
+					if (lastEntryIdxHadSelectionSet == -1)
+						clickedHierarchyEntry.SetSelected (true);
+					else
+					{
+						if (idx > lastEntryIdxHadSelectionSet)
+						{
+							int startIdx = lastEntryIdxHadSelectionSet + 1;
+							int endIdx = idx;
+							if (clickedHierarchyEntry.selected)
+							{
+								startIdx --;
+								endIdx --;
+							}
+							else if (!hierarchyPanel.entries[startIdx].selected)
+								startIdx --;
+							for (int i2 = startIdx; i2 <= endIdx; i2 ++)
+							{
+								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
+								if (!hierarchyEntry.selected && !clickedHierarchyEntry.selected)
+									HierarchyPanel.lastSelectionDirWasUp = false;
+								hierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
+							}
+						}
+						else
+						{
+							int startIdx = lastEntryIdxHadSelectionSet - 1;
+							int endIdx = idx;
+							if (clickedHierarchyEntry.selected)
+							{
+								startIdx ++;
+								endIdx ++;
+							}
+							else if (!hierarchyPanel.entries[startIdx].selected)
+								startIdx ++;
+							for (int i2 = startIdx; i2 >= endIdx; i2 --)
+							{
+								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
+								if (!hierarchyEntry.selected && !clickedHierarchyEntry.selected)
+									HierarchyPanel.lastSelectionDirWasUp = true;
+								hierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
+							}
+						}
+					}
+				}
+				else if (Keyboard.current.leftCtrlKey.isPressed)
+					clickedHierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
+				else if (hierarchyPanel.selected.Length < 2 || !clickedHierarchyEntry.selected)
 				{
 					for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 					{
@@ -40,60 +89,36 @@ namespace EternityEngine
 					}
 					clickedHierarchyEntry.SetSelected (true);
 				}
-				else if (Keyboard.current.leftShiftKey.isPressed)
+			}
+		}
+
+		public void OnMouseUp ()
+		{
+			if (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.leftCtrlKey.isPressed || HierarchyPanel.isDraggingEntry)
+				return;
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				int idx = rectTrs.GetSiblingIndex();
+				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
+				if (hierarchyPanel.selected.Length < 2 || !clickedHierarchyEntry.selected)
+					return;
+				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 				{
-					int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
-					if (lastEntryIdxHadSelectionSet == -1)
-						clickedHierarchyEntry.SetSelected (true);
-					else
+					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
+					if (hierarchyEntry != clickedHierarchyEntry)
 					{
-						if (idx > lastEntryIdxHadSelectionSet)
-						{
-							int startIdx = lastEntryIdxHadSelectionSet + 1;
-							int endIdx = idx;
-							if (selected)
-							{
-								startIdx --;
-								endIdx --;
-							}
-							else if (!hierarchyPanel.entries[startIdx].selected)
-								startIdx --;
-							for (int i2 = startIdx; i2 <= endIdx; i2 ++)
-							{
-								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected && !selected)
-									HierarchyPanel.lastSelectionDirWasUp = false;
-								hierarchyEntry.SetSelected (!selected);
-							}
-						}
-						else
-						{
-							int startIdx = lastEntryIdxHadSelectionSet - 1;
-							int endIdx = idx;
-							if (selected)
-							{
-								startIdx ++;
-								endIdx ++;
-							}
-							else if (!hierarchyPanel.entries[startIdx].selected)
-								startIdx ++;
-							for (int i2 = startIdx; i2 >= endIdx; i2 --)
-							{
-								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected && !selected)
-									HierarchyPanel.lastSelectionDirWasUp = true;
-								hierarchyEntry.SetSelected (!selected);
-							}
-						}
+						hierarchyEntry.SetSelected (false);
+						i2 --;
 					}
 				}
-				else if (Keyboard.current.leftCtrlKey.isPressed)
-					clickedHierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
+				clickedHierarchyEntry.SetSelected (true);
 			}
 		}
 
 		public void BeginDrag ()
 		{
+			HierarchyPanel.isDraggingEntry = true;
 			hierarchyPanel.insertionIndicator = Instantiate(EternityEngine.instance.insertionIndicatorPrefab, hierarchyPanel.entriesParent);
 			hierarchyPanel.insertionIndicator.rectTransform.sizeDelta = hierarchyPanel.insertionIndicator.rectTransform.sizeDelta.SetX(0);
 		}
@@ -136,12 +161,17 @@ namespace EternityEngine
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				int idx = rectTrs.GetSiblingIndex();
-				HierarchyEntry hierarchyEntry = hierarchyPanel.entries[idx];
-				hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
-				hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
-				hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+				hierarchyPanel.selected = hierarchyPanel.selected._Sort(new HierarchyEntryComparer());
+				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+				{
+					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
+					int idx = hierarchyEntry.rectTrs.GetSiblingIndex();
+					hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
+					hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
+					hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+				}
 			}
+			HierarchyPanel.isDraggingEntry = false;
 		}
 
 		void SetSelected (bool select)
@@ -153,6 +183,14 @@ namespace EternityEngine
 			HierarchyPanel.lastEntryIdxHadSelectionSet = rectTrs.GetSiblingIndex();
 			selectedIndicator.enabled = select;
 			selected = select;
+		}
+
+		public class HierarchyEntryComparer : IComparer<HierarchyEntry>
+		{
+			public int Compare (HierarchyEntry hierarchyEntry, HierarchyEntry hierarchyEntry2)
+			{
+				return MathfExtensions.Sign(hierarchyEntry.rectTrs.GetSiblingIndex() - hierarchyEntry2.rectTrs.GetSiblingIndex());
+			}
 		}
 	}
 }

@@ -16,6 +16,7 @@ namespace EternityEngine
 		public Image insertionIndicator;
 		public static int lastEntryIdxHadSelectionSet;
 		public static bool lastSelectionDirWasUp;
+		public static bool isDraggingEntry;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
 		public override void Awake ()

@@ -74,6 +74,7 @@ namespace EternityEngine
 				paused = false;
 				isQuittingGame = false;
 				HierarchyPanel.lastEntryIdxHadSelectionSet = -1;
+				HierarchyPanel.isDraggingEntry = false;
 #endif
 				initialized = true;
 			}
