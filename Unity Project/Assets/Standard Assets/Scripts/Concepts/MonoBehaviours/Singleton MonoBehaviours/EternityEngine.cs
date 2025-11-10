@@ -1,3 +1,4 @@
+using TMPro;
 using System;
 using Extensions;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace EternityEngine
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
 		public _Component[] componentsTypesPrefabs = new _Component[0];
+		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
+		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;
 		static _Object[] obs = new _Object[0];
 
 #if UNITY_EDITOR
@@ -53,7 +56,18 @@ namespace EternityEngine
 
 		public _Component AddComponent (_Object ob, int componentTypeIdx)
 		{
-			_Component component = Instantiate(componentsTypesPrefabs[componentTypeIdx]);
+			_Component componentPrefab = componentsTypesPrefabs[componentTypeIdx];
+			for (int i = 0; i < ob.components.Length; i ++)
+			{
+				_Component _component = ob.components[i];
+				if (_component.inspectorEntryPrefab.onlyAllowOnePerObject && componentPrefab.inspectorEntryPrefab == _component.inspectorEntryPrefab)
+				{
+					instance.onlyOneComponentPerObjectAllowedNotificationText.text = "There can't be multiple " + componentPrefab.name +  " components attached to the same object. " + ob.name +  " already contains a " + componentPrefab.name + " component.";
+					instance.onlyOneComponentPerObjectAllowedNotificationGo.SetActive(true);
+					return null;
+				}
+			}
+			_Component component = Instantiate(componentPrefab);
 			component.ob = ob;
 			ob.components = ob.components.Add(component);
 			InspectorPanel.AddEntries (component);

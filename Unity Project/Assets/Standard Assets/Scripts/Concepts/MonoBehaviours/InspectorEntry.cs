@@ -12,6 +12,7 @@ namespace EternityEngine
 		public InspectorPanel inspectorPanel;
 		public RectTransform collapButtonRectTrs;
 		public GameObject goToGetCollapsed;
+		public bool onlyAllowOnePerObject;
 		int insertAt;
 		bool collapsed;
 
