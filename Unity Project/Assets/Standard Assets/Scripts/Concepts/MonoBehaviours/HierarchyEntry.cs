@@ -56,12 +56,14 @@ namespace EternityEngine
 								startIdx --;
 								endIdx --;
 							}
+							else if (!hierarchyPanel.entries[startIdx].selected)
+								startIdx --;
 							for (int i2 = startIdx; i2 <= endIdx; i2 ++)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected)
+								if (!hierarchyEntry.selected && !selected)
 									HierarchyPanel.lastSelectionDirWasUp = false;
-								hierarchyEntry.SetSelected (false);
+								hierarchyEntry.SetSelected (!selected);
 							}
 						}
 						else
@@ -71,12 +73,14 @@ namespace EternityEngine
 							if (selected)
 							{
 								startIdx ++;
-								endIdx --;
+								endIdx ++;
 							}
+							else if (!hierarchyPanel.entries[startIdx].selected)
+								startIdx ++;
 							for (int i2 = startIdx; i2 >= endIdx; i2 --)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected)
+								if (!hierarchyEntry.selected && !selected)
 									HierarchyPanel.lastSelectionDirWasUp = true;
 								hierarchyEntry.SetSelected (!selected);
 							}

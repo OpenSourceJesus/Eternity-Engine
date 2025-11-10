@@ -73,6 +73,7 @@ namespace EternityEngine
 #if UNITY_EDITOR
 				paused = false;
 				isQuittingGame = false;
+				HierarchyPanel.lastEntryIdxHadSelectionSet = -1;
 #endif
 				initialized = true;
 			}
