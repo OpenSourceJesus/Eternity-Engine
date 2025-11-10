@@ -1,9 +1,5 @@
-using TMPro;
-using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 namespace EternityEngine
 {
@@ -12,6 +8,7 @@ namespace EternityEngine
 		public RectTransform rectTrs;
 		[HideInInspector]
 		public _Component component;
+		[HideInInspector]
 		public InspectorPanel inspectorPanel;
 		int insertAt;
 	}
