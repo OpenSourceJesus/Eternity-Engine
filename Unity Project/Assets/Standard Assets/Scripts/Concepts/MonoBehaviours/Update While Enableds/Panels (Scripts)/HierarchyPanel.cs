@@ -38,6 +38,20 @@ namespace EternityEngine
 			GameManager.updatables = GameManager.updatables.Add(new AddPresetObjectOptionsUpdater(this));
 		}
 
+		public void DeselectAll ()
+		{
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+				{
+					HierarchyEntry entry = hierarchyPanel.selected[i2];
+					entry.SetSelected (false);
+					i2 --;
+				}
+			}
+		}
+
 		public class AddPresetObjectOptionsUpdater : IUpdatable
 		{
 			public HierarchyPanel hierarchyPanel;

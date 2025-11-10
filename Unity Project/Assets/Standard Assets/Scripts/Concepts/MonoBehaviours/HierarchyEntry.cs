@@ -185,7 +185,7 @@ namespace EternityEngine
 			HierarchyPanel.isDraggingEntry = false;
 		}
 
-		void SetSelected (bool select)
+		public void SetSelected (bool select)
 		{
 			if (select && !selected)
 				hierarchyPanel.selected = hierarchyPanel.selected.Add(this);

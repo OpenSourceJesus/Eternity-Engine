@@ -579,6 +579,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9083338148910446831, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5675530036722001900}
+    - targetCorrespondingSourceObject: {fileID: 6075240969734644346, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9003416423807982852}
     - targetCorrespondingSourceObject: {fileID: 4002905234909561803, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4976938491009567372}
@@ -639,6 +642,40 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3357372240035201644, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
   m_PrefabInstance: {fileID: 1723549229645848215}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4874251172520574189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6075240969734644346, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
+  m_PrefabInstance: {fileID: 1723549229645848215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9003416423807982852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4874251172520574189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5675530036722001900}
+          m_TargetAssemblyTypeName: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+          m_MethodName: DeselectAll
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &5392975328281383101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6718513679502413354, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
