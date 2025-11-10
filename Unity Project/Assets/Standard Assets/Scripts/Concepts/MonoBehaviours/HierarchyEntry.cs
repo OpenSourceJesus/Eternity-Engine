@@ -48,8 +48,6 @@ namespace EternityEngine
 							for (int i2 = startIdx; i2 <= endIdx; i2 ++)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected && !clickedHierarchyEntry.selected)
-									HierarchyPanel.lastSelectionDirWasUp = false;
 								hierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
 							}
 						}
@@ -67,8 +65,6 @@ namespace EternityEngine
 							for (int i2 = startIdx; i2 >= endIdx; i2 --)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
-								if (!hierarchyEntry.selected && !clickedHierarchyEntry.selected)
-									HierarchyPanel.lastSelectionDirWasUp = true;
 								hierarchyEntry.SetSelected (!clickedHierarchyEntry.selected);
 							}
 						}

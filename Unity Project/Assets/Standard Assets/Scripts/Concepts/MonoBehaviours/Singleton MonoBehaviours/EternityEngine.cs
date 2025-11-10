@@ -9,7 +9,9 @@ namespace EternityEngine
 	{
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
+		public InspectorEntry inspectorEntryPrefab;
 		public Image insertionIndicatorPrefab;
+		public _Component[] componentsTypesPrefabs = new _Component[0];
 		static _Object[] obs = new _Object[0];
 
 #if UNITY_EDITOR
@@ -48,6 +50,32 @@ namespace EternityEngine
 			}
 			obs = obs.Add(ob);
 			return ob;
+		}
+
+		public _Component AddComponent (_Object ob, int componentTypeIdx)
+		{
+			_Component component = Instantiate(componentsTypesPrefabs[componentTypeIdx]);
+			component.ob = ob;
+			ob.components = ob.components.Add(component);
+			for (int i = 0; i < InspectorPanel.instances.Length; i ++)
+			{
+				InspectorPanel inspectorPanel = InspectorPanel.instances[i];
+				InspectorEntry inspectorEntry = Instantiate(inspectorEntryPrefab, inspectorPanel.entriesParent);
+				inspectorEntry.component = component;
+				inspectorEntry.inspectorPanel = inspectorPanel;
+				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
+			}
+			return component;
+		}
+
+		public void AddCompnoenToSelected (int componentTypeIdx)
+		{
+			HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
+			for (int i = 0; i < selected.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selected[i];
+				AddComponent (hierarchyEntry.ob, componentTypeIdx);
+			}
 		}
 
 		public static string GetUniqueName (string name)

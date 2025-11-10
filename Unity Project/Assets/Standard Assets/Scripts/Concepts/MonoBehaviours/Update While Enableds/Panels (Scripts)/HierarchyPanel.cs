@@ -14,8 +14,9 @@ namespace EternityEngine
 		public HierarchyEntry[] selected = new HierarchyEntry[0];
 		[HideInInspector]
 		public Image insertionIndicator;
+		public RectTransform addPresetObjectOptionsRectTrs;
+		public RectTransform addPresetObjectButtonRectTrs;
 		public static int lastEntryIdxHadSelectionSet;
-		public static bool lastSelectionDirWasUp;
 		public static bool isDraggingEntry;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 
@@ -29,6 +30,38 @@ namespace EternityEngine
 		{
 			base.OnDestroy ();
 			instances = instances.Remove(this);
+		}
+
+		public void ToggleAddPresetObjectOptions ()
+		{
+			addPresetObjectOptionsRectTrs.gameObject.SetActive(!addPresetObjectOptionsRectTrs.gameObject.activeSelf);
+			GameManager.updatables = GameManager.updatables.Add(new AddPresetObjectOptionsUpdater(this));
+		}
+
+		public class AddPresetObjectOptionsUpdater : IUpdatable
+		{
+			public HierarchyPanel hierarchyPanel;
+
+			public AddPresetObjectOptionsUpdater (HierarchyPanel hierarchyPanel)
+			{
+				this.hierarchyPanel = hierarchyPanel;
+			}
+
+			public void DoUpdate ()
+			{
+				if (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame)
+				{
+					Vector2 mousePos = Mouse.current.position.ReadValue();
+					Rect addPresetObjectOptionsWorldRect = hierarchyPanel.addPresetObjectOptionsRectTrs.GetWorldRect();
+					if (!addPresetObjectOptionsWorldRect.Contains(mousePos))
+					{
+						Rect addPresetObjectButtonWorldRect = hierarchyPanel.addPresetObjectButtonRectTrs.GetWorldRect();
+						if (!addPresetObjectButtonWorldRect.Contains(mousePos))
+							hierarchyPanel.addPresetObjectOptionsRectTrs.gameObject.SetActive(false);
+						GameManager.updatables = GameManager.updatables.Remove(this);
+					}
+				}
+			}
 		}
 	}
 }

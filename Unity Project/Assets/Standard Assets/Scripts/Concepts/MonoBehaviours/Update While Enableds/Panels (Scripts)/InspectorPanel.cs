@@ -1,0 +1,29 @@
+using Extensions;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace EternityEngine
+{
+	public class InspectorPanel : Panel
+	{
+		public RectTransform entriesParent;
+		[HideInInspector]
+		public InspectorEntry[] entries = new InspectorEntry[0];
+		[HideInInspector]
+		public Image insertionIndicator;
+		public static bool isDraggingEntry;
+		public new static InspectorPanel[] instances = new InspectorPanel[0];
+
+		public override void Awake ()
+		{
+			base.Awake ();
+			instances = instances.Add(this);
+		}
+		
+		public override void OnDestroy ()
+		{
+			base.OnDestroy ();
+			instances = instances.Remove(this);
+		}
+	}
+}
