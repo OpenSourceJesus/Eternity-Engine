@@ -25,5 +25,15 @@ namespace EternityEngine
 			base.OnDestroy ();
 			instances = instances.Remove(this);
 		}
+
+		public void GenEntries ()
+		{
+			HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
+			for (int i = 0; i < selected.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selected[i];
+				
+			}
+		}
 	}
 }
