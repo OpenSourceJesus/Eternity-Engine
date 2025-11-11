@@ -54,13 +54,13 @@ namespace Extensions
 		{
 			for (int i = 0; i < arr.Length; i ++)
 			{
-				T obj = arr[i];
-				if (obj == null)
+				T ob = arr[i];
+				if (ob == null)
 				{
 					if (element == null)
 						return true;
 				}
-				else if (obj.Equals(element))
+				else if (ob.Equals(element))
 					return true;
 			}
 			return false;
@@ -70,7 +70,13 @@ namespace Extensions
 		{
 			for (int i = 0; i < arr.Length; i ++)
 			{
-				if (arr[i].Equals(element))
+				T ob = arr[i];
+				if (ob == null)
+				{
+					if (element == null)
+						return i;
+				}
+				if (ob.Equals(element))
 					return i;
 			}
 			return -1;

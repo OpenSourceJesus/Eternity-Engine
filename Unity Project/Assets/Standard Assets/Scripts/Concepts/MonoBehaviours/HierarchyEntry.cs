@@ -18,6 +18,7 @@ namespace EternityEngine
 		public HierarchyPanel hierarchyPanel;
 		[HideInInspector]
 		public bool selected;
+		public TMP_InputField nameInputField;
 		int insertAt;
 
 		public void OnMouseDown ()
@@ -196,6 +197,38 @@ namespace EternityEngine
 			HierarchyPanel.lastEntryIdxHadSelectionSet = rectTrs.GetSiblingIndex();
 			selectedIndicator.enabled = select;
 			selected = select;
+		}
+
+		public void OnChangedNameInputField (string name)
+		{
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				HierarchyEntry[] selected = hierarchyPanel.selected;
+				for (int i2 = 0; i2 < selected.Length; i2 ++)
+				{
+					HierarchyEntry hierarchyEntry = selected[i2];
+					hierarchyEntry.nameInputField.text = name;
+				}
+			}
+		}
+
+		public void SetName (string name)
+		{
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				HierarchyEntry[] selected = hierarchyPanel.selected;
+				selected = selected._Sort(new HierarchyEntryComparer());
+				for (int i2 = 0; i2 < selected.Length; i2 ++)
+				{
+					HierarchyEntry hierarchyEntry = selected[i2];
+					if (i == 0)
+						hierarchyEntry.ob.name = EternityEngine.GetUniqueName(name, hierarchyEntry.ob);
+					hierarchyEntry.nameText.text = hierarchyEntry.ob.name;
+					hierarchyEntry.nameInputField.gameObject.SetActive(false);
+				}
+			}
 		}
 
 		public class HierarchyEntryComparer : IComparer<HierarchyEntry>

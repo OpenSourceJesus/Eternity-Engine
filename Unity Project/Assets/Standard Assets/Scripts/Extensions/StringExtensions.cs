@@ -92,5 +92,28 @@ namespace Extensions
 			} while (indexOfFindStr != -1);
 			return output;
 		}
+
+		public static string GetOverlapFromStart (this string str, string str2)
+		{
+			string output = "";
+			for (int i = 0; i < Mathf.Min(str.Length, str2.Length); i ++)
+			{
+				char c = str[i];
+				if (c == str2[i])
+					output += c;
+			}
+			return output;
+		}
+
+		public static string GetOverlapFromStart (params string[] strings)
+		{
+			string output = strings[0].GetOverlapFromStart(strings[1]);
+			for (int i = 2; i < strings.Length; i ++)
+			{
+				string str = strings[i];
+				output = str.GetOverlapFromStart(output);
+			}
+			return output;
+		}
 	}
 }

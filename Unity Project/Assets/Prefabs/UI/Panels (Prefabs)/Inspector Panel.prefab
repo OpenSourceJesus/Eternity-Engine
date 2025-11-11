@@ -83,11 +83,11 @@ PrefabInstance:
     - target: {fileID: 1663648168603035418, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 1663648168603035418, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 1663648168603035418, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnMouseEnterContentsParent
@@ -98,11 +98,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1663648168603035418, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 1663648168603035418, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 1945034216245767109, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -131,23 +131,23 @@ PrefabInstance:
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[3].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[4].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3131002395180067559}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BeginDrag
@@ -170,23 +170,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[3].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3088903864907497066, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Delegates.Array.data[4].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.HierarchyPanel, Assembly-CSharp-firstpass
+      value: EternityEngine.InspectorPanel, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3357372240035201644, guid: 636566ef7ae91b25288617ef2ff25ae5, type: 3}
       propertyPath: m_Pivot.x

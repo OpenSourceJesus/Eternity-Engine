@@ -16,7 +16,7 @@ namespace EternityEngine
 		public Image insertionIndicator;
 		public RectTransform addPresetObjectOptionsRectTrs;
 		public RectTransform addPresetObjectButtonRectTrs;
-		public static int lastEntryIdxHadSelectionSet;
+		public static int lastEntryIdxHadSelectionSet = -1;
 		public static bool isDraggingEntry;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
 

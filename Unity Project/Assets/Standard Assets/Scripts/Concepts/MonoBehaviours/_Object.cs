@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 
 namespace EternityEngine
