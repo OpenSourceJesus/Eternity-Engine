@@ -363,6 +363,18 @@ PrefabInstance:
       propertyPath: canvasRectTrs
       value: 
       objectReference: {fileID: 1910407431}
+    - target: {fileID: 3881004407114316011, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_text
+      value: +
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881004407114316011, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_fontSize
+      value: 21.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881004407114316011, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291085508
+      objectReference: {fileID: 0}
     - target: {fileID: 4142342605788552443, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -515,7 +527,7 @@ PrefabInstance:
     - target: {fileID: 311548205337602918, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
       propertyPath: canvas
       value: 
-      objectReference: {fileID: 1339044569}
+      objectReference: {fileID: 0}
     - target: {fileID: 311548205337602918, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
       propertyPath: updateCanvas
       value: 0
@@ -523,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 311548205337602918, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
       propertyPath: canvasRectTrs
       value: 
-      objectReference: {fileID: 1339044567}
+      objectReference: {fileID: 0}
     - target: {fileID: 468803556050753164, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
       propertyPath: networkManager
       value: 
@@ -783,7 +795,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 250}
+  m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1136356537
 MonoBehaviour:
@@ -972,6 +984,10 @@ PrefabInstance:
       value: 0.76862746
       objectReference: {fileID: 0}
     - target: {fileID: 7671963229169857076, guid: 679e97ebfc21f664f86a0cf5fea35b49, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671963229169857076, guid: 679e97ebfc21f664f86a0cf5fea35b49, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4291085508
       objectReference: {fileID: 0}
@@ -1003,7 +1019,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: 
 --- !u!1 &1263842063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1136,16 +1152,6 @@ Transform:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4142342605788552443, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
   m_PrefabInstance: {fileID: 7568910576695247903}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1339044567 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9123632006134731886, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
-  m_PrefabInstance: {fileID: 958256243}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &1339044569 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 3387923687122710416, guid: 526b5fc63ee58dad4a0ec191b9eb43ba, type: 3}
-  m_PrefabInstance: {fileID: 958256243}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1552116623
 PrefabInstance:
@@ -1670,6 +1676,10 @@ PrefabInstance:
     - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Color.r
       value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_text
+      value: Cancel
       objectReference: {fileID: 0}
     - target: {fileID: 5676166562425650081, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
@@ -2326,6 +2336,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3881004407114316011, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_text
+      value: +
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881004407114316011, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_fontSize
+      value: 21.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881004407114316011, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291085508
+      objectReference: {fileID: 0}
     - target: {fileID: 4142342605788552443, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2410,6 +2432,14 @@ PrefabInstance:
       propertyPath: canvasRectTrs
       value: 
       objectReference: {fileID: 1910407431}
+    - target: {fileID: 5782360865892059320, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_text
+      value: Create Empty
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782360865892059320, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5965934396035700971, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2453,6 +2483,10 @@ PrefabInstance:
     - target: {fileID: 7742275030415098141, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8083437450403317183, guid: aecdf7f2ebc9373748ce29053c1bfe94, type: 3}
+      propertyPath: m_Name
+      value: Add Empty Object Button Text
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

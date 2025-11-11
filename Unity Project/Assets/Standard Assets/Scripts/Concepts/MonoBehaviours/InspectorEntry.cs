@@ -13,19 +13,20 @@ namespace EternityEngine
 		public RectTransform collapButtonRectTrs;
 		public GameObject goToGetCollapsed;
 		public bool onlyAllowOnePerObject;
+		public FloatValueEntry[] floatValuesEntries = new FloatValueEntry[0];
+		public Vector3ValueEntry[] vector3ValuesEntries = new Vector3ValueEntry[0];
 		int insertAt;
-		bool collapsed;
 
 		public void SetCollapsed (bool collapse)
 		{
 			goToGetCollapsed.SetActive(!collapse);
 			collapButtonRectTrs.eulerAngles = Vector3.forward * 180 * collapse.GetHashCode();
-			collapsed = collapse;
+			component.collapsed = collapse;
 		}
 
 		public void ToggleCollapse ()
 		{
-			SetCollapsed (!collapsed);
+			SetCollapsed (!component.collapsed);
 		}
 	}
 }

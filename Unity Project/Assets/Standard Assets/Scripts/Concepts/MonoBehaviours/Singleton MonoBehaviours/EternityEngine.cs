@@ -74,7 +74,7 @@ namespace EternityEngine
 			return component;
 		}
 
-		public void AddCompnoenToSelected (int componentTypeIdx)
+		public void AddCompnoentToSelected (int componentTypeIdx)
 		{
 			HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
 			for (int i = 0; i < selected.Length; i ++)

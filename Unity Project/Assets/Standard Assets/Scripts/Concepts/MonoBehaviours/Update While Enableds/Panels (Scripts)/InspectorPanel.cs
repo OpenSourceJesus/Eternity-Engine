@@ -61,6 +61,18 @@ namespace EternityEngine
 				InspectorEntry inspectorEntry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
 				inspectorEntry.component = component;
 				inspectorEntry.inspectorPanel = inspectorPanel;
+				for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
+				{
+					FloatValue floatValue = component.floatValues[i2];
+					inspectorEntry.floatValuesEntries[i2].value = floatValue;
+				}
+				for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
+				{
+					Vector3Value vector3Value = component.vector3Values[i2];
+					inspectorEntry.vector3ValuesEntries[i2].value = vector3Value;
+				}
+				if (component.collapsed)
+					inspectorEntry.SetCollapsed (true);
 				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
 			}
 		}
