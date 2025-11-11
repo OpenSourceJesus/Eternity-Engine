@@ -820,6 +820,10 @@ PrefabInstance:
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_text
+      value: Create Empty
+      objectReference: {fileID: 0}
     - target: {fileID: 5676166562425650081, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
       value: Add Empty Object Button Text
@@ -1005,6 +1009,18 @@ PrefabInstance:
     - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Color.r
       value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_text
+      value: +
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_fontSize
+      value: 21.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291085508
       objectReference: {fileID: 0}
     - target: {fileID: 5676166562425650081, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name

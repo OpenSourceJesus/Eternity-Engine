@@ -1,6 +1,7 @@
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace EternityEngine
 {
@@ -11,6 +12,8 @@ namespace EternityEngine
 		public InspectorEntry[] entries = new InspectorEntry[0];
 		[HideInInspector]
 		public Image insertionIndicator;
+		public RectTransform addComponentOptionsRectTrs;
+		public RectTransform addComponentButtonRectTrs;
 		public static bool isDraggingEntry;
 		public new static InspectorPanel[] instances = new InspectorPanel[0];
 
@@ -74,6 +77,38 @@ namespace EternityEngine
 				if (component.collapsed)
 					inspectorEntry.SetCollapsed (true);
 				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
+			}
+		}
+
+		public void ToggleAddComponentOptions ()
+		{
+			addComponentOptionsRectTrs.gameObject.SetActive(!addComponentOptionsRectTrs.gameObject.activeSelf);
+			GameManager.updatables = GameManager.updatables.Add(new AddComponentOptionsUpdater(this));
+		}
+
+		public class AddComponentOptionsUpdater : IUpdatable
+		{
+			public InspectorPanel inspectorPanel;
+
+			public AddComponentOptionsUpdater (InspectorPanel inspectorPanel)
+			{
+				this.inspectorPanel = inspectorPanel;
+			}
+
+			public void DoUpdate ()
+			{
+				if (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame)
+				{
+					Vector2 mousePos = Mouse.current.position.ReadValue();
+					Rect addComponentOptionsWorldRect = inspectorPanel.addComponentOptionsRectTrs.GetWorldRect();
+					if (!addComponentOptionsWorldRect.Contains(mousePos))
+					{
+						Rect addComponentButtonWorldRect = inspectorPanel.addComponentButtonRectTrs.GetWorldRect();
+						if (!addComponentButtonWorldRect.Contains(mousePos))
+							inspectorPanel.addComponentOptionsRectTrs.gameObject.SetActive(false);
+						GameManager.updatables = GameManager.updatables.Remove(this);
+					}
+				}
 			}
 		}
 	}
