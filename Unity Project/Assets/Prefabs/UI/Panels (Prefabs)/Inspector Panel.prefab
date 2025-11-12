@@ -732,7 +732,7 @@ MonoBehaviour:
     x: 0.65
     y: 0
     width: 0.35
-    height: 1
+    height: 0.97
   canvasRectTrs: {fileID: 0}
   tabRectTrs: {fileID: 5392975328281383101}
   contentsParentRectTrs: {fileID: 2022764311156116716}
@@ -1037,18 +1037,6 @@ PrefabInstance:
     - target: {fileID: 520398641906481215, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
-      propertyPath: m_Color.b
-      value: 0.23529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
-      propertyPath: m_Color.r
-      value: 0.23529412
       objectReference: {fileID: 0}
     - target: {fileID: 5567374948426619660, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_text

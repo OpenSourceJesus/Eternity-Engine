@@ -18,6 +18,7 @@ namespace EternityEngine
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;
 		static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
+		static bool prevSelectAll;
 
 #if UNTIY_EDITOR
 		public override void Awake ()
@@ -29,6 +30,20 @@ namespace EternityEngine
 
 		public override void DoUpdate ()
 		{
+			bool selectAll = Keyboard.current.aKey.isPressed && Keyboard.current.leftCtrlKey.isPressed;
+			if (selectAll && !prevSelectAll)
+			{
+				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+				{
+					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+					for (int i2 = 0; i2 < hierarchyPanel.entries.Length; i2 ++)
+					{
+						HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
+						hierarchyEntry.SetSelected (true);
+					}
+				}
+			}
+			prevSelectAll = selectAll;
 			bool doDuplicate = Keyboard.current.dKey.isPressed && Keyboard.current.leftCtrlKey.isPressed;
 			if (doDuplicate && !prevDoDuplicate)
 			{
@@ -180,6 +195,11 @@ namespace EternityEngine
 				HierarchyEntry hierarchyEntry = selected[i];
 				AddComponent (hierarchyEntry.ob, componentTypeIdx);
 			}
+		}
+
+		public void Export ()
+		{
+			
 		}
 
 		public static string GetUniqueName (string name, params _Object[] excludeObs)
