@@ -31,14 +31,11 @@ namespace EternityEngine
 		public override void DoUpdate ()
 		{
 			bool leftCtrlKeyPressed = Keyboard.current.leftCtrlKey.isPressed;
-			if (Keyboard.current.upArrowKey.wasPressedThisFrame && HierarchyPanel.lastEntryIdxHadSelectionSet > 0)
-				HandleArrowKeySelection (true);
-			if (Keyboard.current.downArrowKey.wasPressedThisFrame)
-			{
-				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
-				if (HierarchyPanel.lastEntryIdxHadSelectionSet < firstHierarchyPanel.entries.Length - 1)
-					HandleArrowKeySelection (false);
-			}
+			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+			if (Keyboard.current.upArrowKey.wasPressedThisFrame && (HierarchyPanel.lastEntryIdxHadSelectionSet > 0 || firstHierarchyPanel.selected.Length == 0))
+				DoArrowKeySelection (true);
+			if (Keyboard.current.downArrowKey.wasPressedThisFrame && (HierarchyPanel.lastEntryIdxHadSelectionSet < firstHierarchyPanel.entries.Length - 1 || firstHierarchyPanel.selected.Length == 0))
+				DoArrowKeySelection (false);
 			bool selectAll = leftCtrlKeyPressed && Keyboard.current.aKey.isPressed;
 			if (selectAll && !prevSelectAll)
 			{
@@ -56,7 +53,6 @@ namespace EternityEngine
 			bool doDuplicate = leftCtrlKeyPressed && Keyboard.current.dKey.isPressed;
 			if (doDuplicate && !prevDoDuplicate)
 			{
-				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
 				HierarchyEntry[] selected = firstHierarchyPanel.selected._Sort(new HierarchyEntry.Comparer());
 				Dictionary<int, int> hierarchyEntriesIdxsDict = new Dictionary<int, int>();
 				for (int i = 0; i < selected.Length; i ++)
@@ -125,12 +121,17 @@ namespace EternityEngine
 			}
 		}
 		
-		void HandleArrowKeySelection (bool upArrowPressed)
+		void DoArrowKeySelection (bool upArrowPressed)
 		{
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				// HierarchyEntry lastHierarchyEntryHadSelectionSet = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet];
+				if (hierarchyPanel.selected.Length == 0)
+				{
+					hierarchyPanel.entries[0].SetSelected (true);
+					continue;
+				}
+				HierarchyEntry lastHierarchyEntryHadSelectionSet = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet];
 				HierarchyEntry nextHierarchyEntry = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative()];
 				if (!Keyboard.current.leftShiftKey.isPressed)
 				{
@@ -143,8 +144,17 @@ namespace EternityEngine
 							i2 --;
 						}
 					}
+					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
 				}
-				nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
+				else if (lastHierarchyEntryHadSelectionSet.selected && nextHierarchyEntry.selected)
+					lastHierarchyEntryHadSelectionSet.SetSelected (false);
+				else if (hierarchyPanel.selected.Length > 1 || lastHierarchyEntryHadSelectionSet.selected)
+					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
+				else
+				{
+					nextHierarchyEntry = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative() * 2];
+					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
+				}
 			}
 		}
 
