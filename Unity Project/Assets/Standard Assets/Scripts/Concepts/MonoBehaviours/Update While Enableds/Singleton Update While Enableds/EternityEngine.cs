@@ -43,7 +43,6 @@ namespace EternityEngine
 					{
 						int spaceAndLeftParenthesisIdx = name.LastIndexOf(" (");
 						int val;
-						print("" + spaceAndLeftParenthesisIdx + ' ' + int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val));
 						if (spaceAndLeftParenthesisIdx != -1 && int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val))
 							name = name.Remove(spaceAndLeftParenthesisIdx);
 					}
@@ -140,7 +139,13 @@ namespace EternityEngine
 			{
 				_Component component = template.components[i];
 				component = Instantiate(component);
-				component.inspectorEntries = new InspectorEntry[0];
+				for (int i2 = 0; i2 < component.inspectorEntries.Length; i2 ++)
+				{
+					InspectorEntry inspectorEntry = component.inspectorEntries[i2];
+					inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
+					inspectorEntry.gameObject.SetActive(false);
+					component.inspectorEntries[i2] = inspectorEntry;
+				}
 				ob.components[i] = component;
 			}
 			obs = obs.Add(ob);
