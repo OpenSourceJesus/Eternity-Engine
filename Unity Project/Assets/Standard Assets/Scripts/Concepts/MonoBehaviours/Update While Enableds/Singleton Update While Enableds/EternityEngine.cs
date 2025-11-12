@@ -4,6 +4,7 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace EternityEngine
 {
@@ -31,19 +32,39 @@ namespace EternityEngine
 			bool doDuplicate = Keyboard.current.dKey.isPressed && Keyboard.current.leftCtrlKey.isPressed;
 			if (doDuplicate && !prevDoDuplicate)
 			{
-				HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
+				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+				HierarchyEntry[] selected = firstHierarchyPanel.selected._Sort(new HierarchyEntry.Comparer());
+				Dictionary<int, int> hierarchyEntriesIdxsDict = new Dictionary<int, int>();
 				for (int i = 0; i < selected.Length; i ++)
 				{
 					HierarchyEntry hierarchyEntry = selected[i];
 					string name = hierarchyEntry.ob.name;
 					if (name.EndsWith(')'))
 					{
-						int leftParenthesisIdx = name.LastIndexOf('(');
+						int spaceAndLeftParenthesisIdx = name.LastIndexOf(" (");
 						int val;
-						if (leftParenthesisIdx != -1 && int.TryParse(name.Substring(leftParenthesisIdx), out val))
-							name = name.Remove(leftParenthesisIdx);
+						print("" + spaceAndLeftParenthesisIdx + ' ' + int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val));
+						if (spaceAndLeftParenthesisIdx != -1 && int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val))
+							name = name.Remove(spaceAndLeftParenthesisIdx);
 					}
 					NewObject (hierarchyEntry.ob, name);
+					hierarchyEntriesIdxsDict[firstHierarchyPanel.entries.Length - 1] = hierarchyEntry.rectTrs.GetSiblingIndex() + 1 + hierarchyEntriesIdxsDict.Count;
+				}
+				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+				{
+					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+					for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+					{
+						HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
+						hierarchyEntry.SetSelected (false);
+						i2 --;
+					}
+					foreach (KeyValuePair<int, int> keyValuePair in hierarchyEntriesIdxsDict)
+					{
+						HierarchyEntry hierarchyEntry = hierarchyPanel.entries[keyValuePair.Key];
+						hierarchyEntry.Reorder (keyValuePair.Value);
+						hierarchyEntry.SetSelected (true);
+					}
 				}
 			}
 			prevDoDuplicate = doDuplicate;
@@ -113,6 +134,14 @@ namespace EternityEngine
 				hierarchyEntry.ob = ob;
 				hierarchyEntry.hierarchyPanel = hierarchyPanel;
 				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
+			}
+			ob.components = new _Component[template.components.Length];
+			for (int i = 0; i < template.components.Length; i ++)
+			{
+				_Component component = template.components[i];
+				component = Instantiate(component);
+				component.inspectorEntries = new InspectorEntry[0];
+				ob.components[i] = component;
 			}
 			obs = obs.Add(ob);
 			return ob;

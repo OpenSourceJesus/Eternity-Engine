@@ -51,33 +51,46 @@ namespace EternityEngine
 			{
 				InspectorPanel inspectorPanel = instances[i];
 				for (int i2 = 0; i2 < inspectorPanel.entriesParent.childCount; i2 ++)
-					Destroy(inspectorPanel.entriesParent.GetChild(i2).gameObject);
+					inspectorPanel.entriesParent.GetChild(i2).gameObject.SetActive(false);
 				inspectorPanel.entries = new InspectorEntry[0];
 			}
 		}
 
-		public static void AddEntries (_Component component)
+		public static InspectorEntry[] AddEntries (_Component component)
 		{
+			InspectorEntry[] output = new InspectorEntry[instances.Length];
 			for (int i = 0; i < instances.Length; i ++)
 			{
 				InspectorPanel inspectorPanel = instances[i];
-				InspectorEntry inspectorEntry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
-				inspectorEntry.component = component;
-				inspectorEntry.inspectorPanel = inspectorPanel;
-				for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
+				InspectorEntry inspectorEntry = null;
+				if (component.inspectorEntries.Length <= i)
 				{
-					FloatValue floatValue = component.floatValues[i2];
-					inspectorEntry.floatValuesEntries[i2].value = floatValue;
+					inspectorEntry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
+					inspectorEntry.component = component;
+					inspectorEntry.inspectorPanel = inspectorPanel;
+					for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
+					{
+						FloatValue floatValue = component.floatValues[i2];
+						inspectorEntry.floatValuesEntries[i2].value = floatValue;
+					}
+					for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
+					{
+						Vector3Value vector3Value = component.vector3Values[i2];
+						inspectorEntry.vector3ValuesEntries[i2].value = vector3Value;
+					}
+					if (component.collapsed)
+						inspectorEntry.SetCollapsed (true);
+					component.inspectorEntries = component.inspectorEntries.Add(inspectorEntry);
 				}
-				for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
+				else
 				{
-					Vector3Value vector3Value = component.vector3Values[i2];
-					inspectorEntry.vector3ValuesEntries[i2].value = vector3Value;
+					inspectorEntry = component.inspectorEntries[i];
+					inspectorEntry.gameObject.SetActive(true);
 				}
-				if (component.collapsed)
-					inspectorEntry.SetCollapsed (true);
 				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
+				output[i] = inspectorEntry;
 			}
+			return output;
 		}
 
 		public void ToggleAddComponentOptions ()

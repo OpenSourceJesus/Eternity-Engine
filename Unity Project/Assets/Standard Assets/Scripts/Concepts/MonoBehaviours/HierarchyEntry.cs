@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -160,7 +161,7 @@ namespace EternityEngine
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				hierarchyPanel.selected = hierarchyPanel.selected._Sort(new HierarchyEntryComparer());
+				hierarchyPanel.selected = hierarchyPanel.selected._Sort(new Comparer());
 				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 				{
 					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
@@ -170,19 +171,12 @@ namespace EternityEngine
 						for (int i3 = hierarchyPanel.selected.Length - 1; i3 >= i2; i3 --)
 						{
 							hierarchyEntry = hierarchyPanel.selected[i3];
-							idx = hierarchyEntry.rectTrs.GetSiblingIndex();
-							hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
-							hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
-							hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+							hierarchyEntry.Reorder (insertAt);
 						}
 						break;
 					}
 					else
-					{
-						hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
-						hierarchyPanel.entries = hierarchyPanel.entries.Insert(hierarchyEntry, insertAt);
-						hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
-					}
+						hierarchyEntry.Reorder (insertAt);
 				}
 			}
 			HierarchyPanel.isDraggingEntry = false;
@@ -219,7 +213,7 @@ namespace EternityEngine
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
 				HierarchyEntry[] selected = hierarchyPanel.selected;
-				selected = selected._Sort(new HierarchyEntryComparer());
+				selected = selected._Sort(new Comparer());
 				for (int i2 = 0; i2 < selected.Length; i2 ++)
 				{
 					HierarchyEntry hierarchyEntry = selected[i2];
@@ -231,7 +225,15 @@ namespace EternityEngine
 			}
 		}
 
-		public class HierarchyEntryComparer : IComparer<HierarchyEntry>
+		public void Reorder (int insertAt)
+		{
+			int idx = rectTrs.GetSiblingIndex();
+			hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
+			hierarchyPanel.entries = hierarchyPanel.entries.Insert(this, insertAt);
+			hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+		}
+
+		public class Comparer : IComparer<HierarchyEntry>
 		{
 			public int Compare (HierarchyEntry hierarchyEntry, HierarchyEntry hierarchyEntry2)
 			{

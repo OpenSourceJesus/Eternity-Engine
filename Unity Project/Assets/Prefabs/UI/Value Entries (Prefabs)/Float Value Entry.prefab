@@ -171,13 +171,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2133825286720685332, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3728660762943825929}
   m_SourcePrefab: {fileID: 100100000, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+--- !u!1 &960945108605707728 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2133825286720685332, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+  m_PrefabInstance: {fileID: 1209542740642898116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3728660762943825929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960945108605707728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: 45
+  m_MinHeight: -1
+  m_PreferredWidth: 0
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!224 &960945108605707729 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2133825286720685333, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
   m_PrefabInstance: {fileID: 1209542740642898116}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &960945108605707742 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+  m_PrefabInstance: {fileID: 1209542740642898116}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960945108605707728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8416589487355932759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 125
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
       propertyPath: m_SizeDelta.y
@@ -290,9 +329,29 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3719659470832991140, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_MinWidth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6952699251362984547, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
       propertyPath: m_Name
       value: Float Value Entry
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953562527737368081, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953562527737368081, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_fontSize
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953562527737368081, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291085508
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953562527737368081, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -323,6 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValueEntry
   value: {fileID: 0}
+  valueSetter: {fileID: 960945108605707742}
 --- !u!224 &8355699331202631784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
