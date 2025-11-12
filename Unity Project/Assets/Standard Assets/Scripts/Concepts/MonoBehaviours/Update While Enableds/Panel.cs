@@ -6,9 +6,8 @@ using UnityEngine.EventSystems;
 
 namespace EternityEngine
 {
-	public class Panel : UpdateWhileEnabled
+	public class Panel : Window, IUpdatable
 	{
-		public RectTransform rectTrs;
 		public RectTransform tabRectTrs;
 		public RectTransform contentsParentRectTrs;
 		public RectTransform contentsRectTrs;
@@ -16,11 +15,10 @@ namespace EternityEngine
 		public RectTransform borderRectTrs;
 		// public Type type;
 		public TabOptionsUpdater tabOptionsUpdater;
-		public RectTransform canvasRectTrs;
-		public Rect initScreenNormalizedRect;
 		public float screenNormalizedBorderRadius;
 		[HideInInspector]
 		public float borderRadius;
+		public Rect fitInScreenNormalizedRect;
 		public static Panel[] instances = new Panel[0];
 		static Panel panelOfContentsParentMouseIsIn;
 		static Panel resizing;
@@ -32,25 +30,26 @@ namespace EternityEngine
 		ResizeUpdater resizeUpdater;
 		const float MIN_SCREEN_NORMALIZED_SIZE = .05f;
 
-		public virtual void Awake ()
+		public override void Awake ()
 		{
+			base.Awake ();
 			instances = instances.Add(this);
 			borderRadius = Mathf.Min(Screen.width * screenNormalizedBorderRadius, Screen.height * screenNormalizedBorderRadius);
 			borderRectTrs.sizeDelta = Vector2.one * borderRadius * 2;
 			contentsRectTrs.sizeDelta = -Vector2.one * borderRadius * 2;
-			rectTrs.sizeDelta = canvasRectTrs.sizeDelta * initScreenNormalizedRect.size;
 			rectTrs.sizeDelta = new Vector2((int) rectTrs.sizeDelta.x, (int) rectTrs.sizeDelta.y);
-			rectTrs.position = canvasRectTrs.sizeDelta * initScreenNormalizedRect.center;
 			rectTrs.position = new Vector2((int) rectTrs.position.x, (int) rectTrs.position.y);
 			contentsParentRectTrs.sizeDelta = rectTrs.sizeDelta + (Vector2) contentsParentRectTrs.localPosition * 2;
+			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 		
 		public virtual void OnDestroy ()
 		{
+			GameManager.updatables = GameManager.updatables.Remove(this);
 			instances = instances.Remove(this);
 		}
 
-		public override void DoUpdate ()
+		public void DoUpdate ()
 		{
 			Vector2 mousePos = Mouse.current.position.ReadValue();
 			Rect borderWorldRect = borderRectTrs.GetWorldRect();
@@ -319,6 +318,8 @@ namespace EternityEngine
 		void MakeFit ()
 		{
 			Rect canvasWorldRect = canvasRectTrs.GetWorldRect();
+			canvasWorldRect.size *= fitInScreenNormalizedRect.size;
+			canvasWorldRect.center = canvasRectTrs.sizeDelta * fitInScreenNormalizedRect.center;
 			float leftHit = canvasWorldRect.xMin;
 			float rightHit = canvasWorldRect.xMax;
 			float bottHit = canvasWorldRect.yMin;

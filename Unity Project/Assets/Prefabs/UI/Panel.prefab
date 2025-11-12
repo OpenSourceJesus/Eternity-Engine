@@ -1337,20 +1337,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Panel
   rectTrs: {fileID: 3357372240035201644}
-  tabRectTrs: {fileID: 6718513679502413354}
-  contentsParentRectTrs: {fileID: 862733482482995835}
-  contentsRectTrs: {fileID: 291195865851220583}
-  tabOptionsRectTrs: {fileID: 5119387602549907662}
-  borderRectTrs: {fileID: 301302549315712098}
-  canvasRectTrs: {fileID: 0}
   initScreenNormalizedRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 0
     height: 0
+  canvasRectTrs: {fileID: 0}
+  tabRectTrs: {fileID: 6718513679502413354}
+  contentsParentRectTrs: {fileID: 862733482482995835}
+  contentsRectTrs: {fileID: 291195865851220583}
+  tabOptionsRectTrs: {fileID: 5119387602549907662}
+  borderRectTrs: {fileID: 301302549315712098}
   screenNormalizedBorderRadius: 0.01
   borderRadius: 0
+  fitInScreenNormalizedRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 0.97
 --- !u!1001 &1444696359366961372
 PrefabInstance:
   m_ObjectHideFlags: 0

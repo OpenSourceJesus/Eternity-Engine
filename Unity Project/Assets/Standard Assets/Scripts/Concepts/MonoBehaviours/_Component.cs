@@ -4,7 +4,6 @@ namespace EternityEngine
 {
 	public class _Component : MonoBehaviour
 	{
-		public int typeIdx;
 		public Transform trs;
 		[HideInInspector]
         public _Object ob;
