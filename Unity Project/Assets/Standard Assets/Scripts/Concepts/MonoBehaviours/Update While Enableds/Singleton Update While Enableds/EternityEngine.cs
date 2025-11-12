@@ -30,7 +30,16 @@ namespace EternityEngine
 
 		public override void DoUpdate ()
 		{
-			bool selectAll = Keyboard.current.aKey.isPressed && Keyboard.current.leftCtrlKey.isPressed;
+			bool leftCtrlKeyPressed = Keyboard.current.leftCtrlKey.isPressed;
+			if (Keyboard.current.upArrowKey.wasPressedThisFrame && HierarchyPanel.lastEntryIdxHadSelectionSet > 0)
+				HandleArrowKeySelection (true);
+			if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+			{
+				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+				if (HierarchyPanel.lastEntryIdxHadSelectionSet < firstHierarchyPanel.entries.Length - 1)
+					HandleArrowKeySelection (false);
+			}
+			bool selectAll = leftCtrlKeyPressed && Keyboard.current.aKey.isPressed;
 			if (selectAll && !prevSelectAll)
 			{
 				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
@@ -44,7 +53,7 @@ namespace EternityEngine
 				}
 			}
 			prevSelectAll = selectAll;
-			bool doDuplicate = Keyboard.current.dKey.isPressed && Keyboard.current.leftCtrlKey.isPressed;
+			bool doDuplicate = leftCtrlKeyPressed && Keyboard.current.dKey.isPressed;
 			if (doDuplicate && !prevDoDuplicate)
 			{
 				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
@@ -113,6 +122,29 @@ namespace EternityEngine
 						}
 					}
 				}
+			}
+		}
+		
+		void HandleArrowKeySelection (bool upArrowPressed)
+		{
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				// HierarchyEntry lastHierarchyEntryHadSelectionSet = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet];
+				HierarchyEntry nextHierarchyEntry = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative()];
+				if (!Keyboard.current.leftShiftKey.isPressed)
+				{
+					for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+					{
+						HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
+						if (hierarchyEntry != nextHierarchyEntry)
+						{
+							hierarchyEntry.SetSelected (false);
+							i2 --;
+						}
+					}
+				}
+				nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
 			}
 		}
 
