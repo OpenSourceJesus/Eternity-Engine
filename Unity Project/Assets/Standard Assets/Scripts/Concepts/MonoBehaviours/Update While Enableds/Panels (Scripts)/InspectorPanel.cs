@@ -34,10 +34,10 @@ namespace EternityEngine
 		public static void RegenEntries ()
 		{
 			ClearEntries ();
-			HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
-			for (int i = 0; i < selected.Length; i ++)
+			HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
+			for (int i = 0; i < selectedHierarchyEntries.Length; i ++)
 			{
-				HierarchyEntry hierarchyEntry = selected[i];
+				HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i];
 				_Component[] components = hierarchyEntry.ob.components;
 				for (int i2 = 0; i2 < components.Length; i2 ++)
 				{
@@ -65,10 +65,8 @@ namespace EternityEngine
 			{
 				InspectorPanel inspectorPanel = instances[i];
 				InspectorEntry entry = null;
-				InspectorEntry[] entriesPrefabs = new InspectorEntry[entreisForEntriesPrefabsDict.Count];
-				entreisForEntriesPrefabsDict.Keys.CopyTo(entriesPrefabs, 0);
-				int entryPrefabIdx = entriesPrefabs.IndexOf(component.inspectorEntryPrefab);
-				if (entryPrefabIdx == -1)
+				HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
+				if (selectedHierarchyEntries.Length == 1)
 				{
 					if (component.inspectorEntries.Length <= i)
 					{

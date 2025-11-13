@@ -24,6 +24,7 @@ namespace EternityEngine
 
 		public void OnMouseDown ()
 		{
+			int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
@@ -31,7 +32,6 @@ namespace EternityEngine
 				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
 				if (Keyboard.current.leftShiftKey.isPressed)
 				{
-					int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
 					if (lastEntryIdxHadSelectionSet == -1)
 						clickedHierarchyEntry.SetSelected (true);
 					else
@@ -40,13 +40,16 @@ namespace EternityEngine
 						{
 							int startIdx = lastEntryIdxHadSelectionSet + 1;
 							int endIdx = idx;
-							if (clickedHierarchyEntry.selected)
+							if (hierarchyPanel.selected.Length == 1 && hierarchyPanel.entries[idx].selected)
+							{
+								startIdx ++;
+								endIdx ++;
+							}
+							else if (clickedHierarchyEntry.selected == hierarchyPanel.entries[lastEntryIdxHadSelectionSet].selected)
 							{
 								startIdx --;
 								endIdx --;
 							}
-							else if (!hierarchyPanel.entries[startIdx].selected)
-								startIdx --;
 							for (int i2 = startIdx; i2 <= endIdx; i2 ++)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
@@ -57,13 +60,16 @@ namespace EternityEngine
 						{
 							int startIdx = lastEntryIdxHadSelectionSet - 1;
 							int endIdx = idx;
-							if (clickedHierarchyEntry.selected)
+							if (hierarchyPanel.selected.Length == 1 && hierarchyPanel.entries[idx].selected)
+							{
+								startIdx --;
+								endIdx --;
+							}
+							else if (clickedHierarchyEntry.selected == hierarchyPanel.entries[lastEntryIdxHadSelectionSet].selected)
 							{
 								startIdx ++;
 								endIdx ++;
 							}
-							else if (!hierarchyPanel.entries[startIdx].selected)
-								startIdx ++;
 							for (int i2 = startIdx; i2 >= endIdx; i2 --)
 							{
 								HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];

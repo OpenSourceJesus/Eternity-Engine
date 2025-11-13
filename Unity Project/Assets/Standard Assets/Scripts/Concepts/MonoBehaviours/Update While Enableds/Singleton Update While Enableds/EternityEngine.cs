@@ -48,6 +48,7 @@ namespace EternityEngine
 						hierarchyEntry.SetSelected (true);
 					}
 				}
+				InspectorPanel.RegenEntries ();
 			}
 			prevSelectAll = selectAll;
 			bool doDuplicate = leftCtrlKeyPressed && Keyboard.current.dKey.isPressed;
@@ -123,38 +124,11 @@ namespace EternityEngine
 		
 		void DoArrowKeySelection (bool upArrowPressed)
 		{
+			int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				if (hierarchyPanel.selected.Length == 0)
-				{
-					hierarchyPanel.entries[0].SetSelected (true);
-					continue;
-				}
-				HierarchyEntry lastHierarchyEntryHadSelectionSet = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet];
-				HierarchyEntry nextHierarchyEntry = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative()];
-				if (!Keyboard.current.leftShiftKey.isPressed)
-				{
-					for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
-					{
-						HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
-						if (hierarchyEntry != nextHierarchyEntry)
-						{
-							hierarchyEntry.SetSelected (false);
-							i2 --;
-						}
-					}
-					nextHierarchyEntry.SetSelected (true);
-				}
-				else if (lastHierarchyEntryHadSelectionSet.selected && nextHierarchyEntry.selected)
-					lastHierarchyEntryHadSelectionSet.SetSelected (false);
-				else if (hierarchyPanel.selected.Length > 1 || lastHierarchyEntryHadSelectionSet.selected)
-					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
-				else
-				{
-					nextHierarchyEntry = hierarchyPanel.entries[HierarchyPanel.lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative() * 2];
-					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
-				}
+				hierarchyPanel.entries[lastEntryIdxHadSelectionSet - upArrowPressed.PositiveOrNegative()].OnMouseDown ();
 			}
 		}
 
