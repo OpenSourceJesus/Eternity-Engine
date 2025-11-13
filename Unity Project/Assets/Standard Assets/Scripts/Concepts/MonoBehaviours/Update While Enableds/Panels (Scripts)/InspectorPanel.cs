@@ -31,9 +31,9 @@ namespace EternityEngine
 			instances = instances.Remove(this);
 		}
 
-		public static void RegenEntries ()
+		public static void RegenEntries (bool destroy)
 		{
-			ClearEntries ();
+			ClearEntries (destroy);
 			HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
 			for (int i = 0; i < selectedHierarchyEntries.Length; i ++)
 			{
@@ -47,13 +47,19 @@ namespace EternityEngine
 			}
 		}
 
-		public static void ClearEntries ()
+		public static void ClearEntries (bool destroy)
 		{
 			for (int i = 0; i < instances.Length; i ++)
 			{
 				InspectorPanel inspectorPanel = instances[i];
-				for (int i2 = 0; i2 < inspectorPanel.entriesParent.childCount; i2 ++)
-					inspectorPanel.entriesParent.GetChild(i2).gameObject.SetActive(false);
+				for (int i2 = 0; i2 < inspectorPanel.entries.Length; i2 ++)
+				{
+					InspectorEntry entry = inspectorPanel.entries[i2];
+					if (destroy)
+						Destroy(entry.gameObject);
+					else
+						entry.gameObject.SetActive(false);
+				}
 				inspectorPanel.entries = new InspectorEntry[0];
 			}
 		}

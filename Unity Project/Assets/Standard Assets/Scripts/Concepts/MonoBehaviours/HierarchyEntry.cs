@@ -25,9 +25,11 @@ namespace EternityEngine
 		public void OnMouseDown ()
 		{
 			int lastEntryIdxHadSelectionSet = HierarchyPanel.lastEntryIdxHadSelectionSet;
+			int prevSelectedCnt = 0;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				prevSelectedCnt = hierarchyPanel.selected.Length;;
 				int idx = rectTrs.GetSiblingIndex();
 				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
 				if (Keyboard.current.leftShiftKey.isPressed)
@@ -83,7 +85,7 @@ namespace EternityEngine
 					clickedHierarchyEntry.SetSelected (true);
 				}
 			}
-			InspectorPanel.RegenEntries ();
+			InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 		}
 
 		public void OnMouseUp ()
@@ -108,7 +110,7 @@ namespace EternityEngine
 				}
 				clickedHierarchyEntry.SetSelected (true);
 			}
-			InspectorPanel.RegenEntries ();
+			InspectorPanel.RegenEntries (true);
 		}
 
 		public void BeginDrag ()

@@ -39,16 +39,18 @@ namespace EternityEngine
 			bool selectAll = leftCtrlKeyPressed && Keyboard.current.aKey.isPressed;
 			if (selectAll && !prevSelectAll)
 			{
+				int prevSelectedCnt = 0;
 				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 				{
 					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+					prevSelectedCnt = hierarchyPanel.selected.Length;
 					for (int i2 = 0; i2 < hierarchyPanel.entries.Length; i2 ++)
 					{
 						HierarchyEntry hierarchyEntry = hierarchyPanel.entries[i2];
 						hierarchyEntry.SetSelected (true);
 					}
 				}
-				InspectorPanel.RegenEntries ();
+				InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 			}
 			prevSelectAll = selectAll;
 			bool doDuplicate = leftCtrlKeyPressed && Keyboard.current.dKey.isPressed;

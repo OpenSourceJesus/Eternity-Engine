@@ -40,9 +40,11 @@ namespace EternityEngine
 
 		public void DeselectAll ()
 		{
+			int prevSelectedCnt = 0;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				prevSelectedCnt = hierarchyPanel.selected.Length;
 				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 				{
 					HierarchyEntry entry = hierarchyPanel.selected[i2];
@@ -50,7 +52,7 @@ namespace EternityEngine
 					i2 --;
 				}
 			}
-			InspectorPanel.ClearEntries ();
+			InspectorPanel.ClearEntries (prevSelectedCnt > 1);
 		}
 
 		public class AddPresetObjectOptionsUpdater : IUpdatable
