@@ -1682,6 +1682,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 328255497}
     m_Modifications:
     - target: {fileID: 1440889578498667610, guid: 4bf0a26de32fb7b719e425584cf958d0, type: 3}
+      propertyPath: canvasRectTrs
+      value: 
+      objectReference: {fileID: 1910407431}
+    - target: {fileID: 1440889578498667610, guid: 4bf0a26de32fb7b719e425584cf958d0, type: 3}
       propertyPath: onlyOneComponentPerObjectAllowedNotificationGo
       value: 
       objectReference: {fileID: 1136356535}
@@ -2780,7 +2784,6 @@ MonoBehaviour:
     y: 0.97
     width: 1
     height: 0.03
-  canvasRectTrs: {fileID: 1910407431}
 --- !u!114 &8981688710804781764
 MonoBehaviour:
   m_ObjectHideFlags: 0

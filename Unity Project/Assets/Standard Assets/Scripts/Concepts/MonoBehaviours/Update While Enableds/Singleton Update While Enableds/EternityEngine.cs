@@ -16,6 +16,7 @@ namespace EternityEngine
 		public _Component[] componentsTypesPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;
+		public RectTransform canvasRectTrs;
 		static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;

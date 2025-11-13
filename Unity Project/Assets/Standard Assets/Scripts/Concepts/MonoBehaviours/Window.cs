@@ -6,12 +6,11 @@ namespace EternityEngine
 	{
 		public RectTransform rectTrs;
 		public Rect initScreenNormalizedRect;
-		public RectTransform canvasRectTrs;
 
 		public virtual void Awake ()
 		{
-			rectTrs.sizeDelta = canvasRectTrs.sizeDelta * initScreenNormalizedRect.size;
-			rectTrs.position = canvasRectTrs.sizeDelta * initScreenNormalizedRect.center;
+			rectTrs.sizeDelta = EternityEngine.instance.canvasRectTrs.sizeDelta * initScreenNormalizedRect.size;
+			rectTrs.position = EternityEngine.instance.canvasRectTrs.sizeDelta * initScreenNormalizedRect.center;
         }
 	}
 }

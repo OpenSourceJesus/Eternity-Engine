@@ -317,9 +317,9 @@ namespace EternityEngine
 
 		void MakeFit ()
 		{
-			Rect canvasWorldRect = canvasRectTrs.GetWorldRect();
+			Rect canvasWorldRect = EternityEngine.instance.canvasRectTrs.GetWorldRect();
 			canvasWorldRect.size *= fitInScreenNormalizedRect.size;
-			canvasWorldRect.center = canvasRectTrs.sizeDelta * fitInScreenNormalizedRect.center;
+			canvasWorldRect.center = EternityEngine.instance.canvasRectTrs.sizeDelta * fitInScreenNormalizedRect.center;
 			float leftHit = canvasWorldRect.xMin;
 			float rightHit = canvasWorldRect.xMax;
 			float bottHit = canvasWorldRect.yMin;
