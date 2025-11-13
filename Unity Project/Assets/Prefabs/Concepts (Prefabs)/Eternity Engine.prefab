@@ -51,5 +51,6 @@ MonoBehaviour:
   insertionIndicatorPrefab: {fileID: 4879857732329685177, guid: 2e03ac7f65c608a7e9d8d09d08670fc1, type: 3}
   componentsTypesPrefabs:
   - {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
-  inspectorEntriesPrefabs:
-  - {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
+  - {fileID: 7813554479563803767, guid: 7677e9c56d7bfe58083d7af971d46520, type: 3}
+  onlyOneComponentPerObjectAllowedNotificationGo: {fileID: 0}
+  onlyOneComponentPerObjectAllowedNotificationText: {fileID: 0}

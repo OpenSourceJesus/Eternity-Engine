@@ -143,16 +143,7 @@ namespace EternityEngine
 			InspectorEntry entry = Instantiate(component.inspectorEntryPrefab, entriesParent);
 			entry.component = component;
 			entry.inspectorPanel = this;
-			for (int i = 0; i < component.floatValues.Length; i ++)
-			{
-				FloatValue floatValue = component.floatValues[i];
-				entry.floatValuesEntries[i].value = floatValue;
-			}
-			for (int i = 0; i < component.vector3Values.Length; i ++)
-			{
-				Vector3Value vector3Value = component.vector3Values[i];
-				entry.vector3ValuesEntries[i].value = vector3Value;
-			}
+			entry.SetValueEntries (component);
 			if (component.collapsed)
 				entry.SetCollapsed (true);
 			return entry;

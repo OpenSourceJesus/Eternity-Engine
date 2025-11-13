@@ -73,6 +73,101 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!1001 &2716015594125874377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7335552380223399591}
+    m_Modifications:
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361949812163608371, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: m_Name
+      value: Size Value
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+--- !u!4 &2442054135364023779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 311542800848920874, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+  m_PrefabInstance: {fileID: 2716015594125874377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3621590107775029703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1725794314844669198, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+  m_PrefabInstance: {fileID: 2716015594125874377}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!114 &8079905371354273538 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6165620212904018891, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+  m_PrefabInstance: {fileID: 2716015594125874377}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!114 &8836013766403111204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+  m_PrefabInstance: {fileID: 2716015594125874377}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db715c8a9ad17a69dbdbf54394dfb697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector2Value
 --- !u!1001 &3873842040304076057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,6 +336,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1767187477653719786}
+    - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2442054135364023779}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5361949812163608371, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
@@ -263,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2261e77f08436ff07b254d385ca64504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
-  trs: {fileID: 0}
+  trs: {fileID: 7335552380223399591}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
   collapsed: 0
@@ -272,10 +370,16 @@ MonoBehaviour:
   - {fileID: 6940618931179636434}
   - {fileID: 671274873655687076}
   - {fileID: 3989851964556364172}
+  - {fileID: 3621590107775029703}
+  - {fileID: 8079905371354273538}
+  vector2Values:
+  - {fileID: 8836013766403111204}
   vector3Values:
   - {fileID: 8018763865761092866}
+  inspectorEntries: []
   pos: {fileID: 8018763865761092866}
   rot: {fileID: 3989851964556364172}
+  size: {fileID: 8836013766403111204}
 --- !u!4 &7335552380223399591 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}

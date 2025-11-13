@@ -9,5 +9,10 @@ namespace EternityEngine
 		public virtual void TrySet (string text)
 		{
 		}
+
+		public void OnChanged ()
+		{
+			value._OnChanged ();
+		}
 	}
 }

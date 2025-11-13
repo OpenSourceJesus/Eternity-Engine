@@ -179,16 +179,7 @@ namespace EternityEngine
 					inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
 					inspectorEntry.gameObject.SetActive(false);
 					component.inspectorEntries[i2] = inspectorEntry;
-					for (int i3 = 0; i3 < component.floatValues.Length; i3 ++)
-					{
-						FloatValue floatValue = component.floatValues[i3];
-						inspectorEntry.floatValuesEntries[i].value = floatValue;
-					}
-					for (int i3 = 0; i3 < component.vector3Values.Length; i3 ++)
-					{
-						Vector3Value vector3Value = component.vector3Values[i3];
-						inspectorEntry.vector3ValuesEntries[i].value = vector3Value;
-					}
+					inspectorEntry.SetValueEntries (component);
 					InspectorEntry[] inspectorEntriesForEntriesPrefabs = null;
 					if (InspectorPanel.entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out inspectorEntriesForEntriesPrefabs))
 						InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = inspectorEntriesForEntriesPrefabs.Add(inspectorEntry);
