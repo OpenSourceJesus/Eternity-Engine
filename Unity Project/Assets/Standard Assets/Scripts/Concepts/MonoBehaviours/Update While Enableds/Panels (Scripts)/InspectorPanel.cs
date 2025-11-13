@@ -122,8 +122,7 @@ namespace EternityEngine
 					if (component.collapsed)
 						entry.SetCollapsed (true);
 					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab];
-					float?[] floats = new float?[entriesForEntriesPrefabs.Length];
-					Vector3?[] vector3s = new Vector3?[entriesForEntriesPrefabs.Length];
+					float?[] floats = new float?[entry.floatValuesEntries.Length];
 					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
 					{
 						InspectorEntry _entry = entriesForEntriesPrefabs[i2];
@@ -131,11 +130,11 @@ namespace EternityEngine
 						{
 							FloatValueEntry floatValueEntry = _entry.floatValuesEntries[i3];
 							float f = floatValueEntry.value.val;
-							if (i3 == 0)
-								floats[i2] = f;
-							else if (f != floats[i2])
+							if (i2 == 0)
+								floats[i3] = f;
+							else if (f != floats[i3])
 							{
-								floats[i2] = null;
+								floats[i3] = null;
 								break;
 							}
 						}
