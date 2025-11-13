@@ -231,6 +231,8 @@ namespace EternityEngine
 			hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
 			hierarchyPanel.entries = hierarchyPanel.entries.Insert(this, insertAt);
 			hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+			if (HierarchyPanel.lastEntryIdxHadSelectionSet == idx)
+				HierarchyPanel.lastEntryIdxHadSelectionSet = insertAt;
 		}
 
 		public class Comparer : IComparer<HierarchyEntry>

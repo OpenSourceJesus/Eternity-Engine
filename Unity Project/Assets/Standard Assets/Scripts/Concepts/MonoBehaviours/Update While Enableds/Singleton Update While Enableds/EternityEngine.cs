@@ -144,7 +144,7 @@ namespace EternityEngine
 							i2 --;
 						}
 					}
-					nextHierarchyEntry.SetSelected (!nextHierarchyEntry.selected);
+					nextHierarchyEntry.SetSelected (true);
 				}
 				else if (lastHierarchyEntryHadSelectionSet.selected && nextHierarchyEntry.selected)
 					lastHierarchyEntryHadSelectionSet.SetSelected (false);
@@ -225,7 +225,7 @@ namespace EternityEngine
 			_Component component = Instantiate(componentPrefab);
 			component.ob = ob;
 			ob.components = ob.components.Add(component);
-			InspectorPanel.AddEntries (component);
+			InspectorPanel.AddOrUpdateEntries (component);
 			return component;
 		}
 

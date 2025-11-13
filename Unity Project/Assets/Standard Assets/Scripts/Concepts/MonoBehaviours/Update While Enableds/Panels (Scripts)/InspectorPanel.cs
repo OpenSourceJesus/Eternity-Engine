@@ -2,6 +2,7 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace EternityEngine
 {
@@ -16,6 +17,7 @@ namespace EternityEngine
 		public RectTransform addComponentButtonRectTrs;
 		public static bool isDraggingEntry;
 		public new static InspectorPanel[] instances = new InspectorPanel[0];
+		static Dictionary<InspectorEntry, InspectorEntry[]> entreisForEntriesPrefabsDict = new Dictionary<InspectorEntry, InspectorEntry[]>();
 
 		public override void Awake ()
 		{
@@ -40,7 +42,7 @@ namespace EternityEngine
 				for (int i2 = 0; i2 < components.Length; i2 ++)
 				{
 					_Component component = components[i2];
-					AddEntries (component);
+					AddOrUpdateEntries (component);
 				}
 			}
 		}
@@ -56,39 +58,99 @@ namespace EternityEngine
 			}
 		}
 
-		public static InspectorEntry[] AddEntries (_Component component)
+		public static InspectorEntry[] AddOrUpdateEntries (_Component component)
 		{
 			InspectorEntry[] output = new InspectorEntry[instances.Length];
 			for (int i = 0; i < instances.Length; i ++)
 			{
 				InspectorPanel inspectorPanel = instances[i];
-				InspectorEntry inspectorEntry = null;
-				if (component.inspectorEntries.Length <= i)
+				InspectorEntry entry = null;
+				InspectorEntry[] entriesPrefabs = new InspectorEntry[entreisForEntriesPrefabsDict.Count];
+				entreisForEntriesPrefabsDict.Keys.CopyTo(entriesPrefabs, 0);
+				int entryPrefabIdx = entriesPrefabs.IndexOf(component.inspectorEntryPrefab);
+				if (entryPrefabIdx == -1)
 				{
-					inspectorEntry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
-					inspectorEntry.component = component;
-					inspectorEntry.inspectorPanel = inspectorPanel;
+					if (component.inspectorEntries.Length <= i)
+					{
+						entry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
+						entry.component = component;
+						entry.inspectorPanel = inspectorPanel;
+						for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
+						{
+							FloatValue floatValue = component.floatValues[i2];
+							entry.floatValuesEntries[i2].value = floatValue;
+						}
+						for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
+						{
+							Vector3Value vector3Value = component.vector3Values[i2];
+							entry.vector3ValuesEntries[i2].value = vector3Value;
+						}
+						if (component.collapsed)
+							entry.SetCollapsed (true);
+						component.inspectorEntries = component.inspectorEntries.Add(entry);
+						if (i == 0)
+							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { entry };
+						else
+							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab].Add(entry);
+					}
+					else
+					{
+						entry = component.inspectorEntries[i];
+						entry.gameObject.SetActive(true);
+					}
+				}
+				else
+				{
+					if (component.inspectorEntries.Length > i)
+					{
+						entry = component.inspectorEntries[i];
+						entry.gameObject.SetActive(false);
+					}
+					entry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
+					entry.component = component;
+					entry.inspectorPanel = inspectorPanel;
 					for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
 					{
 						FloatValue floatValue = component.floatValues[i2];
-						inspectorEntry.floatValuesEntries[i2].value = floatValue;
+						entry.floatValuesEntries[i2].value = floatValue;
 					}
 					for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
 					{
 						Vector3Value vector3Value = component.vector3Values[i2];
-						inspectorEntry.vector3ValuesEntries[i2].value = vector3Value;
+						entry.vector3ValuesEntries[i2].value = vector3Value;
 					}
 					if (component.collapsed)
-						inspectorEntry.SetCollapsed (true);
-					component.inspectorEntries = component.inspectorEntries.Add(inspectorEntry);
+						entry.SetCollapsed (true);
+					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab];
+					float?[] floats = new float?[entriesForEntriesPrefabs.Length];
+					Vector3?[] vector3s = new Vector3?[entriesForEntriesPrefabs.Length];
+					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
+					{
+						InspectorEntry _entry = entriesForEntriesPrefabs[i2];
+						for (int i3 = 0; i3 < _entry.floatValuesEntries.Length; i3 ++)
+						{
+							FloatValueEntry floatValueEntry = _entry.floatValuesEntries[i3];
+							float f = floatValueEntry.value.val;
+							if (i3 == 0)
+								floats[i2] = f;
+							else if (f != floats[i2])
+							{
+								floats[i2] = null;
+								break;
+							}
+						}
+					}
+					for (int i2 = 0; i2 < floats.Length; i2 ++)
+					{
+						float? f = floats[i2];
+						if (f == null)
+							entry.floatValuesEntries[i2].valueSetter.text = "—";
+						else
+							entry.floatValuesEntries[i2].valueSetter.text = "" + f;
+					}
 				}
-				else
-				{
-					inspectorEntry = component.inspectorEntries[i];
-					inspectorEntry.gameObject.SetActive(true);
-				}
-				inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
-				output[i] = inspectorEntry;
+				inspectorPanel.entries = inspectorPanel.entries.Add(entry);
+				output[i] = entry;
 			}
 			return output;
 		}

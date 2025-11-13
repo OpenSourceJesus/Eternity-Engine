@@ -1,7 +1,11 @@
+using TMPro;
+
 namespace EternityEngine
 {
 	public class FloatValueEntry : ValueEntry<float>
 	{
+		public TMP_InputField valueSetter;
+
 		public override void TrySet (string text)
 		{
 			float prevVal = value.val;
