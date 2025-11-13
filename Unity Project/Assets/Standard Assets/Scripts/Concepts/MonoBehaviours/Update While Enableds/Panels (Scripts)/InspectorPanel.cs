@@ -17,7 +17,7 @@ namespace EternityEngine
 		public RectTransform addComponentButtonRectTrs;
 		public static bool isDraggingEntry;
 		public new static InspectorPanel[] instances = new InspectorPanel[0];
-		static Dictionary<InspectorEntry, InspectorEntry[]> entreisForEntriesPrefabsDict = new Dictionary<InspectorEntry, InspectorEntry[]>();
+		public static Dictionary<InspectorEntry, InspectorEntry[]> entreisForEntriesPrefabsDict = new Dictionary<InspectorEntry, InspectorEntry[]>();
 
 		public override void Awake ()
 		{
@@ -66,6 +66,13 @@ namespace EternityEngine
 
 		public static InspectorEntry[] AddOrUpdateEntries (_Component component)
 		{
+			InspectorPanel firstInspectorPanel = instances[0];
+			for (int i = 0; i < firstInspectorPanel.entries.Length; i ++)
+			{
+				InspectorEntry entry = firstInspectorPanel.entries[i];
+				if (entry.component.inspectorEntryPrefab == component.inspectorEntryPrefab)
+					return new InspectorEntry[0];
+			}
 			InspectorEntry[] output = new InspectorEntry[instances.Length];
 			for (int i = 0; i < instances.Length; i ++)
 			{
@@ -76,26 +83,13 @@ namespace EternityEngine
 				{
 					if (component.inspectorEntries.Length <= i)
 					{
-						entry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
-						entry.component = component;
-						entry.inspectorPanel = inspectorPanel;
-						for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
-						{
-							FloatValue floatValue = component.floatValues[i2];
-							entry.floatValuesEntries[i2].value = floatValue;
-						}
-						for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
-						{
-							Vector3Value vector3Value = component.vector3Values[i2];
-							entry.vector3ValuesEntries[i2].value = vector3Value;
-						}
-						if (component.collapsed)
-							entry.SetCollapsed (true);
+						entry = inspectorPanel.NewEntry(component);
 						component.inspectorEntries = component.inspectorEntries.Add(entry);
-						if (i == 0)
-							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { entry };
+						InspectorEntry[] entriesForEntriesPrefabs = null;
+						if (entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out entriesForEntriesPrefabs))
+							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = entriesForEntriesPrefabs.Add(entry);
 						else
-							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab].Add(entry);
+							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { entry };
 					}
 					else
 					{
@@ -110,21 +104,7 @@ namespace EternityEngine
 						entry = component.inspectorEntries[i];
 						entry.gameObject.SetActive(false);
 					}
-					entry = Instantiate(component.inspectorEntryPrefab, inspectorPanel.entriesParent);
-					entry.component = component;
-					entry.inspectorPanel = inspectorPanel;
-					for (int i2 = 0; i2 < component.floatValues.Length; i2 ++)
-					{
-						FloatValue floatValue = component.floatValues[i2];
-						entry.floatValuesEntries[i2].value = floatValue;
-					}
-					for (int i2 = 0; i2 < component.vector3Values.Length; i2 ++)
-					{
-						Vector3Value vector3Value = component.vector3Values[i2];
-						entry.vector3ValuesEntries[i2].value = vector3Value;
-					}
-					if (component.collapsed)
-						entry.SetCollapsed (true);
+					entry = inspectorPanel.NewEntry(component);
 					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab];
 					float?[] floats = new float?[entry.floatValuesEntries.Length];
 					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
@@ -156,6 +136,26 @@ namespace EternityEngine
 				output[i] = entry;
 			}
 			return output;
+		}
+
+		InspectorEntry NewEntry (_Component component)
+		{
+			InspectorEntry entry = Instantiate(component.inspectorEntryPrefab, entriesParent);
+			entry.component = component;
+			entry.inspectorPanel = this;
+			for (int i = 0; i < component.floatValues.Length; i ++)
+			{
+				FloatValue floatValue = component.floatValues[i];
+				entry.floatValuesEntries[i].value = floatValue;
+			}
+			for (int i = 0; i < component.vector3Values.Length; i ++)
+			{
+				Vector3Value vector3Value = component.vector3Values[i];
+				entry.vector3ValuesEntries[i].value = vector3Value;
+			}
+			if (component.collapsed)
+				entry.SetCollapsed (true);
+			return entry;
 		}
 
 		public void ToggleAddComponentOptions ()

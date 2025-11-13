@@ -122,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_RegexValue
-      value: ^[Infinity.0123456789+\-*/()^!]+$
+      value: "^[Infinity.0123456789+\\-*/()^!\u2014]+$"
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_ContentType
