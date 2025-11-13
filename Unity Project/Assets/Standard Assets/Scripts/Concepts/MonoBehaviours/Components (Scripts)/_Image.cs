@@ -8,6 +8,7 @@ namespace EternityEngine
 	{
 		public Image img;
 		public StringValue path;
+		public Vector2Value pivot;
 		Texture2D tex;
 
 		void Awake ()
@@ -15,22 +16,40 @@ namespace EternityEngine
 			img.rectTransform.SetParent(EternityEngine.instance.canvasRectTrs);
 			tex = new Texture2D(1, 1);
 			path.onChanged += () => {
-				if (File.Exists(path.val))
+				string imgPath = Path.Combine(Application.dataPath, path.val);
+				if (File.Exists(imgPath))
 				{
-					ImageConversion.LoadImage(tex, File.ReadAllBytes(path.val));
-					img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2, 1);
+					ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
+					img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
 				}
+				else
+					img.sprite = null;
+			};
+			pivot.onChanged += () => {
+				RectTransform recTrs = img.rectTransform;
+				Vector2 anchoredPos = recTrs.anchoredPosition; 
+				recTrs.pivot = pivot.val;
+				recTrs.anchoredPosition = anchoredPos;
 			};
 		}
 
 		void OnDestroy ()
 		{
 			path.onChanged -= () => {
-				if (File.Exists(path.val))
+				string imgPath = Path.Combine(Application.dataPath, path.val);
+				if (File.Exists(imgPath))
 				{
-					ImageConversion.LoadImage(tex, File.ReadAllBytes(path.val));
-					img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2, 1);
+					ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
+					img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
 				}
+				else
+					img.sprite = null;
+			};
+			pivot.onChanged -= () => {
+				RectTransform recTrs = img.rectTransform;
+				Vector2 anchoredPos = recTrs.anchoredPosition; 
+				recTrs.pivot = pivot.val;
+				recTrs.anchoredPosition = anchoredPos;
 			};
 		}
 	}
