@@ -7,7 +7,6 @@ namespace EternityEngine
 {
 	public class _Image : _Component
 	{
-		public SceneEntry sceneEntry;
 		[HideInInspector]
 		public Image[] imgs = new Image[0];
 		public StringValue path;
@@ -17,26 +16,16 @@ namespace EternityEngine
 		public override void Start ()
 		{
 			base.Start ();
-			ScenePanel firstScenePanel = ScenePanel.instances[0];
-			sceneEntry.rectTrs.SetParent(firstScenePanel.obsParentRectTrs);
 			imgs = new Image[ScenePanel.instances.Length];
 			imgs[0] = sceneEntry.img;
-			sceneEntries = new SceneEntry[imgs.Length];
-			sceneEntries[0] = sceneEntry;
-			firstScenePanel.entries = firstScenePanel.entries.Add(sceneEntry);
-			sceneEntry.hierarchyEntries = ob.hierarchyEntries;
-			sceneEntry.scenePanel = firstScenePanel;
+			tex = new Texture2D(1, 1);
 			for (int i = 1; i < ScenePanel.instances.Length; i ++)
 			{
 				ScenePanel scenePanel = ScenePanel.instances[i];
 				SceneEntry _sceneEntry = Instantiate(sceneEntry, scenePanel.obsParentRectTrs);
 				imgs[i] = _sceneEntry.img;
 				sceneEntries[i] = _sceneEntry;
-				scenePanel.entries = scenePanel.entries.Add(_sceneEntry);
-				sceneEntry.scenePanel = scenePanel;
 			}
-			ob.sceneEntries = ob.sceneEntries.AddRange(sceneEntries);
-			tex = new Texture2D(1, 1);
 			path.onChanged += OnPathChanged;
 			pivot.onChanged += OnPivotChanged;
 		}

@@ -42,6 +42,7 @@ namespace EternityEngine
 		class Updater : IUpdatable
 		{
 			ScenePanel scenePanel;
+			Vector2 prevMousePos;
 
 			public Updater (ScenePanel scenePanel)
 			{
@@ -50,12 +51,16 @@ namespace EternityEngine
 
 			public void DoUpdate ()
 			{
+				Vector2 mousePos = Mouse.current.position.ReadValue();
+				if (Mouse.current.middleButton.isPressed)
+					scenePanel.obsParentRectTrs.position += (Vector3) (mousePos - prevMousePos);
+				prevMousePos = mousePos;
 				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
 					for (int i = 0; i < scenePanel.entries.Length; i ++)
 					{
 						SceneEntry entry = scenePanel.entries[i];
-						if (entry.img != null && entry.img.rectTransform.GetWorldRect2D().Contains_Polygon(Mouse.current.position.ReadValue()))
+						if (entry.img != null && entry.img.rectTransform.GetWorldRect2D().Contains_Polygon(mousePos))
 						{
 							if (!Keyboard.current.leftShiftKey.isPressed)
 								for (int i2 = 0; i2 < scenePanel.selected.Length; i2 ++)

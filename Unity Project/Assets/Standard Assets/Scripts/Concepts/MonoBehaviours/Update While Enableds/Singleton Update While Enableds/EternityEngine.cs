@@ -36,9 +36,19 @@ namespace EternityEngine
 		{
 			bool leftCtrlKeyPressed = Keyboard.current.leftCtrlKey.isPressed;
 			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
-			if (Keyboard.current.upArrowKey.wasPressedThisFrame && (HierarchyPanel.lastEntryIdxHadSelectionSet > 0 || firstHierarchyPanel.selected.Length == 0))
+			bool upArrowPressed = Keyboard.current.upArrowKey.wasPressedThisFrame;
+			bool downArrowPressed = Keyboard.current.downArrowKey.wasPressedThisFrame;
+			if ((upArrowPressed || downArrowPressed) && firstHierarchyPanel.selected.Length == 0)
+			{
+				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+				{
+					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+					hierarchyPanel.entries[0].OnMouseDown ();
+				}
+			}
+			else if (upArrowPressed && HierarchyPanel.lastEntryIdxHadSelectionSet > 0)
 				DoArrowKeySelection (true);
-			if (Keyboard.current.downArrowKey.wasPressedThisFrame && (HierarchyPanel.lastEntryIdxHadSelectionSet < firstHierarchyPanel.entries.Length - 1 || firstHierarchyPanel.selected.Length == 0))
+			else if (downArrowPressed && HierarchyPanel.lastEntryIdxHadSelectionSet < firstHierarchyPanel.entries.Length - 1)
 				DoArrowKeySelection (false);
 			bool selectAll = leftCtrlKeyPressed && Keyboard.current.aKey.isPressed;
 			if (selectAll && !prevSelectAll)
@@ -101,6 +111,7 @@ namespace EternityEngine
 		{
 			_Object ob = Instantiate(template);
 			ob.name = GetUniqueName(name);
+			ob.hierarchyEntries = new HierarchyEntry[HierarchyPanel.instances.Length];
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
@@ -108,14 +119,22 @@ namespace EternityEngine
 				hierarchyEntry.nameText.text = ob.name;
 				hierarchyEntry.ob = ob;
 				hierarchyEntry.hierarchyPanel = hierarchyPanel;
-				ob.hierarchyEntries = ob.hierarchyEntries.Add(hierarchyEntry);
+				ob.hierarchyEntries[i] = hierarchyEntry;
 				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
 			}
 			ob.components = new _Component[template.components.Length];
+			ob.sceneEntries = new SceneEntry[0];
 			for (int i = 0; i < template.components.Length; i ++)
 			{
 				_Component component = Instantiate(template.components[i]);
 				component = Instantiate(component);
+				SceneEntry sceneEntry = component.sceneEntry;
+				if (sceneEntry != null)
+				{
+					component.sceneEntry = Instantiate(sceneEntry, sceneEntry.scenePanel.obsParentRectTrs);
+					sceneEntry.hierarchyEntries = ob.hierarchyEntries;
+					ob.sceneEntries = ob.sceneEntries.Add(sceneEntry);
+				}
 				for (int i2 = 0; i2 < component.inspectorEntries.Length; i2 ++)
 				{
 					InspectorEntry inspectorEntry = component.inspectorEntries[i2];

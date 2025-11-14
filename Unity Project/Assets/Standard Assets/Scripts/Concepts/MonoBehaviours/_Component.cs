@@ -6,6 +6,7 @@ namespace EternityEngine
 {
 	public class _Component : MonoBehaviour
 	{
+		public SceneEntry sceneEntry;
 		[HideInInspector]
         public _Object ob;
         public InspectorEntry inspectorEntryPrefab;
@@ -42,6 +43,23 @@ namespace EternityEngine
 					dependsOn.Add(component);
 				}
 			}
+			if (sceneEntry == null)
+				return;
+			ScenePanel firstScenePanel = ScenePanel.instances[0];
+			sceneEntry.rectTrs.SetParent(firstScenePanel.obsParentRectTrs);
+			sceneEntries = new SceneEntry[ScenePanel.instances.Length];
+			sceneEntries[0] = sceneEntry;
+			firstScenePanel.entries = firstScenePanel.entries.Add(sceneEntry);
+			sceneEntry.hierarchyEntries = ob.hierarchyEntries;
+			sceneEntry.scenePanel = firstScenePanel;
+			for (int i = 1; i < ScenePanel.instances.Length; i ++)
+			{
+				ScenePanel scenePanel = ScenePanel.instances[i];
+				SceneEntry _sceneEntry = Instantiate(sceneEntry, scenePanel.obsParentRectTrs);
+				scenePanel.entries = scenePanel.entries.Add(_sceneEntry);
+				sceneEntry.scenePanel = scenePanel;
+			}
+			ob.sceneEntries = ob.sceneEntries.AddRange(sceneEntries);
 		}
 
 		public bool TryDelete ()
