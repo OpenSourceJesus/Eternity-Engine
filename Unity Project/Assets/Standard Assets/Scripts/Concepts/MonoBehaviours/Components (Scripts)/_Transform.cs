@@ -1,5 +1,5 @@
-using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace EternityEngine
 {
@@ -13,17 +13,52 @@ namespace EternityEngine
 
 		void Start ()
 		{
-			trs = ob.trs;
-			pos.onChanged += () => { trs.position = pos.val; };
-			rot.onChanged += () => { trs.eulerAngles = Vector3.forward * rot.val; };
-			size.onChanged += () => { trs.SetWorldScale (size.val); };
+			pos.onChanged += () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.position = pos.val;
+				}
+			};
+			rot.onChanged += () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.eulerAngles = Vector3.forward * rot.val;
+				}
+			};
+			size.onChanged += () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.localScale = size.val;
+				}
+			};
 		}
 
 		void OnDestroy ()
 		{
-			pos.onChanged -= () => { trs.position = pos.val; };
-			rot.onChanged -= () => { trs.eulerAngles = Vector3.forward * rot.val; };
-			size.onChanged -= () => { trs.SetWorldScale (size.val); };
+			pos.onChanged -= () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.position = pos.val;
+				}
+			};
+			rot.onChanged -= () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.eulerAngles = Vector3.forward * rot.val;
+				}
+			};
+			size.onChanged -= () => {
+				for (int i = 0; i < ob.imgs.Length; i ++)
+				{
+					Image img = ob.imgs[i];
+					img.rectTransform.localScale = size.val;
+				}
+			};
 		}
 	}
 }

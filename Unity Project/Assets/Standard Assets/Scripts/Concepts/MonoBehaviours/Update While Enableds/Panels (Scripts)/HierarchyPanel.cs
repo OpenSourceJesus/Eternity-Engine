@@ -55,7 +55,7 @@ namespace EternityEngine
 			InspectorPanel.ClearEntries (prevSelectedCnt > 1);
 		}
 
-		public class AddPresetObjectOptionsUpdater : IUpdatable
+		class AddPresetObjectOptionsUpdater : IUpdatable
 		{
 			public HierarchyPanel hierarchyPanel;
 

@@ -121,9 +121,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1725794314844669198, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: val
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5361949812163608371, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
       propertyPath: m_Name
       value: Size Value
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165620212904018891, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: val
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: val.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: val.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -361,7 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2261e77f08436ff07b254d385ca64504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
-  trs: {fileID: 7335552380223399591}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
   collapsed: 0
@@ -372,11 +387,13 @@ MonoBehaviour:
   - {fileID: 3989851964556364172}
   - {fileID: 3621590107775029703}
   - {fileID: 8079905371354273538}
+  stringValues: []
   vector2Values:
   - {fileID: 8836013766403111204}
   vector3Values:
   - {fileID: 8018763865761092866}
   inspectorEntries: []
+  trs: {fileID: 7335552380223399591}
   pos: {fileID: 8018763865761092866}
   rot: {fileID: 3989851964556364172}
   size: {fileID: 8836013766403111204}

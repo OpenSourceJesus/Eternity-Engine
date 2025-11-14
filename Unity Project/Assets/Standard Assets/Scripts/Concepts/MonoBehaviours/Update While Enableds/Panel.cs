@@ -398,7 +398,7 @@ namespace EternityEngine
 			panelOfContentsParentMouseIsIn = null;
 		}
 
-		public class DragUpdater : IUpdatable
+		class DragUpdater : IUpdatable
 		{
 			public Panel panel;
 
@@ -417,7 +417,7 @@ namespace EternityEngine
 			}
 		}
 
-		public class ResizeUpdater : IUpdatable
+		class ResizeUpdater : IUpdatable
 		{
 			public Panel panel;
 			Rect contentsParentWorldRect;

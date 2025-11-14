@@ -155,7 +155,7 @@ namespace EternityEngine
 			GameManager.updatables = GameManager.updatables.Add(new AddComponentOptionsUpdater(this));
 		}
 
-		public class AddComponentOptionsUpdater : IUpdatable
+		class AddComponentOptionsUpdater : IUpdatable
 		{
 			public InspectorPanel inspectorPanel;
 
