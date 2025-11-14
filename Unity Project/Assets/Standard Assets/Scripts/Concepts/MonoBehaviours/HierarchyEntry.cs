@@ -209,6 +209,12 @@ namespace EternityEngine
 			HierarchyPanel.lastEntryIdxHadSelectionSet = rectTrs.GetSiblingIndex();
 			selectedIndicator.enabled = select;
 			selected = select;
+			for (int i = 0; i < ob.sceneEntries.Length; i ++)
+			{
+				SceneEntry sceneEntry = ob.sceneEntries[i];
+				if (sceneEntry.selected != select)
+					sceneEntry.SetSelected (select);
+			}
 		}
 
 		public void OnChangedNameInputField (string name)

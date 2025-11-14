@@ -10,6 +10,8 @@ namespace EternityEngine
 		[HideInInspector]
 		public _Component[] components = new _Component[0];
 		[HideInInspector]
-		public Image[] imgs = new Image[0];
+		public SceneEntry[] sceneEntries = new SceneEntry[0];
+		[HideInInspector]
+		public HierarchyEntry[] hierarchyEntries = new HierarchyEntry[0];
 	}
 }

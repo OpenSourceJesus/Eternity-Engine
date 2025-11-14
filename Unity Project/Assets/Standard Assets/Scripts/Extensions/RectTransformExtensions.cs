@@ -48,5 +48,12 @@ namespace Extensions
 			rectTrs.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, previousSizeDelta.y);
 			rectTrs.localPosition = previousLocalPosition;
 		}
+
+		public static Rect2D GetWorldRect2D (this RectTransform rectTrs)
+		{
+			Vector2 min = rectTrs.TransformPoint(rectTrs.rect.min);
+			Vector2 max = rectTrs.TransformPoint(rectTrs.rect.max);
+			return new Rect2D((min + max) / 2, max - min, rectTrs.eulerAngles.z);
+		}
 	}
 }

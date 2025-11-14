@@ -17,6 +17,8 @@ namespace EternityEngine
 		public Vector3Value[] vector3Values = new Vector3Value[0];
 		[HideInInspector]
         public InspectorEntry[] inspectorEntries = new InspectorEntry[0];
+		[HideInInspector]
+        public SceneEntry[] sceneEntries = new SceneEntry[0];
 		public int[] requiredComponentIdxs = new int[0];
 		public List<_Component> dependsOn = new List<_Component>();
 		public List<_Component> dependsOnMe = new List<_Component>();

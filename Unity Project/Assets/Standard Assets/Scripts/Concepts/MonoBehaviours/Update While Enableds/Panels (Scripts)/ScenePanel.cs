@@ -10,7 +10,9 @@ namespace EternityEngine
 		public RectTransform viewportRectTrs;
 		public RectTransform obsParentRectTrs;
 		[HideInInspector]
-		public Image[] imgs = new Image[0];
+		public SceneEntry[] entries = new SceneEntry[0];
+		[HideInInspector]
+		public SceneEntry[] selected = new SceneEntry[0];
 		public new static ScenePanel[] instances = new ScenePanel[0];
 		Updater updater;
 
@@ -41,7 +43,7 @@ namespace EternityEngine
 		{
 			ScenePanel scenePanel;
 
-			public Updater (ScenePanel ScenePanel)
+			public Updater (ScenePanel scenePanel)
 			{
 				this.scenePanel = scenePanel;
 			}
@@ -50,10 +52,33 @@ namespace EternityEngine
 			{
 				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
-					for (int i = 0; i < scenePanel.imgs.Length; i ++)
+					for (int i = 0; i < scenePanel.entries.Length; i ++)
 					{
-						Image img = scenePanel.imgs[i];
-						
+						SceneEntry entry = scenePanel.entries[i];
+						if (entry.img != null && entry.img.rectTransform.GetWorldRect2D().Contains_Polygon(Mouse.current.position.ReadValue()))
+						{
+							if (!Keyboard.current.leftShiftKey.isPressed)
+								for (int i2 = 0; i2 < scenePanel.selected.Length; i2 ++)
+								{
+									SceneEntry _entry = scenePanel.selected[i2];
+									if (_entry != entry)
+									{
+										_entry.SetSelected (false);
+										i2 --;
+									}
+								}
+							if (Keyboard.current.leftCtrlKey.isPressed)
+								entry.SetSelected (!entry.selected);
+							else
+								entry.SetSelected (true);
+							return;
+						}
+					}
+					for (int i = 0; i < scenePanel.selected.Length; i ++)
+					{
+						SceneEntry entry = scenePanel.selected[i];
+						entry.SetSelected (false);
+						i --;
 					}
 				}
 			}

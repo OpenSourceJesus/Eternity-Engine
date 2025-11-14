@@ -27,28 +27,28 @@ namespace EternityEngine
 
 		void OnPosChanged ()
 		{
-			for (int i = 0; i < ob.imgs.Length; i ++)
+			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
-				Image img = ob.imgs[i];
-				img.rectTransform.position = pos.val;
+				SceneEntry sceneEntry = ob.sceneEntries[i];
+				sceneEntry.rectTrs.position = pos.val;
 			}
 		}
 
 		void OnRotChanged ()
 		{
-			for (int i = 0; i < ob.imgs.Length; i ++)
+			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
-				Image img = ob.imgs[i];
-				img.rectTransform.eulerAngles = Vector3.forward * rot.val;
+				SceneEntry sceneEntry = ob.sceneEntries[i];
+				sceneEntry.rectTrs.eulerAngles = Vector3.forward * rot.val;
 			}
 		}
 
 		void OnSizeChanged ()
 		{
-			for (int i = 0; i < ob.imgs.Length; i ++)
+			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
-				Image img = ob.imgs[i];
-				img.rectTransform.localScale = size.val;
+				SceneEntry sceneEntry = ob.sceneEntries[i];
+				sceneEntry.rectTrs.localScale = size.val;
 			}
 		}
 	}

@@ -12,6 +12,7 @@ namespace EternityEngine
 	{
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
+		public SceneEntry sceneEntryPrefab;
 		public Image insertionIndicatorPrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
@@ -103,10 +104,11 @@ namespace EternityEngine
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				HierarchyEntry hierarchyEntry = Instantiate(EternityEngine.instance.hierarchyEntryPrefab, hierarchyPanel.entriesParent);
+				HierarchyEntry hierarchyEntry = Instantiate(hierarchyEntryPrefab, hierarchyPanel.entriesParent);
 				hierarchyEntry.nameText.text = ob.name;
 				hierarchyEntry.ob = ob;
 				hierarchyEntry.hierarchyPanel = hierarchyPanel;
+				ob.hierarchyEntries = ob.hierarchyEntries.Add(hierarchyEntry);
 				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
 			}
 			ob.components = new _Component[template.components.Length];

@@ -7,7 +7,7 @@ namespace EternityEngine
 {
 	public class _Image : _Component
 	{
-		public Image img;
+		public SceneEntry sceneEntry;
 		[HideInInspector]
 		public Image[] imgs = new Image[0];
 		public StringValue path;
@@ -17,20 +17,28 @@ namespace EternityEngine
 		public override void Start ()
 		{
 			base.Start ();
-			img.rectTransform.SetParent(ScenePanel.instances[0].obsParentRectTrs);
+			ScenePanel firstScenePanel = ScenePanel.instances[0];
+			sceneEntry.rectTrs.SetParent(firstScenePanel.obsParentRectTrs);
 			imgs = new Image[ScenePanel.instances.Length];
-			imgs[0] = img;
+			imgs[0] = sceneEntry.img;
+			sceneEntries = new SceneEntry[imgs.Length];
+			sceneEntries[0] = sceneEntry;
+			firstScenePanel.entries = firstScenePanel.entries.Add(sceneEntry);
+			sceneEntry.hierarchyEntries = ob.hierarchyEntries;
+			sceneEntry.scenePanel = firstScenePanel;
 			for (int i = 1; i < ScenePanel.instances.Length; i ++)
 			{
 				ScenePanel scenePanel = ScenePanel.instances[i];
-				Image _img = Instantiate(img, scenePanel.obsParentRectTrs);
-				imgs[i] = _img;
-				scenePanel.imgs = scenePanel.imgs.Add(_img);
+				SceneEntry _sceneEntry = Instantiate(sceneEntry, scenePanel.obsParentRectTrs);
+				imgs[i] = _sceneEntry.img;
+				sceneEntries[i] = _sceneEntry;
+				scenePanel.entries = scenePanel.entries.Add(_sceneEntry);
+				sceneEntry.scenePanel = scenePanel;
 			}
+			ob.sceneEntries = ob.sceneEntries.AddRange(sceneEntries);
 			tex = new Texture2D(1, 1);
 			path.onChanged += OnPathChanged;
 			pivot.onChanged += OnPivotChanged;
-			ob.imgs = ob.imgs.AddRange(imgs);
 		}
 
 		void OnDestroy ()
@@ -41,7 +49,7 @@ namespace EternityEngine
 			{
 				Image img = imgs[i];
 				ScenePanel scenePanel = ScenePanel.instances[i];
-				scenePanel.imgs = scenePanel.imgs.Remove(img);
+				scenePanel.entries = scenePanel.entries.Remove(sceneEntries[i]);
 				Destroy(img.gameObject);
 			}
 		}
@@ -69,13 +77,13 @@ namespace EternityEngine
 
 		void OnPivotChanged ()
 		{
-			RectTransform recTrs = img.rectTransform;
-			Vector2 anchoredPos = recTrs.anchoredPosition;
-			for (int i = 0; i < imgs.Length; i ++)
+			Vector2 anchoredPos = sceneEntry.rectTrs.anchoredPosition;
+			for (int i = 0; i < sceneEntries.Length; i ++)
 			{
-				Image img = imgs[i];
-				recTrs.pivot = pivot.val;
-				recTrs.anchoredPosition = anchoredPos;
+				SceneEntry sceneEntry = sceneEntries[i];
+				RectTransform rectTrs = sceneEntry.rectTrs;
+				rectTrs.pivot = pivot.val;
+				rectTrs.anchoredPosition = anchoredPos;
 			}
 		}
 	}
