@@ -23,7 +23,9 @@ namespace EternityEngine
 			for (int i = 1; i < ScenePanel.instances.Length; i ++)
 			{
 				ScenePanel scenePanel = ScenePanel.instances[i];
-				imgs[i] = Instantiate(img, scenePanel.obsParentRectTrs);
+				Image _img = Instantiate(img, scenePanel.obsParentRectTrs);
+				imgs[i] = _img;
+				scenePanel.imgs = scenePanel.imgs.Add(_img);
 			}
 			tex = new Texture2D(1, 1);
 			path.onChanged += OnPathChanged;
@@ -35,6 +37,13 @@ namespace EternityEngine
 		{
 			path.onChanged -= OnPathChanged;
 			pivot.onChanged -= OnPivotChanged;
+			for (int i = 1; i < imgs.Length; i ++)
+			{
+				Image img = imgs[i];
+				ScenePanel scenePanel = ScenePanel.instances[i];
+				scenePanel.imgs = scenePanel.imgs.Remove(img);
+				Destroy(img.gameObject);
+			}
 		}
 
 		void OnPathChanged ()

@@ -1,5 +1,6 @@
 using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 namespace EternityEngine
@@ -8,6 +9,8 @@ namespace EternityEngine
 	{
 		public RectTransform viewportRectTrs;
 		public RectTransform obsParentRectTrs;
+		[HideInInspector]
+		public Image[] imgs = new Image[0];
 		public new static ScenePanel[] instances = new ScenePanel[0];
 		Updater updater;
 
@@ -45,7 +48,14 @@ namespace EternityEngine
 
 			public void DoUpdate ()
 			{
-				
+				if (Mouse.current.leftButton.wasPressedThisFrame)
+				{
+					for (int i = 0; i < scenePanel.imgs.Length; i ++)
+					{
+						Image img = scenePanel.imgs[i];
+						
+					}
+				}
 			}
 		}
 	}
