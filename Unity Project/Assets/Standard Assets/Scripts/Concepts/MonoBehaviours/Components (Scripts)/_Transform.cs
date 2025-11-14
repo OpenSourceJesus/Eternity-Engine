@@ -23,6 +23,13 @@ namespace EternityEngine
 			pos.onChanged -= OnPosChanged;
 			rot.onChanged -= OnRotChanged;
 			size.onChanged -= OnSizeChanged;
+			for (int i = 0; i < ob.imgs.Length; i ++)
+			{
+				Image img = ob.imgs[i];
+				img.rectTransform.position = Vector3.zero;
+				img.rectTransform.eulerAngles = Vector3.zero;
+				img.rectTransform.localScale = Vector3.one;
+			}
 		}
 
 		void OnPosChanged ()

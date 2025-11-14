@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace EternityEngine
 {
-	public class HierarchyEntry : MonoBehaviour
+	public class HierarchyEntry : MonoBehaviour, IUpdatable
 	{
 		public RectTransform rectTrs;
 		[HideInInspector]
@@ -20,7 +20,28 @@ namespace EternityEngine
 		[HideInInspector]
 		public bool selected;
 		public TMP_InputField nameInputField;
+		public RectTransform optionsRectTrs;
+		OptionsUpdater optionsUpdater;
 		int insertAt;
+
+		public void OnMouseEnter ()
+		{
+			GameManager.updatables = GameManager.updatables.Add(this);
+		}
+
+		public void OnMouseExit ()
+		{
+			GameManager.updatables = GameManager.updatables.Remove(this);
+		}
+
+		public void DoUpdate ()
+		{
+			if (Mouse.current.rightButton.wasPressedThisFrame)
+			{
+				SetSelected (true);
+				ToggleOptions ();
+			}
+		}
 
 		public void OnMouseDown ()
 		{
@@ -230,6 +251,42 @@ namespace EternityEngine
 			hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
 			if (HierarchyPanel.lastEntryIdxHadSelectionSet == idx)
 				HierarchyPanel.lastEntryIdxHadSelectionSet = insertAt;
+		}
+
+		public void ToggleOptions ()
+		{
+			optionsRectTrs.gameObject.SetActive(!optionsRectTrs.gameObject.activeSelf);
+			if (optionsRectTrs.gameObject.activeSelf)
+			{
+				optionsUpdater = new OptionsUpdater(this);
+				GameManager.updatables = GameManager.updatables.Add(optionsUpdater);
+			}
+			else
+				GameManager.updatables = GameManager.updatables.Add(optionsUpdater);
+		}
+
+		class OptionsUpdater : IUpdatable
+		{
+			HierarchyEntry hierarchyEntry;
+
+			public OptionsUpdater (HierarchyEntry hierarchyEntry)
+			{
+				this.hierarchyEntry = hierarchyEntry;
+			}
+
+			public void DoUpdate ()
+			{
+				if (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame)
+				{
+					Vector2 mousePos = Mouse.current.position.ReadValue();
+					Rect optionssWorldRect = hierarchyEntry.optionsRectTrs.GetWorldRect();
+					if (!optionssWorldRect.Contains(mousePos))
+					{
+						hierarchyEntry.optionsRectTrs.gameObject.SetActive(false);
+						GameManager.updatables = GameManager.updatables.Remove(this);
+					}
+				}
+			}
 		}
 
 		public class Comparer : IComparer<HierarchyEntry>

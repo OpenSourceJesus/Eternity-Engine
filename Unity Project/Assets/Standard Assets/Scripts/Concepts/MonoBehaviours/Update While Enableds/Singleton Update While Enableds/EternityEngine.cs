@@ -56,74 +56,12 @@ namespace EternityEngine
 			prevSelectAll = selectAll;
 			bool doDuplicate = leftCtrlKeyPressed && Keyboard.current.dKey.isPressed;
 			if (doDuplicate && !prevDoDuplicate)
-			{
-				HierarchyEntry[] selected = firstHierarchyPanel.selected._Sort(new HierarchyEntry.Comparer());
-				Dictionary<int, int> hierarchyEntriesIdxsDict = new Dictionary<int, int>();
-				for (int i = 0; i < selected.Length; i ++)
-				{
-					HierarchyEntry hierarchyEntry = selected[i];
-					string name = hierarchyEntry.ob.name;
-					if (name.EndsWith(')'))
-					{
-						int spaceAndLeftParenthesisIdx = name.LastIndexOf(" (");
-						int val;
-						if (spaceAndLeftParenthesisIdx != -1 && int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val))
-							name = name.Remove(spaceAndLeftParenthesisIdx);
-					}
-					NewObject (hierarchyEntry.ob, name);
-					hierarchyEntriesIdxsDict[firstHierarchyPanel.entries.Length - 1] = hierarchyEntry.rectTrs.GetSiblingIndex() + 1 + hierarchyEntriesIdxsDict.Count;
-				}
-				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
-				{
-					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-					for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
-					{
-						HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
-						hierarchyEntry.SetSelected (false);
-						i2 --;
-					}
-					foreach (KeyValuePair<int, int> keyValuePair in hierarchyEntriesIdxsDict)
-					{
-						HierarchyEntry hierarchyEntry = hierarchyPanel.entries[keyValuePair.Key];
-						hierarchyEntry.Reorder (keyValuePair.Value);
-						hierarchyEntry.SetSelected (true);
-					}
-				}
-				InspectorPanel.RegenEntries (selected.Length > 1);
-			}
+				DuplicateSelected ();
 			prevDoDuplicate = doDuplicate;
 			if (Keyboard.current.f2Key.wasPressedThisFrame)
-			{
-				for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
-				{
-					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-					HierarchyEntry[] selected = hierarchyPanel.selected;
-					if (selected.Length > 0)
-					{
-						if (selected.Length == 1)
-						{
-							HierarchyEntry hierarchyEntry = selected[0];
-							hierarchyEntry.nameInputField.gameObject.SetActive(true);
-							hierarchyEntry.nameInputField.text = hierarchyEntry.ob.name;
-						}
-						else
-						{
-							string nameOverlap = selected[0].ob.name.GetOverlapFromStart(selected[1].ob.name);
-							for (int i2 = 2; i2 < selected.Length; i2 ++)
-							{
-								HierarchyEntry hierarchyEntry = selected[i2];
-								nameOverlap = hierarchyEntry.ob.name.GetOverlapFromStart(nameOverlap);
-							}
-							for (int i2 = 0; i2 < selected.Length; i2 ++)
-							{
-								HierarchyEntry hierarchyEntry = selected[i2];
-								hierarchyEntry.nameInputField.gameObject.SetActive(true);
-								hierarchyEntry.nameInputField.text = nameOverlap;
-							}
-						}
-					}
-				}
-			}
+				RenameSelected ();
+			if (Keyboard.current.deleteKey.wasPressedThisFrame)
+				DeleteSelected ();
 		}
 		
 		void DoArrowKeySelection (bool upArrowPressed)
@@ -221,6 +159,82 @@ namespace EternityEngine
 				HierarchyEntry hierarchyEntry = selected[i];
 				AddComponent (hierarchyEntry.ob, componentTypeIdx);
 			}
+		}
+
+		public void DuplicateSelected ()
+		{
+			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+			HierarchyEntry[] selected = firstHierarchyPanel.selected._Sort(new HierarchyEntry.Comparer());
+			Dictionary<int, int> hierarchyEntriesIdxsDict = new Dictionary<int, int>();
+			for (int i = 0; i < selected.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selected[i];
+				string name = hierarchyEntry.ob.name;
+				if (name.EndsWith(')'))
+				{
+					int spaceAndLeftParenthesisIdx = name.LastIndexOf(" (");
+					int val;
+					if (spaceAndLeftParenthesisIdx != -1 && int.TryParse(name.SubstringStartEnd(spaceAndLeftParenthesisIdx + 2, name.Length - 2), out val))
+						name = name.Remove(spaceAndLeftParenthesisIdx);
+				}
+				NewObject (hierarchyEntry.ob, name);
+				hierarchyEntriesIdxsDict[firstHierarchyPanel.entries.Length - 1] = hierarchyEntry.rectTrs.GetSiblingIndex() + 1 + hierarchyEntriesIdxsDict.Count;
+			}
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+				{
+					HierarchyEntry hierarchyEntry = hierarchyPanel.selected[i2];
+					hierarchyEntry.SetSelected (false);
+					i2 --;
+				}
+				foreach (KeyValuePair<int, int> keyValuePair in hierarchyEntriesIdxsDict)
+				{
+					HierarchyEntry hierarchyEntry = hierarchyPanel.entries[keyValuePair.Key];
+					hierarchyEntry.Reorder (keyValuePair.Value);
+					hierarchyEntry.SetSelected (true);
+				}
+			}
+			InspectorPanel.RegenEntries (selected.Length > 1);
+		}
+
+		public void RenameSelected ()
+		{
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				HierarchyEntry[] selected = hierarchyPanel.selected;
+				if (selected.Length > 0)
+				{
+					if (selected.Length == 1)
+					{
+						HierarchyEntry hierarchyEntry = selected[0];
+						hierarchyEntry.nameInputField.gameObject.SetActive(true);
+						hierarchyEntry.nameInputField.text = hierarchyEntry.ob.name;
+					}
+					else
+					{
+						string nameOverlap = selected[0].ob.name.GetOverlapFromStart(selected[1].ob.name);
+						for (int i2 = 2; i2 < selected.Length; i2 ++)
+						{
+							HierarchyEntry hierarchyEntry = selected[i2];
+							nameOverlap = hierarchyEntry.ob.name.GetOverlapFromStart(nameOverlap);
+						}
+						for (int i2 = 0; i2 < selected.Length; i2 ++)
+						{
+							HierarchyEntry hierarchyEntry = selected[i2];
+							hierarchyEntry.nameInputField.gameObject.SetActive(true);
+							hierarchyEntry.nameInputField.text = nameOverlap;
+						}
+					}
+				}
+			}
+		}
+
+		public void DeleteSelected ()
+		{
+			
 		}
 
 		public void Export ()

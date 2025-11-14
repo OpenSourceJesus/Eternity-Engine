@@ -18,6 +18,7 @@ namespace EternityEngine
 		public static bool isDraggingEntry;
 		public new static InspectorPanel[] instances = new InspectorPanel[0];
 		public static Dictionary<InspectorEntry, InspectorEntry[]> entreisForEntriesPrefabsDict = new Dictionary<InspectorEntry, InspectorEntry[]>();
+		AddComponentOptionsUpdater addComponentOptionsUpdater;
 
 		public override void Awake ()
 		{
@@ -152,7 +153,13 @@ namespace EternityEngine
 		public void ToggleAddComponentOptions ()
 		{
 			addComponentOptionsRectTrs.gameObject.SetActive(!addComponentOptionsRectTrs.gameObject.activeSelf);
-			GameManager.updatables = GameManager.updatables.Add(new AddComponentOptionsUpdater(this));
+			if (addComponentOptionsRectTrs.gameObject.activeSelf)
+			{
+				addComponentOptionsUpdater = new AddComponentOptionsUpdater(this);
+				GameManager.updatables = GameManager.updatables.Add(addComponentOptionsUpdater);
+			}
+			else
+				GameManager.updatables = GameManager.updatables.Remove(addComponentOptionsUpdater);
 		}
 
 		class AddComponentOptionsUpdater : IUpdatable

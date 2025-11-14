@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 
 namespace EternityEngine
@@ -15,5 +16,16 @@ namespace EternityEngine
 		public Vector3Value[] vector3Values = new Vector3Value[0];
 		[HideInInspector]
         public InspectorEntry[] inspectorEntries = new InspectorEntry[0];
+
+		public void Delete ()
+		{
+			ob.components = ob.components.Remove(this);
+			for (int i = 0; i < inspectorEntries.Length; i ++)
+			{
+				InspectorEntry inspectorEntry = inspectorEntries[i];
+				Destroy(inspectorEntry.gameObject);
+			}
+			Destroy(gameObject);
+		}
 	}
 }

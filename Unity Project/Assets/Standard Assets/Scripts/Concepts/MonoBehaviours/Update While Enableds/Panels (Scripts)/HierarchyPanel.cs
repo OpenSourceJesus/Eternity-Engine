@@ -19,6 +19,7 @@ namespace EternityEngine
 		public static int lastEntryIdxHadSelectionSet = -1;
 		public static bool isDraggingEntry;
 		public new static HierarchyPanel[] instances = new HierarchyPanel[0];
+		AddPresetObjectOptionsUpdater addPresetObjectOptionsUpdater;
 
 		public override void Awake ()
 		{
@@ -35,7 +36,13 @@ namespace EternityEngine
 		public void ToggleAddPresetObjectOptions ()
 		{
 			addPresetObjectOptionsRectTrs.gameObject.SetActive(!addPresetObjectOptionsRectTrs.gameObject.activeSelf);
-			GameManager.updatables = GameManager.updatables.Add(new AddPresetObjectOptionsUpdater(this));
+			if (addPresetObjectOptionsRectTrs.gameObject.activeSelf)
+			{
+				addPresetObjectOptionsUpdater = new AddPresetObjectOptionsUpdater(this);
+				GameManager.updatables = GameManager.updatables.Add(addPresetObjectOptionsUpdater);
+			}
+			else
+				GameManager.updatables = GameManager.updatables.Remove(addPresetObjectOptionsUpdater);
 		}
 
 		public void DeselectAll ()
