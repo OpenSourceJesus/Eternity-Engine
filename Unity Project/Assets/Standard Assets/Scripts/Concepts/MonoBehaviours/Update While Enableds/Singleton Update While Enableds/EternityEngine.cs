@@ -13,9 +13,11 @@ namespace EternityEngine
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
-		public _Component[] componentsTypesPrefabs = new _Component[0];
+		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;
+		public GameObject  cantDeleteComponentNotificationGo;
+		public TMP_Text  cantDeleteComponentNotificationText;
 		public RectTransform canvasRectTrs;
 		static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
@@ -131,9 +133,9 @@ namespace EternityEngine
 			return ob;
 		}
 
-		public _Component AddComponent (_Object ob, int componentTypeIdx)
+		public _Component AddComponent (_Object ob, int componentPrefabIdx)
 		{
-			_Component componentPrefab = componentsTypesPrefabs[componentTypeIdx];
+			_Component componentPrefab = componentsPrefabs[componentPrefabIdx];
 			for (int i = 0; i < ob.components.Length; i ++)
 			{
 				_Component _component = ob.components[i];
@@ -151,13 +153,13 @@ namespace EternityEngine
 			return component;
 		}
 
-		public void AddCompnoentToSelected (int componentTypeIdx)
+		public void AddCompnoentToSelected (int componentPrefabIdx)
 		{
 			HierarchyEntry[] selected = HierarchyPanel.instances[0].selected;
 			for (int i = 0; i < selected.Length; i ++)
 			{
 				HierarchyEntry hierarchyEntry = selected[i];
-				AddComponent (hierarchyEntry.ob, componentTypeIdx);
+				AddComponent (hierarchyEntry.ob, componentPrefabIdx);
 			}
 		}
 

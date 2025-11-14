@@ -358,7 +358,9 @@ MonoBehaviour:
   - {fileID: 1892331620254728330}
   vector3Values: []
   inspectorEntries: []
+  requiredComponentIdxs: 00000000
   img: {fileID: 4559176933342721009}
+  imgs: []
   path: {fileID: 5196184695415585922}
   pivot: {fileID: 1892331620254728330}
 --- !u!4 &7335552380223399591 stripped
