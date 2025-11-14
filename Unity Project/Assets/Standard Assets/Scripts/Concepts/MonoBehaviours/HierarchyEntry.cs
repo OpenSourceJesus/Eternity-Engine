@@ -262,12 +262,13 @@ namespace EternityEngine
 				GameManager.updatables = GameManager.updatables.Add(optionsUpdater);
 			}
 			else
-				GameManager.updatables = GameManager.updatables.Add(optionsUpdater);
+				GameManager.updatables = GameManager.updatables.Remove(optionsUpdater);
 		}
 
 		class OptionsUpdater : IUpdatable
 		{
 			HierarchyEntry hierarchyEntry;
+			bool prevClicking = true;
 
 			public OptionsUpdater (HierarchyEntry hierarchyEntry)
 			{
@@ -276,7 +277,8 @@ namespace EternityEngine
 
 			public void DoUpdate ()
 			{
-				if (Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame)
+				bool clicking = Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed;
+				if (clicking && !prevClicking)
 				{
 					Vector2 mousePos = Mouse.current.position.ReadValue();
 					Rect optionssWorldRect = hierarchyEntry.optionsRectTrs.GetWorldRect();
@@ -286,6 +288,7 @@ namespace EternityEngine
 						GameManager.updatables = GameManager.updatables.Remove(this);
 					}
 				}
+				prevClicking = clicking;
 			}
 		}
 
