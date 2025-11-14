@@ -25,69 +25,48 @@ namespace EternityEngine
 				imgs[i] = Instantiate(img, scenePanel.obsParentRectTrs);
 			}
 			tex = new Texture2D(1, 1);
-			path.onChanged += () => {
-				string imgPath = Path.Combine(Application.dataPath, path.val);
-				if (File.Exists(imgPath))
-				{
-					ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
-					Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
-					for (int i = 0; i < imgs.Length; i ++)
-					{
-						Image img = imgs[i];
-						img.sprite = sprite;
-					}
-				}
-				else
-					for (int i = 0; i < imgs.Length; i ++)
-					{
-						Image img = imgs[i];
-						img.sprite = null;
-					}
-			};
-			pivot.onChanged += () => {
-				RectTransform recTrs = img.rectTransform;
-				Vector2 anchoredPos = recTrs.anchoredPosition;
-				for (int i = 0; i < imgs.Length; i ++)
-				{
-					Image img = imgs[i];
-					recTrs.pivot = pivot.val;
-					recTrs.anchoredPosition = anchoredPos;
-				}
-			};
+			path.onChanged += OnPathChanged;
+			pivot.onChanged += OnPivotChanged;
 			ob.imgs = ob.imgs.AddRange(imgs);
 		}
 
 		void OnDestroy ()
 		{
-			path.onChanged -= () => {
-				string imgPath = Path.Combine(Application.dataPath, path.val);
-				if (File.Exists(imgPath))
-				{
-					ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
-					Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
-					for (int i = 0; i < imgs.Length; i ++)
-					{
-						Image img = imgs[i];
-						img.sprite = sprite;
-					}
-				}
-				else
-					for (int i = 0; i < imgs.Length; i ++)
-					{
-						Image img = imgs[i];
-						img.sprite = null;
-					}
-			};
-			pivot.onChanged -= () => {
-				RectTransform recTrs = img.rectTransform;
-				Vector2 anchoredPos = recTrs.anchoredPosition;
+			path.onChanged -= OnPathChanged;
+			pivot.onChanged -= OnPivotChanged;
+		}
+
+		void OnPathChanged ()
+		{
+			string imgPath = Path.Combine(Application.dataPath, path.val);
+			if (File.Exists(imgPath))
+			{
+				ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
+				Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
 				for (int i = 0; i < imgs.Length; i ++)
 				{
 					Image img = imgs[i];
-					recTrs.pivot = pivot.val;
-					recTrs.anchoredPosition = anchoredPos;
+					img.sprite = sprite;
 				}
-			};
+			}
+			else
+				for (int i = 0; i < imgs.Length; i ++)
+				{
+					Image img = imgs[i];
+					img.sprite = null;
+				}
+		}
+
+		void OnPivotChanged ()
+		{
+			RectTransform recTrs = img.rectTransform;
+			Vector2 anchoredPos = recTrs.anchoredPosition;
+			for (int i = 0; i < imgs.Length; i ++)
+			{
+				Image img = imgs[i];
+				recTrs.pivot = pivot.val;
+				recTrs.anchoredPosition = anchoredPos;
+			}
 		}
 	}
 }

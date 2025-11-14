@@ -13,52 +13,43 @@ namespace EternityEngine
 
 		void Start ()
 		{
-			pos.onChanged += () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.position = pos.val;
-				}
-			};
-			rot.onChanged += () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.eulerAngles = Vector3.forward * rot.val;
-				}
-			};
-			size.onChanged += () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.localScale = size.val;
-				}
-			};
+			pos.onChanged += OnPosChanged;
+			rot.onChanged += OnRotChanged;
+			size.onChanged += OnSizeChanged;
 		}
 
 		void OnDestroy ()
 		{
-			pos.onChanged -= () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.position = pos.val;
-				}
-			};
-			rot.onChanged -= () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.eulerAngles = Vector3.forward * rot.val;
-				}
-			};
-			size.onChanged -= () => {
-				for (int i = 0; i < ob.imgs.Length; i ++)
-				{
-					Image img = ob.imgs[i];
-					img.rectTransform.localScale = size.val;
-				}
-			};
+			pos.onChanged -= OnPosChanged;
+			rot.onChanged -= OnRotChanged;
+			size.onChanged -= OnSizeChanged;
+		}
+
+		void OnPosChanged ()
+		{
+			for (int i = 0; i < ob.imgs.Length; i ++)
+			{
+				Image img = ob.imgs[i];
+				img.rectTransform.position = pos.val;
+			}
+		}
+
+		void OnRotChanged ()
+		{
+			for (int i = 0; i < ob.imgs.Length; i ++)
+			{
+				Image img = ob.imgs[i];
+				img.rectTransform.eulerAngles = Vector3.forward * rot.val;
+			}
+		}
+
+		void OnSizeChanged ()
+		{
+			for (int i = 0; i < ob.imgs.Length; i ++)
+			{
+				Image img = ob.imgs[i];
+				img.rectTransform.localScale = size.val;
+			}
 		}
 	}
 }
