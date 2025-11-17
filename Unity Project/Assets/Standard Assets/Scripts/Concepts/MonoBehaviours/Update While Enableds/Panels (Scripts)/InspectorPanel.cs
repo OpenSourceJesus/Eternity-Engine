@@ -71,7 +71,8 @@ namespace EternityEngine
 			for (int i = 0; i < firstInspectorPanel.entries.Length; i ++)
 			{
 				InspectorEntry entry = firstInspectorPanel.entries[i];
-				if (entry.component.inspectorEntryPrefab == component.inspectorEntryPrefab)
+				InspectorEntry entryPrefab = entry.component.inspectorEntryPrefab;
+				if (entryPrefab == component.inspectorEntryPrefab)
 					return new InspectorEntry[0];
 			}
 			InspectorEntry[] output = new InspectorEntry[instances.Length];
@@ -95,19 +96,18 @@ namespace EternityEngine
 					else
 					{
 						entry = component.inspectorEntries[i];
+						foreach (KeyValuePair<SetableValue, string> keyValuePair in component.setValueEntriesTo)
+							keyValuePair.Key.valueSetter.text = keyValuePair.Value;
+						component.setValueEntriesTo.Clear();
 						entry.gameObject.SetActive(true);
 					}
 				}
 				else
 				{
-					if (component.inspectorEntries.Length > i)
-					{
-						entry = component.inspectorEntries[i];
-						entry.gameObject.SetActive(false);
-					}
 					entry = inspectorPanel.NewEntry(component);
 					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab];
 					float?[] floats = new float?[entry.floatValuesEntries.Length];
+					_Component[] components = new _Component[entriesForEntriesPrefabs.Length];
 					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
 					{
 						InspectorEntry _entry = entriesForEntriesPrefabs[i2];
@@ -123,7 +123,9 @@ namespace EternityEngine
 								break;
 							}
 						}
+						components[i2] = _entry.component;
 					}
+					entry.components = components;
 					for (int i2 = 0; i2 < floats.Length; i2 ++)
 					{
 						float? f = floats[i2];
@@ -142,7 +144,6 @@ namespace EternityEngine
 		InspectorEntry NewEntry (_Component component)
 		{
 			InspectorEntry entry = Instantiate(component.inspectorEntryPrefab, entriesParent);
-			entry.component = component;
 			entry.inspectorPanel = this;
 			entry.SetValueEntries (component);
 			if (component.collapsed)

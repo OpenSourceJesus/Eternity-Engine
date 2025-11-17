@@ -22,7 +22,6 @@ namespace EternityEngine
 				scenePanel.selected = scenePanel.selected.Add(this);
 			else if (!select && selected)
 				scenePanel.selected = scenePanel.selected.Remove(this);
-			int prevSelectedCnt = HierarchyPanel.instances[0].selected.Length;
 			int idx = rectTrs.GetSiblingIndex();
 			for (int i = 0; i < ScenePanel.instances.Length; i ++)
 			{
@@ -37,7 +36,6 @@ namespace EternityEngine
 						hierarchyEntry.SetSelected (select);
 				}
 			}
-			InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 		}
 	}
 }

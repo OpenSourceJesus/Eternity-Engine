@@ -57,6 +57,7 @@ namespace EternityEngine
 				prevMousePos = mousePos;
 				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
+					int prevSelectedCnt = HierarchyPanel.instances[0].selected.Length;
 					for (int i = 0; i < scenePanel.entries.Length; i ++)
 					{
 						SceneEntry entry = scenePanel.entries[i];
@@ -85,6 +86,7 @@ namespace EternityEngine
 						entry.SetSelected (false);
 						i --;
 					}
+					InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 				}
 			}
 		}

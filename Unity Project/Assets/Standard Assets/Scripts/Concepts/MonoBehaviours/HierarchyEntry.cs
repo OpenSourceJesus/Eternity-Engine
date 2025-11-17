@@ -50,7 +50,7 @@ namespace EternityEngine
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				prevSelectedCnt = hierarchyPanel.selected.Length;;
+				prevSelectedCnt = hierarchyPanel.selected.Length;
 				int idx = rectTrs.GetSiblingIndex();
 				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
 				if (Keyboard.current.leftShiftKey.isPressed)
@@ -113,12 +113,15 @@ namespace EternityEngine
 		{
 			if (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.leftCtrlKey.isPressed || HierarchyPanel.isDraggingEntry)
 				return;
+			int prevSelectedCnt = 0;
+			bool selectedCntChanged = false;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				prevSelectedCnt = hierarchyPanel.selected.Length;
 				int idx = rectTrs.GetSiblingIndex();
 				HierarchyEntry clickedHierarchyEntry = hierarchyPanel.entries[idx];
-				if (hierarchyPanel.selected.Length < 2 || !clickedHierarchyEntry.selected)
+				if (prevSelectedCnt < 2 || !clickedHierarchyEntry.selected)
 					return;
 				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
 				{
@@ -130,8 +133,10 @@ namespace EternityEngine
 					}
 				}
 				clickedHierarchyEntry.SetSelected (true);
+				selectedCntChanged = hierarchyPanel.selected.Length != prevSelectedCnt;
 			}
-			InspectorPanel.RegenEntries (true);
+			if (selectedCntChanged)
+				InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 		}
 
 		public void BeginDrag ()
@@ -252,8 +257,10 @@ namespace EternityEngine
 		public void Reorder (int insertAt)
 		{
 			int idx = rectTrs.GetSiblingIndex();
-			hierarchyPanel.entries = hierarchyPanel.entries.RemoveAt(idx);
-			hierarchyPanel.entries = hierarchyPanel.entries.Insert(this, insertAt);
+			HierarchyEntry[] entries = hierarchyPanel.entries;
+			entries = entries.RemoveAt(idx);
+			entries = entries.Insert(this, insertAt);
+			hierarchyPanel.entries = entries;
 			hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
 			if (HierarchyPanel.lastEntryIdxHadSelectionSet == idx)
 				HierarchyPanel.lastEntryIdxHadSelectionSet = insertAt;

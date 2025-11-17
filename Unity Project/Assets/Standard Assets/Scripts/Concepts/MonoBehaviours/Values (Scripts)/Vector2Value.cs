@@ -7,13 +7,13 @@ namespace EternityEngine
 		public FloatValue xValue;
 		public FloatValue yValue;
 
-		void Awake ()
+		public override void Awake ()
 		{
 			xValue.onChanged += () => { val.x = xValue.val; _OnChanged (); };
 			yValue.onChanged += () => { val.y = yValue.val; _OnChanged (); };
 		}
 
-		void OnDestroy ()
+		public override void OnDestroy ()
 		{
 			xValue.onChanged -= () => { val.x = xValue.val; _OnChanged (); };
 			yValue.onChanged -= () => { val.y = yValue.val; _OnChanged (); };

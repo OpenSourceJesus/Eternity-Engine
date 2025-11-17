@@ -13,9 +13,9 @@ namespace EternityEngine
 		public Vector2Value pivot;
 		Texture2D tex;
 
-		public override void Start ()
+		public override void Init ()
 		{
-			base.Start ();
+			base.Init ();
 			imgs = new Image[ScenePanel.instances.Length];
 			imgs[0] = sceneEntry.img;
 			tex = new Texture2D(1, 1);

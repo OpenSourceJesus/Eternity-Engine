@@ -11,7 +11,7 @@ namespace EternityEngine
         public FloatValue rot;
         public Vector2Value size;
 
-		public override void Start ()
+		public override void Init ()
 		{
 			pos.onChanged += OnPosChanged;
 			rot.onChanged += OnRotChanged;

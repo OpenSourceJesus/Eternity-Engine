@@ -6,6 +6,7 @@ namespace EternityEngine
 	{
 		public override void TrySet (string text)
 		{
+			base.TrySet (text);
 			string prevVal = value.val;
 			value.val = text;
 			if (value.val != prevVal)

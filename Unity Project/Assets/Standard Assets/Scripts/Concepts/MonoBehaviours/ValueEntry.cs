@@ -2,12 +2,9 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class ValueEntry<T> : MonoBehaviour
+	public class ValueEntry<T> : SetableValue
 	{
+		[HideInInspector]
 		public Value<T> value;
-
-		public virtual void TrySet (string text)
-		{
-		}
 	}
 }

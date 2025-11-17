@@ -11,6 +11,8 @@ namespace EternityEngine
 		[HideInInspector]
 		public _Component component;
 		[HideInInspector]
+		public _Component[] components = new _Component[0];
+		[HideInInspector]
 		public InspectorPanel inspectorPanel;
 		public RectTransform collapButtonRectTrs;
 		public GameObject goToGetCollapsed;
@@ -44,12 +46,16 @@ namespace EternityEngine
 			for (int i = 0; i < component.floatValues.Length; i ++)
 			{
 				FloatValue floatValue = component.floatValues[i];
-				floatValuesEntries[i].value = floatValue;
+				FloatValueEntry floatValueEntry = floatValuesEntries[i];
+				floatValueEntry.value = floatValue;
+				floatValue.setableValue = floatValueEntry;
 			}
 			for (int i = 0; i < component.stringValues.Length; i ++)
 			{
 				StringValue stringValue = component.stringValues[i];
+				StringValueEntry stringValueEntry = stringValuesEntries[i];
 				stringValuesEntries[i].value = stringValue;
+				stringValue.setableValue = stringValueEntry;
 			}
 			for (int i = 0; i < component.vector2Values.Length; i ++)
 			{
@@ -61,6 +67,7 @@ namespace EternityEngine
 				Vector3Value vector3Value = component.vector3Values[i];
 				vector3ValuesEntries[i].value = vector3Value;
 			}
+			this.component = component;
 		}
 
 		public void SetCollapsed (bool collapse)

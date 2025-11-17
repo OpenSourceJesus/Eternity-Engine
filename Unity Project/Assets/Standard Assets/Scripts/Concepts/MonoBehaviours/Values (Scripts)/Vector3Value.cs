@@ -8,14 +8,14 @@ namespace EternityEngine
 		public FloatValue yValue;
 		public FloatValue zValue;
 
-		void Awake ()
+		public override void Awake ()
 		{
 			xValue.onChanged += () => { val.x = xValue.val; _OnChanged (); };
 			yValue.onChanged += () => { val.y = yValue.val; _OnChanged (); };
 			zValue.onChanged += () => { val.z = zValue.val; _OnChanged (); };
 		}
 
-		void OnDestroy ()
+		public override void OnDestroy ()
 		{
 			xValue.onChanged -= () => { val.x = xValue.val; _OnChanged (); };
 			yValue.onChanged -= () => { val.y = yValue.val; _OnChanged (); };

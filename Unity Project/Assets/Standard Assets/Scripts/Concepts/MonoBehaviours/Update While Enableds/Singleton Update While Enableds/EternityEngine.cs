@@ -122,24 +122,25 @@ namespace EternityEngine
 				ob.hierarchyEntries[i] = hierarchyEntry;
 				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
 			}
-			ob.components = new _Component[template.components.Length];
 			ob.sceneEntries = new SceneEntry[0];
 			for (int i = 0; i < template.components.Length; i ++)
 			{
 				_Component component = Instantiate(template.components[i]);
 				component = Instantiate(component);
+				component.ob = ob;
 				SceneEntry sceneEntry = component.sceneEntry;
 				if (sceneEntry != null)
 				{
-					component.sceneEntry = Instantiate(sceneEntry, sceneEntry.scenePanel.obsParentRectTrs);
+					sceneEntry = Instantiate(sceneEntry, sceneEntry.scenePanel.obsParentRectTrs);
 					sceneEntry.hierarchyEntries = ob.hierarchyEntries;
 					ob.sceneEntries = ob.sceneEntries.Add(sceneEntry);
+					component.sceneEntry = sceneEntry;
 				}
 				for (int i2 = 0; i2 < component.inspectorEntries.Length; i2 ++)
 				{
 					InspectorEntry inspectorEntry = component.inspectorEntries[i2];
-					inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
 					inspectorEntry.gameObject.SetActive(false);
+					inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
 					component.inspectorEntries[i2] = inspectorEntry;
 					inspectorEntry.SetValueEntries (component);
 					InspectorEntry[] inspectorEntriesForEntriesPrefabs = null;
@@ -149,6 +150,7 @@ namespace EternityEngine
 						InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { inspectorEntry };
 				}
 				ob.components[i] = component;
+				component.Init ();
 			}
 			obs = obs.Add(ob);
 			return ob;
@@ -170,6 +172,7 @@ namespace EternityEngine
 			_Component component = Instantiate(componentPrefab);
 			component.ob = ob;
 			ob.components = ob.components.Add(component);
+			component.Init ();
 			InspectorPanel.AddOrUpdateEntries (component);
 			return component;
 		}

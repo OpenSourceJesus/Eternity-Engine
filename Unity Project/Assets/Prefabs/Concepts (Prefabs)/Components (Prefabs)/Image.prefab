@@ -263,6 +263,10 @@ PrefabInstance:
       propertyPath: val
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1725794314844669198, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: component
+      value: 
+      objectReference: {fileID: 7813554479563803767}
     - target: {fileID: 5361949812163608371, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
       propertyPath: m_Name
       value: Pivot Value
@@ -271,6 +275,10 @@ PrefabInstance:
       propertyPath: val
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6165620212904018891, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: component
+      value: 
+      objectReference: {fileID: 7813554479563803767}
     - target: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
       propertyPath: val.x
       value: 0.5
@@ -279,6 +287,10 @@ PrefabInstance:
       propertyPath: val.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
+      propertyPath: component
+      value: 
+      objectReference: {fileID: 7813554479563803767}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -370,6 +382,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1501202070641553078, guid: cb2adf8faa77dc590860119fccb6b32e, type: 3}
+      propertyPath: component
+      value: 
+      objectReference: {fileID: 7813554479563803767}
     - target: {fileID: 5361949812163608371, guid: cb2adf8faa77dc590860119fccb6b32e, type: 3}
       propertyPath: m_Name
       value: Path Value
@@ -482,6 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef5e518853c7b91e99b31dd6ad1e5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Image
+  sceneEntry: {fileID: 7251970396155826793}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: e919a317a03e6fcb181bdcbef4bc1a2e, type: 3}
   collapsed: 0
@@ -498,7 +515,6 @@ MonoBehaviour:
   requiredComponentIdxs: 00000000
   dependsOn: []
   dependsOnMe: []
-  sceneEntry: {fileID: 7251970396155826793}
   imgs: []
   path: {fileID: 5196184695415585922}
   pivot: {fileID: 1892331620254728330}
