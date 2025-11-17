@@ -186,6 +186,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2133825286720685333, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
   m_PrefabInstance: {fileID: 1209542740642898116}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &960945108605707742 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+  m_PrefabInstance: {fileID: 1209542740642898116}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960945108605707728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8416589487355932759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37db3e6470d627b3386e655d27eafa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.StringValueEntry
+  valueSetter: {fileID: 960945108605707742}
   value: {fileID: 0}
 --- !u!224 &8355699331202631784 stripped
 RectTransform:

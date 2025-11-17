@@ -57,7 +57,29 @@ namespace EternityEngine
 				{
 					InspectorEntry entry = inspectorPanel.entries[i2];
 					if (destroy)
+					{
+						for (int i3 = 0; i3 < entry.floatValuesEntries.Length; i3 ++)
+						{
+							FloatValueEntry floatValueEntry = entry.floatValuesEntries[i3];
+							floatValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.stringValuesEntries.Length; i3 ++)
+						{
+							StringValueEntry stringValueEntry = entry.stringValuesEntries[i3];
+							stringValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.vector2ValuesEntries.Length; i3 ++)
+						{
+							Vector2ValueEntry vector2ValueEntry = entry.vector2ValuesEntries[i3];
+							vector2ValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.vector3ValuesEntries.Length; i3 ++)
+						{
+							Vector3ValueEntry vector3ValueEntry = entry.vector3ValuesEntries[i3];
+							vector3ValueEntry.DetachValues ();
+						}
 						Destroy(entry.gameObject);
+					}
 					else
 						entry.gameObject.SetActive(false);
 				}
@@ -96,17 +118,14 @@ namespace EternityEngine
 					else
 					{
 						entry = component.inspectorEntries[i];
-						foreach (KeyValuePair<SetableValue, string> keyValuePair in component.setValueEntriesTo)
-							keyValuePair.Key.valueSetter.text = keyValuePair.Value;
-						component.setValueEntriesTo.Clear();
 						entry.gameObject.SetActive(true);
 					}
 				}
 				else
 				{
-					entry = inspectorPanel.NewEntry(component);
-					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[component.inspectorEntryPrefab];
-					float?[] floats = new float?[entry.floatValuesEntries.Length];
+					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
+					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[entryPrefab];
+					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
 					_Component[] components = new _Component[entriesForEntriesPrefabs.Length];
 					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
 					{
@@ -125,7 +144,7 @@ namespace EternityEngine
 						}
 						components[i2] = _entry.component;
 					}
-					entry.components = components;
+					entry = inspectorPanel.NewEntry(components);
 					for (int i2 = 0; i2 < floats.Length; i2 ++)
 					{
 						float? f = floats[i2];
@@ -141,11 +160,12 @@ namespace EternityEngine
 			return output;
 		}
 
-		InspectorEntry NewEntry (_Component component)
+		InspectorEntry NewEntry (params _Component[] components)
 		{
+			_Component component = components[0];
 			InspectorEntry entry = Instantiate(component.inspectorEntryPrefab, entriesParent);
 			entry.inspectorPanel = this;
-			entry.SetValueEntries (component);
+			entry.SetValueEntries (components);
 			if (component.collapsed)
 				entry.SetCollapsed (true);
 			return entry;

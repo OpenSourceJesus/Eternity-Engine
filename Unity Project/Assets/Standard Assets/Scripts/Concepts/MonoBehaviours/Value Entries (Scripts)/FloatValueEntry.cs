@@ -6,20 +6,28 @@ namespace EternityEngine
 	{
 		public override void TrySet (string text)
 		{
-			base.TrySet (text);
-			float prevVal = value.val;
-			if (string.IsNullOrEmpty(text) && prevVal != 0)
+			Value<float>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			bool parsed = false;
+			float newVal = 0;
+			if (string.IsNullOrEmpty(text))
 			{
-				value.val = 0;
-				value._OnChanged ();
-			}
-			else if (float.TryParse(text, out value.val))
-			{
-				if (value.val != prevVal)
-					value._OnChanged ();
+				parsed = true;
+				newVal = 0;
 			}
 			else
-				valueSetter.text = "" + prevVal;
+				parsed = float.TryParse(text, out newVal);
+			if (!parsed)
+				return;
+			for (int i = 0; i < targets.Length; i ++)
+			{
+				Value<float> target = targets[i];
+				if (target == null || target.val == newVal)
+					continue;
+				target.val = newVal;
+				target._OnChanged ();
+			}
 		}
 	}
 }

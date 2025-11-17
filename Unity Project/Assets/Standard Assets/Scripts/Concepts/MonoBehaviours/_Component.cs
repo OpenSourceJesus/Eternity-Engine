@@ -23,8 +23,6 @@ namespace EternityEngine
 		public int[] requiredComponentIdxs = new int[0];
 		public List<_Component> dependsOn = new List<_Component>();
 		public List<_Component> dependsOnMe = new List<_Component>();
-		[HideInInspector]
-		public Dictionary<SetableValue, string> setValueEntriesTo = new Dictionary<SetableValue, string>();
 
 		public virtual void Init ()
 		{

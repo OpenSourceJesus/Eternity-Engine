@@ -11,8 +11,6 @@ namespace EternityEngine
 		[HideInInspector]
 		public _Component component;
 		[HideInInspector]
-		public _Component[] components = new _Component[0];
-		[HideInInspector]
 		public InspectorPanel inspectorPanel;
 		public RectTransform collapButtonRectTrs;
 		public GameObject goToGetCollapsed;
@@ -41,33 +39,62 @@ namespace EternityEngine
 				ToggleOptions ();
 		}
 
-		public void SetValueEntries (_Component component)
+		public void SetValueEntries (params _Component[] components)
 		{
-			for (int i = 0; i < component.floatValues.Length; i ++)
+			_Component firstComponent = components[0];
+			for (int i = 0; i < floatValuesEntries.Length; i ++)
 			{
-				FloatValue floatValue = component.floatValues[i];
 				FloatValueEntry floatValueEntry = floatValuesEntries[i];
-				floatValueEntry.value = floatValue;
-				floatValue.setableValue = floatValueEntry;
+				floatValueEntry.DetachValues ();
+				Value<float>[] values = new Value<float>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					FloatValue floatValue = component.floatValues[i];
+					floatValue.setableValues = floatValue.setableValues.Add(floatValueEntry);
+					values[i2] = floatValue;
+				}
+				floatValueEntry.SetValues (values);
 			}
-			for (int i = 0; i < component.stringValues.Length; i ++)
+			for (int i = 0; i < stringValuesEntries.Length; i ++)
 			{
-				StringValue stringValue = component.stringValues[i];
 				StringValueEntry stringValueEntry = stringValuesEntries[i];
-				stringValuesEntries[i].value = stringValue;
-				stringValue.setableValue = stringValueEntry;
+				stringValueEntry.DetachValues ();
+				Value<string>[] values = new Value<string>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					StringValue stringValue = component.stringValues[i];
+					stringValue.setableValues = stringValue.setableValues.Add(stringValueEntry);
+					values[i2] = stringValue;
+				}
+				stringValueEntry.SetValues (values);
 			}
-			for (int i = 0; i < component.vector2Values.Length; i ++)
+			for (int i = 0; i < vector2ValuesEntries.Length; i ++)
 			{
-				Vector2Value vector2Value = component.vector2Values[i];
-				vector2ValuesEntries[i].value = vector2Value;
+				Vector2ValueEntry vector2ValueEntry = vector2ValuesEntries[i];
+				vector2ValueEntry.DetachValues ();
+				Value<Vector2>[] values = new Value<Vector2>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.vector2Values[i];
+				}
+				vector2ValueEntry.SetValues (values);
 			}
-			for (int i = 0; i < component.vector3Values.Length; i ++)
+			for (int i = 0; i < vector3ValuesEntries.Length; i ++)
 			{
-				Vector3Value vector3Value = component.vector3Values[i];
-				vector3ValuesEntries[i].value = vector3Value;
+				Vector3ValueEntry vector3ValueEntry = vector3ValuesEntries[i];
+				vector3ValueEntry.DetachValues ();
+				Value<Vector3>[] values = new Value<Vector3>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.vector3Values[i];
+				}
+				vector3ValueEntry.SetValues (values);
 			}
-			this.component = component;
+			component = firstComponent;
 		}
 
 		public void SetCollapsed (bool collapse)

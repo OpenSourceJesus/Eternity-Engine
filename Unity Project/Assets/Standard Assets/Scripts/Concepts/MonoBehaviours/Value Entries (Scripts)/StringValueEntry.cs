@@ -6,11 +6,19 @@ namespace EternityEngine
 	{
 		public override void TrySet (string text)
 		{
-			base.TrySet (text);
-			string prevVal = value.val;
-			value.val = text;
-			if (value.val != prevVal)
-				value._OnChanged ();
+			Value<string>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			for (int i = 0; i < targets.Length; i ++)
+			{
+				Value<string> target = targets[i];
+				if (target == null)
+					continue;
+				string prevVal = target.val;
+				target.val = text;
+				if (target.val != prevVal)
+					target._OnChanged ();
+			}
 		}
 	}
 }

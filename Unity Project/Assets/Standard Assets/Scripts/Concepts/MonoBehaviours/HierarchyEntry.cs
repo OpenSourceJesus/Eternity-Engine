@@ -114,7 +114,7 @@ namespace EternityEngine
 			if (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.leftCtrlKey.isPressed || HierarchyPanel.isDraggingEntry)
 				return;
 			int prevSelectedCnt = 0;
-			bool selectedCntChanged = false;
+			bool selectionCntChanged = false;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
@@ -133,9 +133,9 @@ namespace EternityEngine
 					}
 				}
 				clickedHierarchyEntry.SetSelected (true);
-				selectedCntChanged = hierarchyPanel.selected.Length != prevSelectedCnt;
+				selectionCntChanged = hierarchyPanel.selected.Length != prevSelectedCnt;
 			}
-			if (selectedCntChanged)
+			if (selectionCntChanged)
 				InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 		}
 
