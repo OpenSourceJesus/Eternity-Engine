@@ -75,6 +75,123 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &2005511815159687630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7335552380223399591}
+    m_Modifications:
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361949812163608371, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: m_Name
+      value: Tint Value
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+--- !u!114 &875460397715795136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1725794314844669198, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!4 &2272014163693734116 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 311542800848920874, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2335673030856729107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4304588443194608605, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!114 &2830367649192074099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4364689799243166397, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!114 &5640103999415642629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6165620212904018891, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4ec9e01e11b893a93f5cb8689368e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValue
+--- !u!114 &7242753509195102053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9175644090777771691, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+  m_PrefabInstance: {fileID: 2005511815159687630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d6f54fd6e5a4a6e857e66dac20711a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorValue
 --- !u!1001 &4373444201000599337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -475,6 +592,9 @@ PrefabInstance:
       addedObject: {fileID: 4701425329700047949}
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2272014163693734116}
+    - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4099202354145910275}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5361949812163608371, guid: 552b994166718d114809ee820a481314, type: 3}
@@ -505,11 +625,17 @@ MonoBehaviour:
   floatValues:
   - {fileID: 5953551047351937129}
   - {fileID: 1224043422574800556}
+  - {fileID: 875460397715795136}
+  - {fileID: 5640103999415642629}
+  - {fileID: 2830367649192074099}
+  - {fileID: 2335673030856729107}
   stringValues:
   - {fileID: 5196184695415585922}
   vector2Values:
   - {fileID: 1892331620254728330}
   vector3Values: []
+  colorValues:
+  - {fileID: 7242753509195102053}
   inspectorEntries: []
   sceneEntries: []
   requiredComponentIdxs: 00000000

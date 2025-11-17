@@ -19,6 +19,7 @@ namespace EternityEngine
 		public StringValueEntry[] stringValuesEntries = new StringValueEntry[0];
 		public Vector2ValueEntry[] vector2ValuesEntries = new Vector2ValueEntry[0];
 		public Vector3ValueEntry[] vector3ValuesEntries = new Vector3ValueEntry[0];
+		public ColorValueEntry[] colorValueEntries = new ColorValueEntry[0];
 		public RectTransform optionsRectTrs;
 		OptionsUpdater optionsUpdater;
 		int insertAt;
@@ -93,6 +94,18 @@ namespace EternityEngine
 					values[i2] = component.vector3Values[i];
 				}
 				vector3ValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < colorValueEntries.Length; i ++)
+			{
+				ColorValueEntry colorValueEntry = colorValueEntries[i];
+				colorValueEntry.DetachValues ();
+				Value<Color>[] values = new Value<Color>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.colorValues[i];
+				}
+				colorValueEntry.SetValues (values);
 			}
 			component = firstComponent;
 		}
