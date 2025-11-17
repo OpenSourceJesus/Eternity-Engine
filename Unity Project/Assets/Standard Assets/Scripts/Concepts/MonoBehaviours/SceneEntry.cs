@@ -16,6 +16,12 @@ namespace EternityEngine
 		[HideInInspector]
 		public bool selected;
 
+		void Start ()
+		{
+			if (hierarchyEntries[0].selected)
+				SetSelected (true);
+		}
+
 		public void SetSelected (bool select)
 		{
 			if (select && !selected)

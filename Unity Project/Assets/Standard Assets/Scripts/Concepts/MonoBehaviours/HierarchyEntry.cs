@@ -213,12 +213,14 @@ namespace EternityEngine
 				hierarchyPanel.selected = hierarchyPanel.selected.Remove(this);
 			HierarchyPanel.lastEntryIdxHadSelectionSet = rectTrs.GetSiblingIndex();
 			selectedIndicator.enabled = select;
-			selected = select;
-			for (int i = 0; i < ob.sceneEntries.Length; i ++)
+			if (selected != select)
 			{
-				SceneEntry sceneEntry = ob.sceneEntries[i];
-				if (sceneEntry.selected != select)
+				selected = select;
+				for (int i = 0; i < ob.sceneEntries.Length; i ++)
+				{
+					SceneEntry sceneEntry = ob.sceneEntries[i];
 					sceneEntry.SetSelected (select);
+				}
 			}
 		}
 

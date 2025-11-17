@@ -77,6 +77,7 @@ namespace EternityEngine
 								entry.SetSelected (!entry.selected);
 							else
 								entry.SetSelected (true);
+							InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 							return;
 						}
 					}

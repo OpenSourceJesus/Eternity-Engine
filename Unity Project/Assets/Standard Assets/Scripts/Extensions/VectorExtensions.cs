@@ -77,11 +77,18 @@ namespace Extensions
 				return new Vector2(-v.y, v.x);
 		}
 		
-		public static Vector2 Rotate (this Vector2 v, Vector2 pivotPoint, float degrees)
+
+		public static Vector2 Rotate (this Vector2 pnt, Vector2 pivot, float degrees)
 		{
-			float ang = GetFacingAngle(v - pivotPoint) + degrees;
-			ang *= Mathf.Deg2Rad;
-			return pivotPoint + (new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)).normalized * Vector2.Distance(v, pivotPoint));
+			float rad = degrees * Mathf.Deg2Rad;
+			Vector2 relativePnt = pnt - pivot;
+			float cos = Mathf.Cos(rad);
+			float sin = Mathf.Sin(rad);
+			Vector2 rotatedPnt = new Vector2(
+				relativePnt.x * cos - relativePnt.y * sin,
+				relativePnt.x * sin + relativePnt.y * cos
+			);
+			return rotatedPnt + pivot;
 		}
 		
 		public static Vector3 Rotate (this Vector3 v, Quaternion rotation)
@@ -89,10 +96,10 @@ namespace Extensions
 			return rotation * v;
 		}
 
-		public static Vector3 Rotate (this Vector3 v, Vector3 pivotPoint, Quaternion rotation)
+		public static Vector3 Rotate (this Vector3 v, Vector3 pivotPnt, Quaternion rotation)
 		{
-			Vector3 direction = (rotation * (v - pivotPoint)).normalized;
-			return pivotPoint + (direction * Vector3.Distance(v, pivotPoint));
+			Vector3 direction = (rotation * (v - pivotPnt)).normalized;
+			return pivotPnt + direction * Vector3.Distance(v, pivotPnt);
 		}
 		
 		public static Vector2 PerpendicularCloserToDir (this Vector2 v, Vector2 dir)
@@ -292,76 +299,76 @@ namespace Extensions
 			return actualResult.ToVec2Int();
 		}
 
-		public static Vector3 GetClosestPoint (Vector3 v, params Vector3[] points)
+		public static Vector3 GetClosestPoint (Vector3 v, params Vector3[] pnts)
 		{
-			Vector3 closestPoint = points[0];
-			float closestDistanceSqr = (v - closestPoint).sqrMagnitude;
-			for (int i = 1; i < points.Length; i ++)
+			Vector3 closestPnt = pnts[0];
+			float closestDistanceSqr = (v - closestPnt).sqrMagnitude;
+			for (int i = 1; i < pnts.Length; i ++)
 			{
-				Vector3 point = points[i];
-				float distanceSqr = (v - point).sqrMagnitude;
+				Vector3 pnt = pnts[i];
+				float distanceSqr = (v - pnt).sqrMagnitude;
 				if (distanceSqr < closestDistanceSqr)
 				{
-					closestPoint = point;
+					closestPnt = pnt;
 					closestDistanceSqr = distanceSqr;
 				}
 			}
-			return closestPoint;
+			return closestPnt;
 		}
 
-		public static int GetIndexOfClosestPoint (Vector3 v, params Vector3[] points)
+		public static int GetIndexOfClosestPoint (Vector3 v, params Vector3[] pnts)
 		{
-			int indexOfClosestPoint = 0;
-			Vector3 closestPoint = points[0];
-			float closestDistanceSqr = (v - closestPoint).sqrMagnitude;
-			for (int i = 1; i < points.Length; i ++)
+			int indexOfClosestPnt = 0;
+			Vector3 closestPnt = pnts[0];
+			float closestDistanceSqr = (v - closestPnt).sqrMagnitude;
+			for (int i = 1; i < pnts.Length; i ++)
 			{
-				Vector3 point = points[i];
-				float distanceSqr = (v - point).sqrMagnitude;
+				Vector3 pnt = pnts[i];
+				float distanceSqr = (v - pnt).sqrMagnitude;
 				if (distanceSqr < closestDistanceSqr)
 				{
-					closestPoint = point;
+					closestPnt = pnt;
 					closestDistanceSqr = distanceSqr;
-					indexOfClosestPoint = i;
+					indexOfClosestPnt = i;
 				}
 			}
-			return indexOfClosestPoint;
+			return indexOfClosestPnt;
 		}
 
-		public static Vector2 GetClosestPoint (Vector2 v, params Vector2[] points)
+		public static Vector2 GetClosestPoint (Vector2 v, params Vector2[] pnts)
 		{
-			Vector2 closestPoint = points[0];
-			float closestDistanceSqr = (v - closestPoint).sqrMagnitude;
-			for (int i = 1; i < points.Length; i ++)
+			Vector2 closestPnt = pnts[0];
+			float closestDistanceSqr = (v - closestPnt).sqrMagnitude;
+			for (int i = 1; i < pnts.Length; i ++)
 			{
-				Vector2 point = points[i];
-				float distanceSqr = (v - point).sqrMagnitude;
+				Vector2 pnt = pnts[i];
+				float distanceSqr = (v - pnt).sqrMagnitude;
 				if (distanceSqr < closestDistanceSqr)
 				{
-					closestPoint = point;
+					closestPnt = pnt;
 					closestDistanceSqr = distanceSqr;
 				}
 			}
-			return closestPoint;
+			return closestPnt;
 		}
 
-		public static int GetIndexOfClosestPoint (Vector2 v, params Vector2[] points)
+		public static int GetIndexOfClosestPoint (Vector2 v, params Vector2[] pnts)
 		{
-			int indexOfClosestPoint = 0;
-			Vector2 closestPoint = points[0];
-			float closestDistanceSqr = (v - closestPoint).sqrMagnitude;
-			for (int i = 1; i < points.Length; i ++)
+			int indexOfClosestPnt = 0;
+			Vector2 closestPnt = pnts[0];
+			float closestDistanceSqr = (v - closestPnt).sqrMagnitude;
+			for (int i = 1; i < pnts.Length; i ++)
 			{
-				Vector2 point = points[i];
-				float distanceSqr = (v - point).sqrMagnitude;
+				Vector2 pnt = pnts[i];
+				float distanceSqr = (v - pnt).sqrMagnitude;
 				if (distanceSqr < closestDistanceSqr)
 				{
-					closestPoint = point;
+					closestPnt = pnt;
 					closestDistanceSqr = distanceSqr;
-					indexOfClosestPoint = i;
+					indexOfClosestPnt = i;
 				}
 			}
-			return indexOfClosestPoint;
+			return indexOfClosestPnt;
 		}
 
 		public static float Sign (Vector2 p1, Vector2 p2, Vector2 p3)
@@ -433,23 +440,23 @@ namespace Extensions
 			return Vector4.Dot(aV, aB) / Vector4.Dot(aB, aB);
 		}
 
-		public static List<Vector2> GetConvexHull (this List<Vector2> points)
+		public static List<Vector2> GetConvexHull (this List<Vector2> pnts)
 		{
-			points = points.OrderBy(p => p.x).ThenBy(p => p.y).ToList();
+			pnts = pnts.OrderBy(p => p.x).ThenBy(p => p.y).ToList();
 			List<Vector2> lower = new List<Vector2>();
-			foreach (var point in points)
+			foreach (var pnt in pnts)
 			{
-				while (lower.Count >= 2 && CrossProduct(lower[lower.Count - 2], lower[lower.Count - 1], point) <= 0)
+				while (lower.Count >= 2 && CrossProduct(lower[lower.Count - 2], lower[lower.Count - 1], pnt) <= 0)
 					lower.RemoveAt(lower.Count - 1);
-				lower.Add(point);
+				lower.Add(pnt);
 			}
 			List<Vector2> upper = new List<Vector2>();
-			for (int i = points.Count - 1; i >= 0; i --)
+			for (int i = pnts.Count - 1; i >= 0; i --)
 			{
-				var point = points[i];
-				while (upper.Count >= 2 && CrossProduct(upper[upper.Count - 2], upper[upper.Count - 1], point) <= 0)
+				var pnt = pnts[i];
+				while (upper.Count >= 2 && CrossProduct(upper[upper.Count - 2], upper[upper.Count - 1], pnt) <= 0)
 					upper.RemoveAt(upper.Count - 1);
-				upper.Add(point);
+				upper.Add(pnt);
 			}
 			lower.RemoveAt(lower.Count - 1);
 			upper.RemoveAt(upper.Count - 1);

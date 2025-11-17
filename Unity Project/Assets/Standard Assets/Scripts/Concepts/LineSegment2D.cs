@@ -20,22 +20,23 @@ public class LineSegment2D
 		this.end = end;
 	}
 
-// #if UNITY_EDITOR
-// 	public virtual void DrawGizmos (Color color)
-// 	{
-// 		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
-// 		gizmosEntry.setColor = true;
-// 		gizmosEntry.color = color;
-// 		gizmosEntry.onDrawGizmos += DrawGizmos;
-// 		gizmosEntry.remove = true;
-// 		GizmosManager.gizmosEntries.Add(gizmosEntry);
-// 	}
+#if UNITY_EDITOR
+	public virtual void DrawGizmos (Color color)
+	{
+		GizmosManager.GizmosEntry gizmosEntry = new GizmosManager.GizmosEntry();
+		gizmosEntry.setColor = true;
+		gizmosEntry.color = color;
+		gizmosEntry.onDrawGizmos += DrawGizmos;
+		gizmosEntry.remove = true;
+		GizmosManager.gizmosEntries.Add(gizmosEntry);
+		Debug.DrawLine(start, end, color, .1f);
+	}
 
-// 	public virtual void DrawGizmos (params object[] args)
-// 	{
-// 		Gizmos.DrawLine(start, end);
-// 	}
-// #endif
+	public virtual void DrawGizmos (object arg)
+	{
+		Gizmos.DrawLine(start, end);
+	}
+#endif
 
 	public override string ToString ()
 	{

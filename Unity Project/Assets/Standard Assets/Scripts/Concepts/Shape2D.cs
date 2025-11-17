@@ -23,16 +23,16 @@ public class Shape2D
 		shape.edges.CopyTo(edges, 0);
 	}
 
-// #if UNITY_EDITOR
-// 	public void DrawGizmos (Color color)
-// 	{
-// 		for (int i = 0; i < edges.Length; i ++)
-// 		{
-// 			LineSegment2D edge = edges[i];
-// 			edge.DrawGizmos (color);
-// 		}
-// 	}
-// #endif
+#if UNITY_EDITOR
+	public void DrawGizmos (Color color)
+	{
+		for (int i = 0; i < edges.Length; i ++)
+		{
+			LineSegment2D edge = edges[i];
+			edge.DrawGizmos (color);
+		}
+	}
+#endif
 
 	public void SetCorners_Polygon ()
 	{

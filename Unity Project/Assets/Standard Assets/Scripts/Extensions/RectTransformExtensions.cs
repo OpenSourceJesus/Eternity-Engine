@@ -53,7 +53,8 @@ namespace Extensions
 		{
 			Vector2 min = rectTrs.TransformPoint(rectTrs.rect.min);
 			Vector2 max = rectTrs.TransformPoint(rectTrs.rect.max);
-			return new Rect2D((min + max) / 2, max - min, rectTrs.eulerAngles.z);
+			Vector2 size = rectTrs.rect.size * rectTrs.lossyScale;
+			return new Rect2D((min + max) / 2, size, rectTrs.eulerAngles.z);
 		}
 	}
 }

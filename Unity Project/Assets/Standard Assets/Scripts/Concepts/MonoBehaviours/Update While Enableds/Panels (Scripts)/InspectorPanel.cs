@@ -126,6 +126,7 @@ namespace EternityEngine
 					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
 					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[entryPrefab];
 					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
+					string[] strings = new string[entryPrefab.stringValuesEntries.Length];
 					_Component[] components = new _Component[entriesForEntriesPrefabs.Length];
 					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
 					{
@@ -142,6 +143,18 @@ namespace EternityEngine
 								break;
 							}
 						}
+						for (int i3 = 0; i3 < _entry.stringValuesEntries.Length; i3 ++)
+						{
+							StringValueEntry stringValueEntry = _entry.stringValuesEntries[i3];
+							string str = stringValueEntry.value.val;
+							if (i2 == 0)
+								strings[i3] = str;
+							else if (str != strings[i3])
+							{
+								strings[i3] = null;
+								break;
+							}
+						}
 						components[i2] = _entry.component;
 					}
 					entry = inspectorPanel.NewEntry(components);
@@ -152,6 +165,14 @@ namespace EternityEngine
 							entry.floatValuesEntries[i2].valueSetter.text = "—";
 						else
 							entry.floatValuesEntries[i2].valueSetter.text = "" + f;
+					}
+					for (int i2 = 0; i2 < strings.Length; i2 ++)
+					{
+						string str = strings[i2];
+						if (str == null)
+							entry.stringValuesEntries[i2].valueSetter.text = "—";
+						else
+							entry.stringValuesEntries[i2].valueSetter.text = "" + str;
 					}
 				}
 				inspectorPanel.entries = inspectorPanel.entries.Add(entry);
