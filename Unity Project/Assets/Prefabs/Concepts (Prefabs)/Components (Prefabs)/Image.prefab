@@ -127,6 +127,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tint Value
       objectReference: {fileID: 0}
+    - target: {fileID: 9175644090777771691, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
+      propertyPath: component
+      value: 
+      objectReference: {fileID: 7813554479563803767}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -644,6 +648,7 @@ MonoBehaviour:
   imgs: []
   path: {fileID: 5196184695415585922}
   pivot: {fileID: 1892331620254728330}
+  tint: {fileID: 7242753509195102053}
 --- !u!4 &7335552380223399591 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}

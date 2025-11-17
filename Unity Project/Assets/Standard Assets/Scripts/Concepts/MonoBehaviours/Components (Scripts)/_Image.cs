@@ -11,6 +11,7 @@ namespace EternityEngine
 		public Image[] imgs = new Image[0];
 		public StringValue path;
 		public Vector2Value pivot;
+		public ColorValue tint;
 		Texture2D tex;
 
 		public override void Init ()
@@ -28,12 +29,14 @@ namespace EternityEngine
 			}
 			path.onChanged += OnPathChanged;
 			pivot.onChanged += OnPivotChanged;
+			tint.onChanged += OnTintChanged;
 		}
 
 		void OnDestroy ()
 		{
 			path.onChanged -= OnPathChanged;
 			pivot.onChanged -= OnPivotChanged;
+			tint.onChanged -= OnTintChanged;
 			for (int i = 1; i < imgs.Length; i ++)
 			{
 				Image img = imgs[i];
@@ -73,6 +76,15 @@ namespace EternityEngine
 				RectTransform rectTrs = sceneEntry.rectTrs;
 				rectTrs.pivot = pivot.val;
 				rectTrs.anchoredPosition = anchoredPos;
+			}
+		}
+
+		void OnTintChanged ()
+		{
+			for (int i = 0; i < imgs.Length; i ++)
+			{
+				Image img = imgs[i];
+				img.color = tint.val;
 			}
 		}
 	}
