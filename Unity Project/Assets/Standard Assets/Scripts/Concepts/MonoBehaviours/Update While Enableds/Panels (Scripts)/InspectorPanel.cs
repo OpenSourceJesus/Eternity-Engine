@@ -58,6 +58,11 @@ namespace EternityEngine
 					InspectorEntry entry = inspectorPanel.entries[i2];
 					if (destroy)
 					{
+						for (int i3 = 0; i3 < entry.boolValuesEntries.Length; i3 ++)
+						{
+							BoolValueEntry boolValuesEntry = entry.boolValuesEntries[i3];
+							boolValuesEntry.DetachValues ();
+						}
 						for (int i3 = 0; i3 < entry.floatValuesEntries.Length; i3 ++)
 						{
 							FloatValueEntry floatValueEntry = entry.floatValuesEntries[i3];
@@ -77,6 +82,11 @@ namespace EternityEngine
 						{
 							Vector3ValueEntry vector3ValueEntry = entry.vector3ValuesEntries[i3];
 							vector3ValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.colorValueEntries.Length; i3 ++)
+						{
+							ColorValueEntry colorValueEntry = entry.colorValueEntries[i3];
+							colorValueEntry.DetachValues ();
 						}
 						Destroy(entry.gameObject);
 					}

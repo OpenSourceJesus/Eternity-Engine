@@ -12,6 +12,7 @@ namespace EternityEngine
         public InspectorEntry inspectorEntryPrefab;
 		[HideInInspector]
 		public bool collapsed;
+		public BoolValue[] boolValues = new BoolValue[0];
 		public FloatValue[] floatValues = new FloatValue[0];
 		public StringValue[] stringValues = new StringValue[0];
 		public Vector2Value[] vector2Values = new Vector2Value[0];

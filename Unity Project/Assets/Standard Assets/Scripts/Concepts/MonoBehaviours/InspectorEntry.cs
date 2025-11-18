@@ -15,6 +15,7 @@ namespace EternityEngine
 		public RectTransform collapButtonRectTrs;
 		public GameObject goToGetCollapsed;
 		public bool onlyAllowOnePerObject;
+		public BoolValueEntry[] boolValuesEntries = new BoolValueEntry[0];
 		public FloatValueEntry[] floatValuesEntries = new FloatValueEntry[0];
 		public StringValueEntry[] stringValuesEntries = new StringValueEntry[0];
 		public Vector2ValueEntry[] vector2ValuesEntries = new Vector2ValueEntry[0];
@@ -43,6 +44,18 @@ namespace EternityEngine
 		public void SetValueEntries (params _Component[] components)
 		{
 			_Component firstComponent = components[0];
+			for (int i = 0; i < boolValuesEntries.Length; i ++)
+			{
+				BoolValueEntry boolValuesEntry = boolValuesEntries[i];
+				boolValuesEntry.DetachValues ();
+				Value<bool>[] values = new Value<bool>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.boolValues[i];
+				}
+				boolValuesEntry.SetValues (values);
+			}
 			for (int i = 0; i < floatValuesEntries.Length; i ++)
 			{
 				FloatValueEntry floatValueEntry = floatValuesEntries[i];
