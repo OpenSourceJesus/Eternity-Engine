@@ -23,11 +23,26 @@ namespace EternityEngine
 		public GameObject  cantDeleteComponentNotificationGo;
 		public TMP_Text  cantDeleteComponentNotificationText;
 		public RectTransform canvasRectTrs;
+		public ColorValue backgroundColor;
+		public BoolValue useGravity;
+		public Vector3Value gravity;
+		public FloatValue unitLen;
 		static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
 		static StreamReader errorReader;
+		static Dictionary<string, string> attributes = new Dictionary<string, string>();
+		static string apiCode;
+		static string initCode;
+		static string[] updateScripts = new string[0];
+		static string[] vars = new string[0];
+		static string[] uiMethods = new string[0];
+		static string[] renderCode = new string[0];
+		static string[] particleSystemsClauses = new string[0];
+		static string[] uiClauses = new string[0];
+		static string[] globals = new string[0];
+		static Dictionary<string, float[]> pivots = new Dictionary<string, float[]>();
 		static string PYTHON = @"from python import os, sys, math, pygame, random, PyRapier2d
 from random import uniform
 
@@ -707,6 +722,87 @@ while running:
 				if (ob.data.export.val)
 					Export (ob);
 			}
+			string code = PYTHON;
+			code = code.Replace("# Attributes", $"attributes = {attributes}");
+			code = code.Replace("# API", apiCode);
+			code = code.Replace("# Vars", string.Join('\n', vars));
+			code = code.Replace("# UI Methods", string.Join('\n', uiMethods));
+			Vector2 _gravity = new Vector2();
+			if (useGravity.val)
+				_gravity = gravity.val;
+			List<string> physicsInitClauses = new List<string>(new string[] { "sim.set_length_unit (" + unitLen.val + ")\nsim.set_gravity (" + _gravity.x + ", " + _gravity.y + ")" });
+			// for rigidBody in rigidBodies.values():
+			// 	physicsInitClauses.append(rigidBody)
+			// for collider in colliders.values():
+			// 	physicsInitClauses.append(collider)
+			// for joint in joints.values():
+			// 	physicsInitClauses.append(joint)
+			string physicsInitCode = "";
+			for (int i = 0; i < physicsInitClauses.Count; i ++)
+			{
+				string clause = physicsInitClauses[i];
+				string[] lines = clause.Split('\n');
+				for (int i2 = 0; i2 < lines.Length; i2 ++)
+				{
+					string line = lines[i2];
+					physicsInitCode += "	" + line + '\n';
+				}
+			}
+			for (int i = 0; i < renderCode.Length; i ++)
+			{
+				string renderClause = renderCode[i];
+				string _renderClause = "";
+				string[] lines = renderClause.Split('\n');
+				for (int i2 = 0; i2 < lines.Length; i2 ++)
+				{
+					string line = lines[i2];
+					_renderClause += "	" + line + '\n';
+				}
+				renderCode[i] = _renderClause;
+			}
+			string particleSystemsCode = "";
+			for (int i = 0; i < particleSystemsClauses.Length; i ++)
+			{
+				string particleSystemClause = particleSystemsClauses[i];
+				string[] lines = particleSystemClause.Split('\n');
+				for (int i2 = 0; i2 < lines.Length; i2 ++)
+				{
+					string line = lines[i2];
+					particleSystemsCode += "	" + line + '\n';
+				}
+			}
+			string uiCode = "";
+			for (int i = 0; i < uiClauses.Length; i ++)
+			{
+				string uiClause = uiClauses[i];
+				string[] lines = uiClause.Split('\n');
+				for (int i2 = 0; i2 < lines.Length; i2 ++)
+				{
+					string line = lines[i2];
+					uiCode += "	" + line + '\n';
+				}
+			}
+			code = code.Replace("# Init Pivots, Attributes, UI", $"	pivots = {pivots}\n	attributes = {attributes}\n{uiCode}");
+			code = code.Replace("# Init Physics", physicsInitCode);
+			code = code.Replace("# Init Rendering", string.Join('\n', renderCode));
+			code = code.Replace("# Init Particle Systems", particleSystemsCode);
+			code = code.Replace("# Init User Code", string.Join('\n', initCode));
+			for (int i = 0; i < updateScripts.Length; i ++)
+			{
+				string updateScript = updateScripts[i];
+				string _updateScript = "";
+				string[] lines = updateScript.Split('\n');
+				for (int i2 = 0; i2 < lines.Length; i2 ++)
+				{
+					string line = lines[i2];
+					_updateScript += "	" + line + '\n';
+				}
+				updateScripts[i] = updateScript;
+			}
+			code = code.Replace("# Globals", "	global " + string.Join(", ", globals));
+			code = code.Replace("# Update", string.Join('\n', updateScripts));
+			Color _backgroundColor = backgroundColor.val;
+			code = code.Replace("# Background", "	screen.fill([" + _backgroundColor.r * 255 + ", " + _backgroundColor.g * 255 + ", " + _backgroundColor.b * 255 + "])");
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
 			processStartInfo.FileName = pythonPath;
 			processStartInfo.Arguments = "\"" + BUILD_SCRIPT_PATH;
@@ -728,7 +824,7 @@ while running:
 			}
 			catch (Exception e)
 			{
-				UnityEngine.Debug.LogError($"Error launching Export script: {e.Message}\nStack trace: {e.StackTrace}");
+				UnityEngine.Debug.LogError($"Error launching Build script: {e.Message}\nStack trace: {e.StackTrace}");
 			}
 		}
 
@@ -736,7 +832,7 @@ while running:
 		{
 			string oVarName = GetVarNameForObject(ob);
 			Dictionary<string, string> attributes = GetAttributes(ob);
-
+			
 		}
 
 		string GetVarNameForObject (_Object ob)

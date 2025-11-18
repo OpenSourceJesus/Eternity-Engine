@@ -13,12 +13,14 @@ namespace EternityEngine
 
 		public virtual void Awake ()
 		{
-			onChanged += HandleChange;
+			if (component != null)
+				onChanged += HandleChange;
 		}
 
 		public virtual void OnDestroy ()
 		{
-			onChanged -= HandleChange;
+			if (component != null)
+				onChanged -= HandleChange;
 		}
 
 		void HandleChange ()
