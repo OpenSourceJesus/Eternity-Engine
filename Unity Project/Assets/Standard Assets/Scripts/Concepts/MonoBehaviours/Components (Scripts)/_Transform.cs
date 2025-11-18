@@ -5,8 +5,6 @@ namespace EternityEngine
 {
 	public class _Transform : _Component
 	{
-		[HideInInspector]
-		public Transform trs;
         public Vector3Value pos;
         public FloatValue rot;
         public Vector2Value size;

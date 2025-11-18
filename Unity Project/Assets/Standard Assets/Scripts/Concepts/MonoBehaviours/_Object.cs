@@ -6,6 +6,7 @@ namespace EternityEngine
 {
 	public class _Object : MonoBehaviour
 	{
+		public ObjectData data;
 		[HideInInspector]
 		public _Component[] components = new _Component[0];
 		[HideInInspector]

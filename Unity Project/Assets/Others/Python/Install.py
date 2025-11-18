@@ -3,7 +3,8 @@ import os
 _thisDir = os.path.split(os.path.abspath(__file__))[0]
 if not os.path.isdir('PyRapier2d'):
 	os.system('git clone https://github.com/OpenSourceJesus/PyRapier2d --depth=1')
-os.system('''/bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+os.system('''sudo apt install python3-pip
+/bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
 pip install codon-jit
 pip install codon-jit --break-system-packages
 pip install maturin
