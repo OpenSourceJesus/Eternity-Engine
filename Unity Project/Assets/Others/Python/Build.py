@@ -1,6 +1,10 @@
 import os, sys, shutil, sysconfig, argparse, subprocess
 from pathlib import Path
 
+def is_interactive():
+	"""Check if stdin is connected to an interactive terminal."""
+	return sys.stdin.isatty()
+
 def StrToBool (v):
 	if isinstance(v, bool):
 		return v
@@ -67,16 +71,26 @@ if not genericSymlink.exists():
 	print("\n     This script needs to create it by running the following command:")
 	print(f"     > sudo ln -s {python_lib_soname} {genericSymlink}")
 	try:
-		response = input("\n     Do you want to authorize this command? (y/N) ")
-		if response.lower() not in ['y', 'yes']:
-			print("🚫 Aborting compilation due to missing link.")
-			sys.exit(1)
+		if is_interactive():
+			response = input("\n     Do you want to authorize this command? (y/n) ")
+			if response.lower() not in ['y', 'yes']:
+				print("🚫 Aborting compilation due to missing link.")
+				sys.exit(1)
+		else:
+			print("\n     ⚠️  Non-interactive mode detected (running from Unity).")
+			print("     Attempting to create symlink automatically...")
+			print("     (If this fails, please run the command manually)")
 		cmd = ["sudo", "ln", "-s", python_lib_soname, "libpython.so"]
 		subprocess.run(cmd, cwd = python_lib_dir, check = True)
 		print("  ✅ Symbolic link created successfully.")
 	except (subprocess.CalledProcessError, FileNotFoundError) as e:
 		print(f"\n❌ Error creating symbolic link: {e}")
-		print("   Please try running the command manually.")
+		if not is_interactive():
+			print("   This script is running in non-interactive mode.")
+			print("   Please run the following command manually before exporting:")
+			print(f"   sudo ln -s {python_lib_soname} {genericSymlink}")
+		else:
+			print("   Please try running the command manually.")
 		sys.exit(1)
 	except KeyboardInterrupt:
 		print("\n🚫 Operation cancelled by user.")

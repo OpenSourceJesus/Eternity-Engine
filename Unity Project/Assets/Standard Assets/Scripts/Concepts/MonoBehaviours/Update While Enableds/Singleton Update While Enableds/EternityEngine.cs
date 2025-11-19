@@ -810,11 +810,12 @@ while running:
 			code = code.Replace("# Update", string.Join('\n', updateScripts));
 			Color _backgroundColor = backgroundColor.val;
 			code = code.Replace("# Background", "	screen.fill([" + _backgroundColor.r * 255 + ", " + _backgroundColor.g * 255 + ", " + _backgroundColor.b * 255 + "])");
-			string scriptPath = Path.Combine(Application.temporaryCachePath, "Eternity Engine Export");
+			string scriptPath = Path.Combine(Application.temporaryCachePath, "Eternity Engine Export.py");
 			File.WriteAllText(scriptPath, code);
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
 			processStartInfo.FileName = pythonPath;
-			processStartInfo.Arguments = "\"" + BUILD_SCRIPT_PATH + "\" \"" + scriptPath + "\" \"" + exportPath.val +  "\" " + debugMode.val;
+			string executablePath = exportPath.val;
+			processStartInfo.Arguments = "\"" + BUILD_SCRIPT_PATH + "\" \"" + scriptPath + "\" \"" + executablePath +  "\" " + debugMode.val;
 			processStartInfo.UseShellExecute = false;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.CreateNoWindow = false;
@@ -828,7 +829,8 @@ while running:
 				{
 					UnityEngine.Debug.Log($"Python process started with PID: {process.Id}");
 					errorReader = process.StandardError;
-					StartCoroutine(ReadErrors ());
+					StartCoroutine(ReadErrors (process));
+					StartCoroutine(WaitForProcessExit(process, executablePath));
 				}
 			}
 			catch (Exception e)
@@ -860,14 +862,56 @@ while running:
 			return output;
 		}
 
-		IEnumerator ReadErrors ()
+		IEnumerator ReadErrors (Process process)
 		{
-			while (true)
+			while (!process.HasExited)
 			{
 				string line;
-                while ((line = errorReader.ReadLine()) != null)
-                    UnityEngine.Debug.LogError(line);
+				while ((line = errorReader.ReadLine()) != null)
+					UnityEngine.Debug.LogError(line);
 				yield return null;
+			}
+			string remainingLine;
+			while ((remainingLine = errorReader.ReadLine()) != null)
+				UnityEngine.Debug.LogError(remainingLine);
+			errorReader.Close();
+			errorReader = null;
+		}
+
+		IEnumerator WaitForProcessExit (Process process, string executablePath)
+		{
+			while (!process.HasExited)
+				yield return null;
+			if (process.ExitCode == 0)
+				RunExportedExecutable(executablePath);
+			else
+				UnityEngine.Debug.LogError($"Export process failed with exit code {process.ExitCode}.");
+		}
+
+		void RunExportedExecutable (string executablePath)
+		{
+			if (string.IsNullOrWhiteSpace(executablePath))
+			{
+				UnityEngine.Debug.LogError("Export path is not set. Cannot run exported program.");
+				return;
+			}
+			if (!File.Exists(executablePath))
+			{
+				UnityEngine.Debug.LogError($"Exported executable not found at '{executablePath}'.");
+				return;
+			}
+			try
+			{
+				ProcessStartInfo runInfo = new ProcessStartInfo();
+				runInfo.FileName = executablePath;
+				runInfo.UseShellExecute = false;
+				runInfo.WorkingDirectory = Path.GetDirectoryName(executablePath);
+				Process.Start(runInfo);
+				UnityEngine.Debug.Log($"Launched exported program at '{executablePath}'.");
+			}
+			catch (Exception e)
+			{
+				UnityEngine.Debug.LogError($"Failed to launch exported program: {e.Message}");
 			}
 		}
 
