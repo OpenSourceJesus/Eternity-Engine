@@ -47,7 +47,7 @@ namespace EternityEngine
 		static string[] particleSystemsClauses = new string[0];
 		static string[] uiClauses = new string[0];
 		static string[] globals = new string[0];
-		static Dictionary<string, float[]> pivots = new Dictionary<string, float[]>();
+		static Dictionary<string, Vector2> pivots = new Dictionary<string, Vector2>();
 		static string PYTHON = @"from python import os, sys, math, pygame, random, PyRapier2d
 from random import uniform
 
@@ -55,28 +55,23 @@ os.environ['SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS'] = '1'
 
 # Physics Section Start
 sim = PyRapier2d.Simulation()
-# rigidBodiesIds = {}
-# collidersIds = {}
-rigidBodiesIds = {'' : (-1, -1)}
-rigidBodiesIds.clear()
-collidersIds = {'' : (-1, -1)}
-collidersIds.clear()
+rigidBodiesIds : dict[str, pyobj] = {}
+collidersIds : dict[str, pyobj] = {}
 jointsIds = {}
 # Physics Section End
-surfaces = {'' : pygame.Surface((0, 0))}
-surfaces.clear()
+surfaces : dict[str, pyobj] = {}
 hide = []
-surfacesRects = {'' : pygame.Rect(0, 0, 0, 0)}
-surfacesRects.clear()
-initRots = {'' : 0.0}
-initRots.clear()
-zOrders = {'' : 0.0}
-zOrders.clear()
+surfacesRects : dict[str, pyobj] = {}
+initRots : dict[str, pyobj] = {}
+zOrders : dict[str, pyobj] = {}
+particleSystems : dict[str, pyobj] = {}
 if sys.platform == 'win32':
 	TMP_DIR = os.path.expanduser('~\\AppData\\Local\\Temp')
 else:
 	TMP_DIR = '/tmp'
-pivots = {}
+pivots : dict[str, pyobj] = {}
+attributes : dict[str, pyobj] = {}
+attributes = {}
 # Attributes
 mousePos = pygame.math.Vector2()
 mousePosWorld = pygame.math.Vector2()
@@ -106,7 +101,20 @@ def sqr_magnitude (v) -> float:
 def normalize (v):
 	return divide(v, magnitude(v))
 
-def copy_object (name, newName, pos, rot = 0, wakeUp = True, attachTo : str = '', copyParticles = True):
+class Particle:
+	name : str
+	life : float
+
+	def __init__ (self, name : str, life : float):
+		self.name = name
+		self.life = life
+
+	def __eq__ (self, other : Particle) -> bool:
+		if not isinstance(other, Particle):
+			return False
+		return self.name == other.name
+
+def copy_object (name : str, newName : str, pos : tuple[float, float], rot : float = 0.0, wakeUp : bool = True, attachTo : str = '', copyParticles : bool = True):
 	global pivots, initRots, surfaces, surfacesRects, collidersIds, rigidBodiesIds
 	surface = surfaces.get(name, None)
 	if surface is not None:
@@ -148,86 +156,6 @@ def copy_object (name, newName, pos, rot = 0, wakeUp = True, attachTo : str = ''
 				copy_object (particle.name, newParticleName, rotate_vector(particlePos, pos, rot), particleRot + rot)
 				newParticleSystem.particles.append(Particle(newParticleName, particle.life))
 		particleSystems[newName] = newParticleSystem
-
-def remove_object (name, removeColliders = True, wakeUp = True, removeParticles = True):
-	global sortedObNames
-	if name in pivots:
-		del surfaces[name]
-		del surfacesRects[name]
-		del initRots[name]
-		del pivots[name]
-		sortedObNames = [item for item in sortedObNames if item != name]
-	if name in attributes:
-		del attributes[name]
-	if name in zOrders:
-		del zOrders[name]
-	if name in rigidBodiesIds:
-		rigidBody = rigidBodiesIds[name]
-		if removeColliders:
-			for removeCollider in sim.get_rigid_body_colliders(rigidBody):
-				for colliderName, collider in list(collidersIds.items()):
-					if collider == removeCollider:
-						del collidersIds[colliderName]
-						break
-		sim.remove_rigid_body (rigidBody, removeColliders)
-		del rigidBodiesIds[name]
-	elif name in collidersIds:
-		sim.remove_collider (collidersIds[name], wakeUp)
-		del collidersIds[name]
-	if removeParticles and name in particleSystems:
-		particleSystem = particleSystems.pop(name)
-		for particle in particleSystem.particles:
-			remove_object (particle.name)
-
-def ang_to_dir (ang):
-	ang = math.radians(ang)
-	return pygame.math.Vector2(math.cos(ang), math.sin(ang))
-
-def rotate_surface (surface, deg, pivot, offset):
-	rotatedSurface = pygame.transform.rotate(surface, -deg)
-	rotatedOff = offset.rotate(deg)
-	rect = rotatedSurface.get_rect(center = pivot - rotatedOff)
-	return rotatedSurface, rect
-
-def rotate_vector (v, pivot, deg):
-	deg = math.radians(deg)
-	ang = math.atan2(v[1] - pivot[1], v[0] - pivot[0]) + deg
-	return pivot + (pygame.math.Vector2(math.cos(ang), math.sin(ang)).normalize() * (pygame.math.Vector2(v) - pivot).length())
-
-def degrees (ang):
-	return float(math.degrees(ang))
-
-def radians (ang):
-	return float(math.radians(ang))
-
-def get_object_position (name):
-	if name in rigidBodiesIds:
-		return sim.get_rigid_body_position(rigidBodiesIds[name])
-	elif name in collidersIds:
-		return sim.get_collider_position(collidersIds[name])
-	else:
-		raise ValueError('name needs to refer to a rigid body or a collider found in rigidBodiesIds or collidersIds')
-
-def get_object_rotation (name):
-	if name in rigidBodiesIds:
-		return sim.get_rigid_body_rotation(rigidBodiesIds[name])
-	elif name in collidersIds:
-		return sim.get_collider_rotation(collidersIds[name])
-	else:
-		raise ValueError('name needs to refer to a rigid body or a collider found in rigidBodiesIds or collidersIds')
-
-class Particle:
-	name : str
-	life : float
-
-	def __init__ (self, name : str, life : float):
-		self.name = name
-		self.life = life
-
-	def __eq__ (self, other : Particle) -> bool:
-		if not isinstance(other, Particle):
-			return False
-		return self.name == other.name
 
 class ParticleSystem:
 	name : str
@@ -350,7 +278,7 @@ class ParticleSystem:
 	def set_enabled (self, enable : bool):
 		if enable and not self.enable:
 			self.timer = 0.0
-			self.intvl = 1.0 / uniform(minRate, maxRate)
+			self.intvl = 1.0 / uniform(self.minRate, self.maxRate)
 			while self.timer < self.prewarmDur:
 				self.timer += self.intvl
 				self.update (self.intvl)
@@ -361,7 +289,72 @@ class ParticleSystem:
 	def copy (self, newName : str):
 		return ParticleSystem(newName, self.particleName, self.enable, self.prewarmDur, self.minRate, self.maxRate, self.bursts, self.minLife, self.maxLife, self.minSpeed, self.maxSpeed, self.minRot, self.maxRot, self.minSize, self.maxSize, self.minGravityScale, self.maxGravityScale, self.minBounciness, self.maxBounciness, self.maxEmitRadiusNormalized, self.minEmitRadiusNormalized, self.minLinearDrag, self.maxLinearDrag, self.minAngDrag, self.maxAngDrag, self.tint, self.shapeType, self.shapeRot, self.ballRadius)
 
-particleSystems : dict[str, ParticleSystem] = {}
+def remove_object (name, removeColliders = True, wakeUp = True, removeParticles = True):
+	global sortedObNames
+	if name in pivots:
+		del surfaces[name]
+		del surfacesRects[name]
+		del initRots[name]
+		del pivots[name]
+		sortedObNames = [item for item in sortedObNames if item != name]
+	if name in attributes:
+		del attributes[name]
+	if name in zOrders:
+		del zOrders[name]
+	if name in rigidBodiesIds:
+		rigidBody = rigidBodiesIds[name]
+		if removeColliders:
+			for removeCollider in sim.get_rigid_body_colliders(rigidBody):
+				for colliderName, collider in list(collidersIds.items()):
+					if collider == removeCollider:
+						del collidersIds[colliderName]
+						break
+		sim.remove_rigid_body (rigidBody, removeColliders)
+		del rigidBodiesIds[name]
+	elif name in collidersIds:
+		sim.remove_collider (collidersIds[name], wakeUp)
+		del collidersIds[name]
+	if removeParticles and name in particleSystems:
+		particleSystem = particleSystems.pop(name)
+		for particle in particleSystem.particles:
+			remove_object (particle.name)
+
+def ang_to_dir (ang):
+	ang = math.radians(ang)
+	return pygame.math.Vector2(math.cos(ang), math.sin(ang))
+
+def rotate_surface (surface, deg, pivot, offset):
+	rotatedSurface = pygame.transform.rotate(surface, -deg)
+	rotatedOff = offset.rotate(deg)
+	rect = rotatedSurface.get_rect(center = pivot - rotatedOff)
+	return rotatedSurface, rect
+
+def rotate_vector (v, pivot, deg):
+	deg = math.radians(deg)
+	ang = math.atan2(v[1] - pivot[1], v[0] - pivot[0]) + deg
+	return pivot + (pygame.math.Vector2(math.cos(ang), math.sin(ang)).normalize() * (pygame.math.Vector2(v) - pivot).length())
+
+def degrees (ang):
+	return float(math.degrees(ang))
+
+def radians (ang):
+	return float(math.radians(ang))
+
+def get_object_position (name):
+	if name in rigidBodiesIds:
+		return sim.get_rigid_body_position(rigidBodiesIds[name])
+	elif name in collidersIds:
+		return sim.get_collider_position(collidersIds[name])
+	else:
+		raise ValueError('name needs to refer to a rigid body or a collider found in rigidBodiesIds or collidersIds')
+
+def get_object_rotation (name):
+	if name in rigidBodiesIds:
+		return sim.get_rigid_body_rotation(rigidBodiesIds[name])
+	elif name in collidersIds:
+		return sim.get_collider_rotation(collidersIds[name])
+	else:
+		raise ValueError('name needs to refer to a rigid body or a collider found in rigidBodiesIds or collidersIds')
 
 def handle_events ():
 	for event in pygame.event.get():
@@ -728,7 +721,11 @@ while running:
 					Export (ob);
 			}
 			string code = PYTHON;
-			code = code.Replace("# Attributes", $"attributes = {attributes}");
+			string _attributes = "{";
+			foreach (KeyValuePair<string, string> keyValuePair in attributes)
+				_attributes += "'" + keyValuePair.Key + "':'" + keyValuePair.Value + "',";
+			_attributes += '}';
+			code = code.Replace("# Attributes", $"attributes = {_attributes}");
 			code = code.Replace("# API", apiCode);
 			code = code.Replace("# Vars", string.Join('\n', vars));
 			code = code.Replace("# UI Methods", string.Join('\n', uiMethods));
@@ -787,7 +784,11 @@ while running:
 					uiCode += "	" + line + '\n';
 				}
 			}
-			code = code.Replace("# Init Pivots, Attributes, UI", $"	pivots = {pivots}\n	attributes = {attributes}\n{uiCode}");
+			string _pivots = "{";
+			foreach (KeyValuePair<string, Vector2> keyValuePair in pivots)
+				_pivots += "'" + keyValuePair.Key + "':[" + keyValuePair.Value.x + ',' + keyValuePair.Value.y + "],";
+			_pivots += '}';
+			code = code.Replace("# Init Pivots, Attributes, UI", $"	pivots = {_pivots}\n	attributes = {_attributes}\n{uiCode}");
 			code = code.Replace("# Init Physics", physicsInitCode);
 			code = code.Replace("# Init Rendering", string.Join('\n', renderCode));
 			code = code.Replace("# Init Particle Systems", particleSystemsCode);
@@ -804,7 +805,8 @@ while running:
 				}
 				updateScripts[i] = updateScript;
 			}
-			code = code.Replace("# Globals", "	global " + string.Join(", ", globals));
+			if (globals.Length > 0)
+				code = code.Replace("# Globals", "	global " + string.Join(", ", globals));
 			code = code.Replace("# Update", string.Join('\n', updateScripts));
 			Color _backgroundColor = backgroundColor.val;
 			code = code.Replace("# Background", "	screen.fill([" + _backgroundColor.r * 255 + ", " + _backgroundColor.g * 255 + ", " + _backgroundColor.b * 255 + "])");
