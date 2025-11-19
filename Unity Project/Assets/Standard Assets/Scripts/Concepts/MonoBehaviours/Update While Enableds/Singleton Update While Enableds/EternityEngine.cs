@@ -27,6 +27,8 @@ namespace EternityEngine
 		public BoolValue useGravity;
 		public Vector3Value gravity;
 		public FloatValue unitLen;
+		public StringValue exportPath;
+		public BoolValue debugMode;
 		static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
@@ -36,6 +38,9 @@ namespace EternityEngine
 		static string apiCode;
 		static string initCode;
 		static string[] updateScripts = new string[0];
+		static Dictionary<_Object, string> rigidBodies = new Dictionary<_Object, string>();
+		static Dictionary<_Object, string> colliders = new Dictionary<_Object, string>();
+		static Dictionary<_Object, string> joints = new Dictionary<_Object, string>();
 		static string[] vars = new string[0];
 		static string[] uiMethods = new string[0];
 		static string[] renderCode = new string[0];
@@ -731,12 +736,12 @@ while running:
 			if (useGravity.val)
 				_gravity = gravity.val;
 			List<string> physicsInitClauses = new List<string>(new string[] { "sim.set_length_unit (" + unitLen.val + ")\nsim.set_gravity (" + _gravity.x + ", " + _gravity.y + ")" });
-			// for rigidBody in rigidBodies.values():
-			// 	physicsInitClauses.append(rigidBody)
-			// for collider in colliders.values():
-			// 	physicsInitClauses.append(collider)
-			// for joint in joints.values():
-			// 	physicsInitClauses.append(joint)
+			foreach (KeyValuePair<_Object, string> keyValuePair in rigidBodies)
+				physicsInitClauses.Add(keyValuePair.Value);
+			foreach (KeyValuePair<_Object, string> keyValuePair in colliders)
+				physicsInitClauses.Add(keyValuePair.Value);
+			foreach (KeyValuePair<_Object, string> keyValuePair in joints)
+				physicsInitClauses.Add(keyValuePair.Value);
 			string physicsInitCode = "";
 			for (int i = 0; i < physicsInitClauses.Count; i ++)
 			{
@@ -803,9 +808,11 @@ while running:
 			code = code.Replace("# Update", string.Join('\n', updateScripts));
 			Color _backgroundColor = backgroundColor.val;
 			code = code.Replace("# Background", "	screen.fill([" + _backgroundColor.r * 255 + ", " + _backgroundColor.g * 255 + ", " + _backgroundColor.b * 255 + "])");
+			string scriptPath = Path.Combine(Application.temporaryCachePath, "Eternity Engine Export");
+			File.WriteAllText(scriptPath, code);
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
 			processStartInfo.FileName = pythonPath;
-			processStartInfo.Arguments = "\"" + BUILD_SCRIPT_PATH;
+			processStartInfo.Arguments = "\"" + BUILD_SCRIPT_PATH + "\" \"" + scriptPath + "\" \"" + exportPath.val +  "\" " + debugMode.val;
 			processStartInfo.UseShellExecute = false;
 			processStartInfo.RedirectStandardError = true;
 			processStartInfo.CreateNoWindow = false;

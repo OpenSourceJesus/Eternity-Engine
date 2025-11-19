@@ -6,7 +6,6 @@ namespace EternityEngine
 	public class ValueEntry<T> : SetableValue
 	{
 		public Value<T> value;
-		[HideInInspector]
 		public Value<T>[] values = new Value<T>[0];
 		protected Value<T>[] TargetValues
 		{

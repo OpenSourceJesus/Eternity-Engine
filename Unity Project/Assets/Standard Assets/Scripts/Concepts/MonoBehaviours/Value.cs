@@ -6,7 +6,7 @@ namespace EternityEngine
 	{
 		public T val;
 		public delegate void OnChanged();
-		public event OnChanged onChanged;
+		public event OnChanged onChanged = () => {};
 		public _Component component;
 		[HideInInspector]
 		public SetableValue[] setableValues = new SetableValue[0];

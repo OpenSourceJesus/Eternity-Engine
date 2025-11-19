@@ -1,7 +1,7 @@
 import os, sys, shutil, sysconfig, argparse, subprocess
 from pathlib import Path
 
-def StringToBool (v):
+def StrToBool (v):
 	if isinstance(v, bool):
 		return v
 	if v.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -27,7 +27,7 @@ parser.add_argument(
 )
 parser.add_argument(
 	"debug",
-	type = StringToBool,
+	type = StrToBool,
 	help = "Use debug mode."
 )
 args = parser.parse_args()
