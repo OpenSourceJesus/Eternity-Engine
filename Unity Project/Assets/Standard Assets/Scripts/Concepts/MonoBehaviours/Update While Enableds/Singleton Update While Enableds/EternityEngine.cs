@@ -43,7 +43,7 @@ namespace EternityEngine
 		static Dictionary<_Object, string> joints = new Dictionary<_Object, string>();
 		static string[] vars = new string[0];
 		static string[] uiMethods = new string[0];
-		static string[] renderCode = new string[0];
+		static List<string> renderCode = new List<string>();
 		static string[] particleSystemsClauses = new string[0];
 		static string[] uiClauses = new string[0];
 		static string[] globals = new string[0];
@@ -714,6 +714,20 @@ while running:
 				UnityEngine.Debug.LogError("Python not found. Please install Python to use the Export feature.");
 				return;
 			}
+			attributes = new Dictionary<string, string>();
+			apiCode = "";
+			initCode = "";
+			updateScripts = new string[0];
+			rigidBodies = new Dictionary<_Object, string>();
+			colliders = new Dictionary<_Object, string>();
+			joints = new Dictionary<_Object, string>();
+			vars = new string[0];
+			uiMethods = new string[0];
+			renderCode = new List<string>();
+			particleSystemsClauses = new string[0];
+			uiClauses = new string[0];
+			globals = new string[0];
+			pivots = new Dictionary<string, Vector2>();
 			for (int i = 0; i < obs.Length; i ++)
 			{
 				_Object ob = obs[i];
@@ -750,7 +764,7 @@ while running:
 					physicsInitCode += "	" + line + '\n';
 				}
 			}
-			for (int i = 0; i < renderCode.Length; i ++)
+			for (int i = 0; i < renderCode.Count; i ++)
 			{
 				string renderClause = renderCode[i];
 				string _renderClause = "";
@@ -841,9 +855,39 @@ while running:
 
 		void Export (_Object ob)
 		{
-			string oVarName = GetVarNameForObject(ob);
+			string obVarName = GetVarNameForObject(ob);
 			Dictionary<string, string> attributes = GetAttributes(ob);
-			
+			for (int i = 0; i < ob.components.Length; i ++)
+			{
+				_Component component = ob.components[i];
+				_Image img = component as _Image;
+				if (img != null)
+				{
+					string surfaceRect = obVarName + "Rect";
+					string renderCodeClause = obVarName + " = pygame.image.load('" + Path.Combine(Application.dataPath, img.path.val) + "').convert_alpha()\n";
+					Color tint = img.tint.val;
+					if (tint != Color.white)
+						renderCodeClause += "tintSurface = pygame.Surface(" + obVarName + ".get_size()).convert_alpha()\ntintSurface.fill((" + (tint.r * 255) + ", " + (tint.g * 255) + ", " + (tint.b * 255) + ", " + (tint.a * 255) + "))\n" + obVarName + ".blit(tintSurface, (0, 0), special_flags = pygame.BLEND_RGBA_MULT)\n";
+					Texture2D tex = img.tex;
+					renderCodeClause += obVarName + " = pygame.transform.scale(" + obVarName + ", (" + tex.width + "," + tex.height + "))\n";
+					Transform trs = img.imgs[0].rectTransform;
+					if (trs.eulerAngles.z != 0)
+						renderCodeClause += obVarName + " = pygame.transform.rotate(" + obVarName + ", " + trs.eulerAngles.z + ")\n";
+					Vector2 size = trs.localScale / new Vector2(tex.width, tex.height);
+					if (tex.width > tex.height)
+						size.x *= tex.width / tex.height;
+					else
+						size.y *= tex.height / tex.width;
+					Vector2 pos = trs.position;
+					Vector2 pivot = img.pivot.val;
+					pos += size * new Vector2(-pivot.x, -pivot.y);
+					pos.y *= -1;
+					renderCodeClause += "initRots['" + obVarName + "'] = " + trs.eulerAngles.z + "\nsurfaces['" + obVarName + "'] = " + obVarName + "\n" + surfaceRect + " = " + obVarName + ".get_rect().move(" + pos.x + ", " + pos.y + ")\nsurfacesRects['" + obVarName + "'] = " + surfaceRect + "\nzOrders['" + obVarName + "'] = " + trs.position.z;
+					if (!img.enabled)
+						renderCodeClause += "\nhide.append('" + obVarName + "')";
+					renderCode.Add(renderCodeClause);
+				}
+			}
 		}
 
 		string GetVarNameForObject (_Object ob)
@@ -883,12 +927,12 @@ while running:
 			while (!process.HasExited)
 				yield return null;
 			if (process.ExitCode == 0)
-				RunExportedExecutable(executablePath);
+				RunExecutable (executablePath);
 			else
 				UnityEngine.Debug.LogError($"Export process failed with exit code {process.ExitCode}.");
 		}
 
-		void RunExportedExecutable (string executablePath)
+		void RunExecutable (string executablePath)
 		{
 			if (string.IsNullOrWhiteSpace(executablePath))
 			{

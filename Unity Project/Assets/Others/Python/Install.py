@@ -1,4 +1,5 @@
-import os, sys, pathlib, sysconfig, subprocess
+import os, sys, sysconfig, subprocess
+from pathlib import *
 
 _thisDir = os.path.split(os.path.abspath(__file__))[0]
 if not os.path.isdir('PyRapier2d'):

@@ -12,7 +12,8 @@ namespace EternityEngine
 		public StringValue path;
 		public Vector2Value pivot;
 		public ColorValue tint;
-		Texture2D tex;
+		[HideInInspector]
+		public Texture2D tex;
 
 		public override void Init ()
 		{
