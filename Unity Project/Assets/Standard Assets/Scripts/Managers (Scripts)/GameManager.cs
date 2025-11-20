@@ -58,6 +58,7 @@ namespace EternityEngine
 				return Time.timeSinceLevelLoad - pausedTime;
 			}
 		}
+		public static List<Asset.Data> assetsDatas = new List<Asset.Data>();
 		public const int LAGGY_FRAMES_ON_LOAD_SCENE = 2;
 		static bool initialized;
 		const string STRING_SEPERATOR = "|";

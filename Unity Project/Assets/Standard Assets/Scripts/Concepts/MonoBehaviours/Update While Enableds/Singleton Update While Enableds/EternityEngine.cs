@@ -17,6 +17,7 @@ namespace EternityEngine
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
+		public _Component componentPrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;

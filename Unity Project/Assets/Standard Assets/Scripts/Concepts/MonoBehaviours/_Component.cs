@@ -1,11 +1,23 @@
+using System;
 using Extensions;
 using UnityEngine;
 using System.Collections.Generic;
 
 namespace EternityEngine
 {
-	public class _Component : MonoBehaviour
+	public class _Component : Asset
 	{
+		public new Data _Data
+		{
+			get
+			{
+				return (Data) data;
+			}
+			set
+			{
+				data = value;
+			}
+		}
 		public SceneEntry sceneEntry;
 		[HideInInspector]
         public _Object ob;
@@ -85,6 +97,25 @@ namespace EternityEngine
 			}
 			Destroy(gameObject);
 			return true;
+		}
+
+		[Serializable]
+		public class Data : Asset.Data
+		{
+			public override object MakeAsset ()
+			{
+				_Component component = Instantiate(EternityEngine.instance.componentPrefab);
+				Apply (component);
+				component.Init ();
+				return component;
+			}
+
+			public override void Apply (Asset asset)
+			{
+				base.Apply (asset);
+				_Component component = (_Component) asset;
+				component._Data = this;
+			}
 		}
 	}
 }

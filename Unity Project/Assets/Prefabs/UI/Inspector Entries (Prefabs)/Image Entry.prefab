@@ -1173,6 +1173,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8306095026889529738, guid: 34954f8f2c4fe05e0af49f015d7e719c, type: 3}
+      propertyPath: onlyAllowOnePerObject
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8306095026889529738, guid: 34954f8f2c4fe05e0af49f015d7e719c, type: 3}
       propertyPath: colorValueEntries.Array.size
       value: 1
       objectReference: {fileID: 0}

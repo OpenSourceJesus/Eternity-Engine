@@ -48,6 +48,11 @@ namespace EternityEngine
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			saveData = (SaveData) binaryFormatter.Deserialize(fileStream);
 			fileStream.Close();
+			for (int i = 0; i < GameManager.assetsDatas.Count; i ++)
+			{
+				Asset.Data assetData = GameManager.assetsDatas[i];
+				assetData.MakeAsset ();
+			}
 #endif
 		}
 
