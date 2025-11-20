@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,17 @@ namespace EternityEngine
 {
 	public class _Transform : _Component
 	{
+		public new Data _Data
+		{
+			get
+			{
+				return (Data) data;
+			}
+			set
+			{
+				data = value;
+			}
+		}
         public Vector3Value pos;
         public FloatValue rot;
         public Vector2Value size;
@@ -47,6 +59,63 @@ namespace EternityEngine
 			{
 				SceneEntry sceneEntry = ob.sceneEntries[i];
 				sceneEntry.rectTrs.localScale = size.val;
+			}
+		}
+
+		public override void InitData ()
+		{
+			if (_Data == null)
+				_Data = new Data();
+		}
+
+		public override void SetData ()
+		{
+			base.SetData ();
+			SetPosOFData ();
+			SetRotOFData ();
+		}
+
+		void SetPosOFData ()
+		{
+			_Data.pos = _Vector3.FromVec3(pos.val);
+		}
+
+		void SetPosFromData ()
+		{
+			pos.val = _Data.pos.ToVec3();
+		}
+
+		void SetRotOFData ()
+		{
+			_Data.rot = rot.val;
+		}
+
+		void SetRotFromData ()
+		{
+			rot.val = _Data.rot;
+		}
+
+		[Serializable]
+		public class Data : _Component.Data
+		{
+			public _Vector3 pos;
+			public float rot;
+			public _Vector2 size;
+
+			public override object GenAsset ()
+			{
+				_Transform trs = Instantiate(EternityEngine.instance.trsPrefab);
+				Apply (trs);
+				return trs;
+			}
+
+			public override void Apply (Asset asset)
+			{
+				base.Apply (asset);
+				_Transform trs = (_Transform) asset;
+				trs._Data = this;
+				trs.SetPosFromData ();
+				trs.SetRotFromData ();
 			}
 		}
 	}

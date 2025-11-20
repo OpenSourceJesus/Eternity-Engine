@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
@@ -49,7 +50,7 @@ namespace EternityEngine
 		public static bool paused;
 		public static IUpdatable[] updatables = new IUpdatable[0];
 		public static uint framesSinceLevelLoaded;
-		public static bool isQuittingGame;
+		public static bool isQuitting;
 		public static float pausedTime;
 		public static float TimeSinceLevelLoad
 		{
@@ -58,6 +59,7 @@ namespace EternityEngine
 				return Time.timeSinceLevelLoad - pausedTime;
 			}
 		}
+		public static List<Asset> assets = new List<Asset>();
 		public static List<Asset.Data> assetsDatas = new List<Asset.Data>();
 		public const int LAGGY_FRAMES_ON_LOAD_SCENE = 2;
 		static bool initialized;
@@ -73,7 +75,7 @@ namespace EternityEngine
 #endif
 #if UNITY_EDITOR
 				paused = false;
-				isQuittingGame = false;
+				isQuitting = false;
 				HierarchyPanel.lastEntryIdxHadSelectionSet = -1;
 				HierarchyPanel.isDraggingEntry = false;
 #endif
@@ -91,7 +93,7 @@ namespace EternityEngine
 			SceneManager.sceneLoaded += OnSceneLoaded;
 			QualitySettings.globalTextureMipmapLimit = 0;
 			timeSpeed = SettingsMenu.TimeSpeed;
-			SaveAndLoadManager.Save ();
+			Application.wantsToQuit += OnWantToQuit;
 		}
 
 		void Update ()
@@ -127,6 +129,13 @@ namespace EternityEngine
 			Instance.StopAllCoroutines();
 			framesSinceLevelLoaded = 0;
 			pausedTime = 0;
+		}
+
+		bool OnWantToQuit ()
+		{
+			SaveAndLoadManager.Save (Path.Combine(Application.dataPath, "Auto Save.txt"));
+			Application.wantsToQuit -= OnWantToQuit;
+			return true;
 		}
 
 		public void DisplayNotification (string text)
@@ -204,15 +213,6 @@ namespace EternityEngine
 		public void Quit ()
 		{
 			Application.Quit();
-		}
-
-		void OnApplicationQuit ()
-		{
-			isQuittingGame = true;
-			SaveAndLoadManager.Save ();
-#if UNITY_EDITOR
-			initialized = false;
-#endif
 		}
 
 		public static void Log (object obj)

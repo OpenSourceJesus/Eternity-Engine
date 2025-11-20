@@ -18,7 +18,7 @@ namespace EternityEngine
 			{
 				AudioListener.volume = value;
 				SaveAndLoadManager.SetFloat ("Volume", value);
-				SaveAndLoadManager.Save ();
+				// SaveAndLoadManager.Save ();
 			}
 		}
 		public static bool EnableSound
@@ -31,7 +31,7 @@ namespace EternityEngine
 			{
 				AudioListener.pause = !value;
 				SaveAndLoadManager.SetBool ("Enable sound", value);
-				SaveAndLoadManager.Save ();
+				// SaveAndLoadManager.Save ();
 			}
 		}
 		public static float TimeSpeed
@@ -44,7 +44,7 @@ namespace EternityEngine
 			{
 				GameManager.instance.timeSpeed = value;
 				SaveAndLoadManager.SetFloat ("Time speed", value);
-				SaveAndLoadManager.Save ();
+				// SaveAndLoadManager.Save ();
 			}
 		}
 

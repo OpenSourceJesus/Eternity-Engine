@@ -76,6 +76,18 @@ namespace EternityEngine
 			ob.sceneEntries = ob.sceneEntries.AddRange(sceneEntries);
 		}
 
+		public override void Awake ()
+		{
+			base.Awake ();
+			EternityEngine.components = EternityEngine.components.Add(this);
+		}
+
+		public override void OnDestroy ()
+		{
+			base.OnDestroy ();
+			EternityEngine.components = EternityEngine.components.Remove(this);
+		}
+
 		public bool TryDelete ()
 		{
 			if (dependsOnMe.Count > 0)
@@ -99,14 +111,46 @@ namespace EternityEngine
 			return true;
 		}
 
+		public override void InitData ()
+		{
+			if (_Data == null)
+				_Data = new Data();
+		}
+
+		public override void SetData ()
+		{
+			base.SetData ();
+			SetObNameOFData ();
+		}
+
+		void SetObNameOFData ()
+		{
+			_Data.obName = ob.name;
+		}
+
+		void SetObNameFromData ()
+		{
+			for (int i = 0; i < EternityEngine.obs.Length; i ++)
+			{
+				_Object ob = EternityEngine.obs[i];
+				if (ob.name == _Data.obName)
+				{
+					this.ob = ob;
+					return;
+				}
+			}
+			ob = Get<_Object>(_Data.obName);
+		}
+
 		[Serializable]
 		public class Data : Asset.Data
 		{
-			public override object MakeAsset ()
+			public string obName;
+
+			public override object GenAsset ()
 			{
 				_Component component = Instantiate(EternityEngine.instance.componentPrefab);
 				Apply (component);
-				component.Init ();
 				return component;
 			}
 
@@ -115,6 +159,7 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Component component = (_Component) asset;
 				component._Data = this;
+				component.SetObNameFromData ();
 			}
 		}
 	}

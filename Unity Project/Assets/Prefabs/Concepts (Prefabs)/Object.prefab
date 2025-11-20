@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97aec4b8dc313ca688cf60d3bfbe6754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Object
-  data: {fileID: 8248174216329184453}
+  trs: {fileID: 0}
+  prefabIndex: 0
+  obData: {fileID: 8248174216329184453}
   components:
   - {fileID: 8248174216329184453}
   sceneEntries: []

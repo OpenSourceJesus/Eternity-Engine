@@ -18,6 +18,7 @@ namespace EternityEngine
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
 		public _Component componentPrefab;
+		public _Transform trsPrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;
@@ -30,7 +31,9 @@ namespace EternityEngine
 		public FloatValue unitLen;
 		public StringValue exportPath;
 		public BoolValue debugMode;
-		static _Object[] obs = new _Object[0];
+		public static string saveFilePaths;
+		public static _Object[] obs = new _Object[0];
+		public static _Component[] components = new _Component[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
@@ -732,7 +735,7 @@ while running:
 			for (int i = 0; i < obs.Length; i ++)
 			{
 				_Object ob = obs[i];
-				if (ob.data.export.val)
+				if (ob.obData.export.val)
 					Export (ob);
 			}
 			string code = PYTHON;

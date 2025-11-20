@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class Asset : Spawnable
+	public class Asset : MonoBehaviour
 	{
 		public object data;
 		public Data _Data
@@ -21,12 +21,25 @@ namespace EternityEngine
 		public virtual void Awake ()
 		{
 			InitData ();
+			GameManager.assets.Add(this);
 			GameManager.assetsDatas.Add(_Data);
 		}
 
 		public virtual void OnDestroy ()
 		{
+			GameManager.assets.Remove(this);
 			GameManager.assetsDatas.Remove(_Data);
+		}
+
+		public static T Get<T> (string name) where T : Asset
+		{
+			for (int i = 0; i < GameManager.assetsDatas.Count; i ++)
+			{
+				Asset.Data data = GameManager.assetsDatas[i];
+				if (data.name == name)
+					return (T) data.GenAsset();
+			}
+			return null;
 		}
 
 		public virtual void InitData ()
@@ -56,7 +69,7 @@ namespace EternityEngine
 		{
 			public string name;
 
-			public virtual object MakeAsset ()
+			public virtual object GenAsset ()
 			{
 				throw new NotImplementedException();
 			}

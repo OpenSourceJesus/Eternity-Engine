@@ -10,14 +10,11 @@ namespace EternityEngine
 {
 	public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 	{
-		static string SAVE_FILE_PATH;
 		public static SaveData saveData = new SaveData();
 
 		public static void Init ()
 		{
 #if !UNITY_WEBGL
-			SAVE_FILE_PATH = Application.persistentDataPath + Path.DirectorySeparatorChar + "Save Data";
-			print(SAVE_FILE_PATH);
 			saveData.boolDict = new Dictionary<string, bool>();
 			saveData.intDict = new Dictionary<string, int>();
 			saveData.floatDict = new Dictionary<string, float>();
@@ -26,32 +23,50 @@ namespace EternityEngine
 			saveData.boolArrayDict = new Dictionary<string, bool[]>();
 			saveData.byteArrayDict = new Dictionary<string, byte[]>();
 			saveData.vector2IntArrayDict = new Dictionary<string, _Vector2Int[]>();
-			if (File.Exists(SAVE_FILE_PATH))
-				Load ();
+			string autoSaveFilePath = Path.Combine(Application.dataPath, "Auto Save.txt");
+			if (File.Exists(autoSaveFilePath))
+				Load (autoSaveFilePath);
 #endif
 		}
 
-		public static void Save ()
+		public static void Save (string saveFilePath)
 		{
 #if !UNITY_WEBGL
-			FileStream fileStream = new FileStream(SAVE_FILE_PATH, FileMode.Create);
+			for (int i = 0; i < GameManager.assets.Count; i ++)
+			{
+				Asset asset = GameManager.assets[i];
+				asset.SetData ();
+			}
+			saveData.assetsDatas = GameManager.assetsDatas.ToArray();
+			FileStream fileStream = new FileStream(saveFilePath, FileMode.Create);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			binaryFormatter.Serialize(fileStream, saveData);
 			fileStream.Close();
 #endif
 		}
 
-		public static void Load ()
+		public static void Load (string saveFilePath)
 		{
 #if !UNITY_WEBGL
-			FileStream fileStream = new FileStream(SAVE_FILE_PATH, FileMode.Open);
+			FileStream fileStream = new FileStream(saveFilePath, FileMode.Open);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			saveData = (SaveData) binaryFormatter.Deserialize(fileStream);
 			fileStream.Close();
 			for (int i = 0; i < GameManager.assetsDatas.Count; i ++)
 			{
 				Asset.Data assetData = GameManager.assetsDatas[i];
-				assetData.MakeAsset ();
+				bool genAsset = true;
+				for (int i2 = 0; i2 < GameManager.assetsDatas.Count; i2 ++)
+				{
+					Asset asset = GameManager.assets[i2];
+					if (asset.name == assetData.name)
+					{
+						genAsset = false;
+						break;
+					}
+				}
+				if (genAsset)
+					assetData.GenAsset ();
 			}
 #endif
 		}
@@ -332,13 +347,14 @@ namespace EternityEngine
 			saveData.boolArrayDict.Clear();
 			saveData.byteArrayDict.Clear();
 			saveData.vector2IntArrayDict.Clear();
-			Save ();
+			// Save ();
 #endif
 		}
 
 		[Serializable]
 		public struct SaveData
 		{
+			public Asset.Data[] assetsDatas;
 			public Dictionary<string, bool> boolDict;
 			public Dictionary<string, int> intDict;
 			public Dictionary<string, float> floatDict;
