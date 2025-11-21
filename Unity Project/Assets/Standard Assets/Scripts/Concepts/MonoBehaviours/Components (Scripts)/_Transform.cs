@@ -71,11 +71,12 @@ namespace EternityEngine
 		public override void SetData ()
 		{
 			base.SetData ();
-			SetPosOFData ();
-			SetRotOFData ();
+			SetPosOfData ();
+			SetRotOfData ();
+			SetSizeOfData ();
 		}
 
-		void SetPosOFData ()
+		void SetPosOfData ()
 		{
 			_Data.pos = _Vector3.FromVec3(pos.val);
 		}
@@ -85,7 +86,7 @@ namespace EternityEngine
 			pos.val = _Data.pos.ToVec3();
 		}
 
-		void SetRotOFData ()
+		void SetRotOfData ()
 		{
 			_Data.rot = rot.val;
 		}
@@ -93,6 +94,16 @@ namespace EternityEngine
 		void SetRotFromData ()
 		{
 			rot.val = _Data.rot;
+		}
+
+		void SetSizeOfData ()
+		{
+			_Data.size = _Vector2.FromVec2(size.val);
+		}
+
+		void SetSizeFromData ()
+		{
+			size.val = _Data.size.ToVec2();
 		}
 
 		[Serializable]
@@ -113,9 +124,10 @@ namespace EternityEngine
 			{
 				base.Apply (asset);
 				_Transform trs = (_Transform) asset;
-				trs._Data = this;
+				trs.data = this;
 				trs.SetPosFromData ();
 				trs.SetRotFromData ();
+				trs.SetSizeFromData ();
 			}
 		}
 	}

@@ -605,7 +605,11 @@ while running:
 
 		public _Component AddComponent (_Object ob, int componentPrefabIdx)
 		{
-			_Component componentPrefab = componentsPrefabs[componentPrefabIdx];
+			return AddComponent(ob, componentsPrefabs[componentPrefabIdx]);
+		}
+
+		public _Component AddComponent (_Object ob, _Component componentPrefab)
+		{
 			for (int i = 0; i < ob.components.Length; i ++)
 			{
 				_Component _component = ob.components[i];

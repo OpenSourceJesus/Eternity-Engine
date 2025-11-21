@@ -54,12 +54,12 @@ namespace EternityEngine
 			SetNameOfData ();
 		}
 
-		void SetNameOfData ()
+		public void SetNameOfData ()
 		{
 			_Data.name = name;
 		}
 
-		void SetNameFromData ()
+		public void SetNameFromData ()
 		{
 			name = _Data.name;
 		}
@@ -76,8 +76,7 @@ namespace EternityEngine
 
 			public virtual void Apply (Asset asset)
 			{
-				if (asset.data == null)
-					asset.data = this;
+				asset.data = this;
 				asset.SetNameFromData ();
 			}
 		}

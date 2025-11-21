@@ -23,7 +23,7 @@ namespace EternityEngine
 				onChanged -= HandleChange;
 		}
 
-		void HandleChange ()
+		public void HandleChange ()
 		{
 			if (!component.inspectorEntries[0].gameObject.activeSelf)
 				for (int i = 0; i < setableValues.Length; i ++)

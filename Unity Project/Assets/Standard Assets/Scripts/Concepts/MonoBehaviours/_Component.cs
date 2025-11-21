@@ -19,7 +19,6 @@ namespace EternityEngine
 			}
 		}
 		public SceneEntry sceneEntry;
-		[HideInInspector]
         public _Object ob;
         public InspectorEntry inspectorEntryPrefab;
 		[HideInInspector]
@@ -120,10 +119,10 @@ namespace EternityEngine
 		public override void SetData ()
 		{
 			base.SetData ();
-			SetObNameOFData ();
+			SetObNameOfData ();
 		}
 
-		void SetObNameOFData ()
+		void SetObNameOfData ()
 		{
 			_Data.obName = ob.name;
 		}
@@ -158,7 +157,7 @@ namespace EternityEngine
 			{
 				base.Apply (asset);
 				_Component component = (_Component) asset;
-				component._Data = this;
+				component.data = this;
 				component.SetObNameFromData ();
 			}
 		}

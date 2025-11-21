@@ -45,8 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97aec4b8dc313ca688cf60d3bfbe6754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Object
-  trs: {fileID: 0}
-  prefabIndex: 0
   obData: {fileID: 8248174216329184453}
   components:
   - {fileID: 8248174216329184453}
@@ -64,6 +62,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Object Data
       objectReference: {fileID: 0}
+    - target: {fileID: 6445755035653220395, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
+      propertyPath: ob
+      value: 
+      objectReference: {fileID: 7550459198398753375}
     - target: {fileID: 7335552380223399591, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.36765

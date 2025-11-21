@@ -62,10 +62,7 @@ namespace EternityEngine
 		[MenuItem("Build/Make Builds %&b")]
 		public static void Build ()
 		{
-			bool prevDebugMode = Instance.debugMode;
-			instance.debugMode = false;
 			instance._Build ();
-			instance.debugMode = prevDebugMode;
 		}
 
 		public void _Build ()

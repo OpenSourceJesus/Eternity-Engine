@@ -34,10 +34,10 @@ namespace EternityEngine
 		public override void SetData ()
 		{
 			base.SetData ();
-			SetComponentsNamesOFData ();
+			SetComponentsNamesOfData ();
 		}
 
-		void SetComponentsNamesOFData ()
+		void SetComponentsNamesOfData ()
 		{
 			_Data.componentsNames = new string[components.Length];
 			for (int i = 0; i < components.Length; i ++)
@@ -85,7 +85,7 @@ namespace EternityEngine
 			{
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
-				ob._Data = this;
+				ob.data = this;
 				ob.SetComponentsNamesFromData ();
 			}
 		}

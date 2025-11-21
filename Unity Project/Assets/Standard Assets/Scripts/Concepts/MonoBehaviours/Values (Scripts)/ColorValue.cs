@@ -24,5 +24,17 @@ namespace EternityEngine
 			bValue.onChanged -= () => { val.b = bValue.val; _OnChanged (); };
 			aValue.onChanged -= () => { val.a = aValue.val; _OnChanged (); };
 		}
+
+		public void SetSubValues (Color val)
+		{
+			rValue.val = val.r;
+			rValue.HandleChange ();
+			gValue.val = val.g;
+			gValue.HandleChange ();
+			bValue.val = val.b;
+			bValue.HandleChange ();
+			aValue.val = val.a;
+			aValue.HandleChange ();
+		}
 	}
 }

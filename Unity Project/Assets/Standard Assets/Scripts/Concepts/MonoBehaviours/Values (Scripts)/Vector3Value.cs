@@ -21,5 +21,15 @@ namespace EternityEngine
 			yValue.onChanged -= () => { val.y = yValue.val; _OnChanged (); };
 			zValue.onChanged -= () => { val.z = zValue.val; _OnChanged (); };
 		}
+
+		public void SetSubValues (Vector3 val)
+		{
+			xValue.val = val.x;
+			xValue.HandleChange ();
+			yValue.val = val.y;
+			yValue.HandleChange ();
+			zValue.val = val.y;
+			zValue.HandleChange ();
+		}
 	}
 }
