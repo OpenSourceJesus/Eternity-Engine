@@ -64,12 +64,13 @@ namespace EternityEngine
 
 		public override void InitData ()
 		{
-			if (_Data == null)
-				_Data = new Data();
+			if (data == null)
+				data = new Data();
 		}
 
 		public override void SetData ()
 		{
+			InitData ();
 			base.SetData ();
 			SetPosOfData ();
 			SetRotOfData ();
@@ -122,9 +123,9 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
 				base.Apply (asset);
 				_Transform trs = (_Transform) asset;
-				trs.data = this;
 				trs.SetPosFromData ();
 				trs.SetRotFromData ();
 				trs.SetSizeFromData ();

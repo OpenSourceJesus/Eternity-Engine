@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class Value<T> : Asset
+	public class Value<T> : MonoBehaviour
 	{
 		public T val;
 		public delegate void OnChanged();

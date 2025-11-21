@@ -32,12 +32,13 @@ namespace EternityEngine
 		public static void Save (string saveFilePath)
 		{
 #if !UNITY_WEBGL
+			saveData.assetsDatasDict = new Dictionary<string, Asset.Data>();
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];
 				asset.SetData ();
+				saveData.assetsDatasDict[asset.name] = asset._Data;
 			}
-			saveData.assetsDatas = GameManager.assetsDatas.ToArray();
 			FileStream fileStream = new FileStream(saveFilePath, FileMode.Create);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			binaryFormatter.Serialize(fileStream, saveData);
@@ -52,21 +53,10 @@ namespace EternityEngine
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			saveData = (SaveData) binaryFormatter.Deserialize(fileStream);
 			fileStream.Close();
-			for (int i = 0; i < saveData.assetsDatas.Length; i ++)
+			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
 			{
-				Asset.Data assetData = saveData.assetsDatas[i];
-				bool genAsset = true;
-				for (int i2 = 0; i2 < GameManager.assetsDatas.Count; i2 ++)
-				{
-					Asset asset = GameManager.assets[i2];
-					if (asset.name == assetData.name)
-					{
-						genAsset = false;
-						break;
-					}
-				}
-				if (genAsset)
-					assetData.GenAsset ();
+				if (Asset.Get<Asset>(keyValuePair.Key) == null)
+					keyValuePair.Value.GenAsset ();
 			}
 #endif
 		}
@@ -354,7 +344,7 @@ namespace EternityEngine
 		[Serializable]
 		public struct SaveData
 		{
-			public Asset.Data[] assetsDatas;
+			public Dictionary<string, Asset.Data> assetsDatasDict;
 			public Dictionary<string, bool> boolDict;
 			public Dictionary<string, int> intDict;
 			public Dictionary<string, float> floatDict;

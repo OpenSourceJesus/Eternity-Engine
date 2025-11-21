@@ -20,24 +20,21 @@ namespace EternityEngine
 
 		public virtual void Awake ()
 		{
-			InitData ();
 			GameManager.assets.Add(this);
-			GameManager.assetsDatas.Add(_Data);
 		}
 
 		public virtual void OnDestroy ()
 		{
 			GameManager.assets.Remove(this);
-			GameManager.assetsDatas.Remove(_Data);
 		}
 
 		public static T Get<T> (string name) where T : Asset
 		{
-			for (int i = 0; i < GameManager.assetsDatas.Count; i ++)
+			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
-				Asset.Data data = GameManager.assetsDatas[i];
-				if (data.name == name)
-					return (T) data.GenAsset();
+				Asset asset = GameManager.assets[i];
+				if (asset.name == name)
+					return (T) asset;
 			}
 			return null;
 		}
@@ -76,7 +73,7 @@ namespace EternityEngine
 
 			public virtual void Apply (Asset asset)
 			{
-				asset.data = this;
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
 				asset.SetNameFromData ();
 			}
 		}

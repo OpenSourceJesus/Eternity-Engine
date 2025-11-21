@@ -112,12 +112,13 @@ namespace EternityEngine
 
 		public override void InitData ()
 		{
-			if (_Data == null)
-				_Data = new Data();
+			if (data == null)
+				data = new Data();
 		}
 
 		public override void SetData ()
 		{
+			InitData ();
 			base.SetData ();
 			SetObNameOfData ();
 		}
@@ -129,16 +130,9 @@ namespace EternityEngine
 
 		void SetObNameFromData ()
 		{
-			for (int i = 0; i < EternityEngine.obs.Length; i ++)
-			{
-				_Object ob = EternityEngine.obs[i];
-				if (ob.name == _Data.obName)
-				{
-					this.ob = ob;
-					return;
-				}
-			}
 			ob = Get<_Object>(_Data.obName);
+			if (ob == null)
+				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obName].GenAsset();
 		}
 
 		[Serializable]
@@ -155,9 +149,9 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
 				base.Apply (asset);
 				_Component component = (_Component) asset;
-				component.data = this;
 				component.SetObNameFromData ();
 			}
 		}

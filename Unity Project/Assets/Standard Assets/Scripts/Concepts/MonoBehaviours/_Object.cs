@@ -27,12 +27,13 @@ namespace EternityEngine
 
 		public override void InitData ()
 		{
-			if (_Data == null)
-				_Data = new Data();
+			if (data == null)
+				data = new Data();
 		}
 
 		public override void SetData ()
 		{
+			InitData ();
 			base.SetData ();
 			SetComponentsNamesOfData ();
 		}
@@ -52,20 +53,12 @@ namespace EternityEngine
 			components = new _Component[_Data.componentsNames.Length];
 			for (int i = 0; i < _Data.componentsNames.Length; i ++)
 			{
-				string componentName = _Data.componentsNames[i];
-				bool foundComponent = false;
-				for (int i2 = 0; i2 < EternityEngine.components.Length; i2 ++)
-				{
-					_Component component = EternityEngine.components[i2];
-					if (component.name == componentName)
-					{
-						components[i] = component;
-						foundComponent = true;
-						break;
-					}
-				}
-				if (!foundComponent)
-					components[i] = Get<_Component>(componentName);
+				string componentName =_Data.componentsNames[i];
+				_Component component = null;
+				component = Get<_Component>(componentName);
+				if (component == null)
+					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentName].GenAsset();
+				components[i] = component;
 			}
 		}
 
@@ -83,9 +76,9 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
-				ob.data = this;
 				ob.SetComponentsNamesFromData ();
 			}
 		}

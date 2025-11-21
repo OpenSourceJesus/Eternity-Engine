@@ -60,7 +60,6 @@ namespace EternityEngine
 			}
 		}
 		public static List<Asset> assets = new List<Asset>();
-		public static List<Asset.Data> assetsDatas = new List<Asset.Data>();
 		public const int LAGGY_FRAMES_ON_LOAD_SCENE = 2;
 		static bool initialized;
 		const string STRING_SEPERATOR = "|";
