@@ -22,13 +22,13 @@ namespace EternityEngine
 			zValue.onChanged -= () => { val.z = zValue.val; _OnChanged (); };
 		}
 
-		public void SetSubValues (Vector3 val)
+		public void SetSubValues ()
 		{
 			xValue.val = val.x;
 			xValue.HandleChange ();
 			yValue.val = val.y;
 			yValue.HandleChange ();
-			zValue.val = val.y;
+			zValue.val = val.z;
 			zValue.HandleChange ();
 		}
 	}

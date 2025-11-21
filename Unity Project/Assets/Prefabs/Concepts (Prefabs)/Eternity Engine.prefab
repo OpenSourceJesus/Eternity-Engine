@@ -56,6 +56,7 @@ MonoBehaviour:
   hierarchyEntryPrefab: {fileID: 2077112351387511479, guid: fcf15853281a35949bc297928b0ce43e, type: 3}
   insertionIndicatorPrefab: {fileID: 4879857732329685177, guid: 2e03ac7f65c608a7e9d8d09d08670fc1, type: 3}
   componentPrefab: {fileID: 2278549369278915289, guid: 552b994166718d114809ee820a481314, type: 3}
+  obDataPrefab: {fileID: 6445755035653220395, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
   trsPrefab: {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
   componentsPrefabs:
   - {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}

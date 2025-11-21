@@ -33,6 +33,7 @@ namespace EternityEngine
 		{
 #if !UNITY_WEBGL
 			saveData.assetsDatasDict = new Dictionary<string, Asset.Data>();
+			GameManager.assets.Sort(new AssetComperer());
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];
@@ -54,10 +55,9 @@ namespace EternityEngine
 			saveData = (SaveData) binaryFormatter.Deserialize(fileStream);
 			fileStream.Close();
 			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
-			{
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
 					keyValuePair.Value.GenAsset ();
-			}
+			InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
 #endif
 		}
 
@@ -341,6 +341,21 @@ namespace EternityEngine
 #endif
 		}
 
+		public class AssetComperer : IComparer<Asset>
+		{
+			public int Compare (Asset asset, Asset asset2)
+			{
+				bool assetIsOb = asset is _Object;
+				bool asset2IsOb = asset2 is _Object;
+				if (assetIsOb && !asset2IsOb)
+					return -1;
+				else if (!assetIsOb && asset2IsOb)
+					return 1;
+				else
+					return 0;
+			}
+		}
+
 		[Serializable]
 		public struct SaveData
 		{
@@ -353,6 +368,7 @@ namespace EternityEngine
 			public Dictionary<string, bool[]> boolArrayDict;
 			public Dictionary<string, byte[]> byteArrayDict;
 			public Dictionary<string, _Vector2Int[]> vector2IntArrayDict;
+			public int[] selecteHierarchydEnriesIdxs;
 		}
 	}
 }

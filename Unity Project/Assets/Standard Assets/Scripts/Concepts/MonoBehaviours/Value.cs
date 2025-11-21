@@ -29,7 +29,7 @@ namespace EternityEngine
 				for (int i = 0; i < setableValues.Length; i ++)
 				{
 					SetableValue setableValue = setableValues[i];
-					setableValue.valueSetter.text =  "" + val;
+					setableValue.valueSetter.text = "" + val;
 				}
 		}
 

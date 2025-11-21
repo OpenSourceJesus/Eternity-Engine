@@ -18,6 +18,7 @@ namespace EternityEngine
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
 		public _Component componentPrefab;
+		public ObjectData obDataPrefab;
 		public _Transform trsPrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
@@ -33,7 +34,6 @@ namespace EternityEngine
 		public BoolValue debugMode;
 		public static string saveFilePaths;
 		public static _Object[] obs = new _Object[0];
-		public static _Component[] components = new _Component[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
@@ -542,62 +542,20 @@ while running:
 		public _Object NewPresetObject (PresetObjectType presetObjectType)
 		{
 			if (presetObjectType == PresetObjectType.Empty)
-				return NewObject();
+				return NewObject(obPrefab);
 			else
 				throw new NotImplementedException();
-		}
-
-		public _Object NewObject (string name = "Object", Vector2 pos = new Vector2(), float rot = 0)
-		{
-			_Object ob = NewObject(obPrefab, name);
-
-			return ob;
 		}
 
 		public _Object NewObject (_Object template, string name = "Object")
 		{
 			_Object ob = Instantiate(template);
 			ob.name = GetUniqueName(name);
-			ob.hierarchyEntries = new HierarchyEntry[HierarchyPanel.instances.Length];
-			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
-			{
-				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-				HierarchyEntry hierarchyEntry = Instantiate(hierarchyEntryPrefab, hierarchyPanel.entriesParent);
-				hierarchyEntry.nameText.text = ob.name;
-				hierarchyEntry.ob = ob;
-				hierarchyEntry.hierarchyPanel = hierarchyPanel;
-				ob.hierarchyEntries[i] = hierarchyEntry;
-				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
-			}
-			ob.sceneEntries = new SceneEntry[0];
+			ob.Init ();
 			for (int i = 0; i < template.components.Length; i ++)
 			{
 				_Component component = Instantiate(template.components[i]);
-				component = Instantiate(component);
-				component.ob = ob;
-				SceneEntry sceneEntry = component.sceneEntry;
-				if (sceneEntry != null)
-				{
-					sceneEntry = Instantiate(sceneEntry, sceneEntry.scenePanel.obsParentRectTrs);
-					sceneEntry.hierarchyEntries = ob.hierarchyEntries;
-					ob.sceneEntries = ob.sceneEntries.Add(sceneEntry);
-					component.sceneEntry = sceneEntry;
-				}
-				for (int i2 = 0; i2 < component.inspectorEntries.Length; i2 ++)
-				{
-					InspectorEntry inspectorEntry = component.inspectorEntries[i2];
-					inspectorEntry.gameObject.SetActive(false);
-					inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
-					component.inspectorEntries[i2] = inspectorEntry;
-					inspectorEntry.SetValueEntries (component);
-					InspectorEntry[] inspectorEntriesForEntriesPrefabs = null;
-					if (InspectorPanel.entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out inspectorEntriesForEntriesPrefabs))
-						InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = inspectorEntriesForEntriesPrefabs.Add(inspectorEntry);
-					else
-						InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { inspectorEntry };
-				}
-				ob.components[i] = component;
-				component.Init ();
+				ob.SetupComponent (component, i);
 			}
 			obs = obs.Add(ob);
 			return ob;
@@ -605,11 +563,7 @@ while running:
 
 		public _Component AddComponent (_Object ob, int componentPrefabIdx)
 		{
-			return AddComponent(ob, componentsPrefabs[componentPrefabIdx]);
-		}
-
-		public _Component AddComponent (_Object ob, _Component componentPrefab)
-		{
+			_Component componentPrefab = componentsPrefabs[componentPrefabIdx];
 			for (int i = 0; i < ob.components.Length; i ++)
 			{
 				_Component _component = ob.components[i];

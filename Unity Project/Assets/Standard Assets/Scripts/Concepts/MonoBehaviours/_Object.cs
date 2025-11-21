@@ -25,6 +25,50 @@ namespace EternityEngine
 		[HideInInspector]
 		public HierarchyEntry[] hierarchyEntries = new HierarchyEntry[0];
 
+		public void Init ()
+		{
+			hierarchyEntries = new HierarchyEntry[HierarchyPanel.instances.Length];
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				HierarchyEntry hierarchyEntry = Instantiate(EternityEngine.instance.hierarchyEntryPrefab, hierarchyPanel.entriesParent);
+				hierarchyEntry.nameText.text = name;
+				hierarchyEntry.ob = this;
+				hierarchyEntry.hierarchyPanel = hierarchyPanel;
+				hierarchyEntries[i] = hierarchyEntry;
+				hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
+			}
+			sceneEntries = new SceneEntry[0];
+		}
+
+		public void SetupComponent (_Component component, int idx)
+		{
+			component.ob = this;
+			SceneEntry sceneEntry = component.sceneEntry;
+			if (sceneEntry != null)
+			{
+				sceneEntry = Instantiate(sceneEntry, sceneEntry.scenePanel.obsParentRectTrs);
+				sceneEntry.hierarchyEntries = hierarchyEntries;
+				sceneEntries = sceneEntries.Add(sceneEntry);
+				component.sceneEntry = sceneEntry;
+			}
+			for (int i = 0; i < component.inspectorEntries.Length; i ++)
+			{
+				InspectorEntry inspectorEntry = component.inspectorEntries[i];
+				inspectorEntry.gameObject.SetActive(false);
+				inspectorEntry = Instantiate(inspectorEntry, inspectorEntry.rectTrs.parent);
+				component.inspectorEntries[i] = inspectorEntry;
+				inspectorEntry.SetValueEntries (component);
+				InspectorEntry[] inspectorEntriesForEntriesPrefabs = null;
+				if (InspectorPanel.entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out inspectorEntriesForEntriesPrefabs))
+					InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = inspectorEntriesForEntriesPrefabs.Add(inspectorEntry);
+				else
+					InspectorPanel.entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { inspectorEntry };
+			}
+			components[idx] = component;
+			component.Init ();
+		}
+
 		public override void InitData ()
 		{
 			if (data == null)
@@ -36,6 +80,7 @@ namespace EternityEngine
 			InitData ();
 			base.SetData ();
 			SetComponentsNamesOfData ();
+			SetSelectedOfData ();
 		}
 
 		void SetComponentsNamesOfData ()
@@ -62,10 +107,25 @@ namespace EternityEngine
 			}
 		}
 
+		void SetSelectedOfData ()
+		{
+			_Data.selected = hierarchyEntries[0].selected;
+		}
+
+		void SetSelectedFromData ()
+		{
+			for (int i = 0; i < hierarchyEntries.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = hierarchyEntries[i];
+				hierarchyEntry.SetSelected (_Data.selected);
+			}
+		}
+
 		[Serializable]
 		public class Data : Asset.Data
 		{
 			public string[] componentsNames = new string[0];
+			public bool selected;
 
 			public override object GenAsset ()
 			{
@@ -80,6 +140,15 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
 				ob.SetComponentsNamesFromData ();
+				ob.Init ();
+				EternityEngine.obs = EternityEngine.obs.Add(ob);
+				for (int i = 0; i < ob.components.Length; i ++)
+				{
+					_Component component = ob.components[i];
+					ob.SetupComponent (component, i);
+					InspectorPanel.AddOrUpdateEntries (component);
+				}
+				ob.SetSelectedFromData ();
 			}
 		}
 	}

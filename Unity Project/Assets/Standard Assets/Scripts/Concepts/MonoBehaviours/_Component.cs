@@ -75,18 +75,6 @@ namespace EternityEngine
 			ob.sceneEntries = ob.sceneEntries.AddRange(sceneEntries);
 		}
 
-		public override void Awake ()
-		{
-			base.Awake ();
-			EternityEngine.components = EternityEngine.components.Add(this);
-		}
-
-		public override void OnDestroy ()
-		{
-			base.OnDestroy ();
-			EternityEngine.components = EternityEngine.components.Remove(this);
-		}
-
 		public bool TryDelete ()
 		{
 			if (dependsOnMe.Count > 0)

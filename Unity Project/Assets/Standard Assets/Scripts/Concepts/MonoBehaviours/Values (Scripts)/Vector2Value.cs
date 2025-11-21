@@ -19,7 +19,7 @@ namespace EternityEngine
 			yValue.onChanged -= () => { val.y = yValue.val; _OnChanged (); };
 		}
 
-		public void SetSubValues (Vector2 val)
+		public void SetSubValues ()
 		{
 			xValue.val = val.x;
 			xValue.HandleChange ();

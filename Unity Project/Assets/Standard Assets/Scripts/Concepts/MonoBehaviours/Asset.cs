@@ -18,12 +18,12 @@ namespace EternityEngine
 			}
 		}
 
-		public virtual void Awake ()
+		void Awake ()
 		{
 			GameManager.assets.Add(this);
 		}
 
-		public virtual void OnDestroy ()
+		void OnDestroy ()
 		{
 			GameManager.assets.Remove(this);
 		}

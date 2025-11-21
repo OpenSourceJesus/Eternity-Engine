@@ -89,6 +89,8 @@ namespace EternityEngine
 							colorValueEntry.DetachValues ();
 						}
 						Destroy(entry.gameObject);
+						_Component component = entry.component;
+						component.inspectorEntries = component.inspectorEntries.Remove(entry);
 					}
 					else
 						entry.gameObject.SetActive(false);
@@ -113,7 +115,7 @@ namespace EternityEngine
 				InspectorPanel inspectorPanel = instances[i];
 				InspectorEntry entry = null;
 				HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
-				if (selectedHierarchyEntries.Length == 1)
+				if (selectedHierarchyEntries.Length < 2)
 				{
 					if (component.inspectorEntries.Length <= i)
 					{
