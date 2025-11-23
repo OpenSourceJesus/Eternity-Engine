@@ -54,7 +54,7 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				ObjectData obData = (ObjectData) asset;
 				obData.SetExportFromData ();

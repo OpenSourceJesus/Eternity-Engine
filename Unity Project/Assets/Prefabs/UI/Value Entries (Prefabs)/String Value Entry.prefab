@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37db3e6470d627b3386e655d27eafa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.StringValueEntry
-  valueSetter: {fileID: 960945108605707742}
+  setter: {fileID: 960945108605707742}
   value: {fileID: 0}
 --- !u!224 &8355699331202631784 stripped
 RectTransform:

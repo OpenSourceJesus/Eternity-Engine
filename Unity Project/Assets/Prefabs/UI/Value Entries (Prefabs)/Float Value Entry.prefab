@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValueEntry
   value: {fileID: 0}
-  valueSetter: {fileID: 960945108605707742}
+  setter: {fileID: 960945108605707742}
 --- !u!224 &8355699331202631784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}

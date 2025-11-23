@@ -5,6 +5,8 @@ namespace EternityEngine
 {
 	public class Asset : MonoBehaviour
 	{
+		[HideInInspector]
+		public string id;
 		public object data;
 		public Data _Data
 		{
@@ -17,10 +19,23 @@ namespace EternityEngine
 				data = value;
 			}
 		}
+		static string lastId = "" + (char) 0;
 
 		void Awake ()
 		{
 			GameManager.assets.Add(this);
+			if (!SaveAndLoadManager.isLoading)
+			{
+				byte charVal = (byte) lastId[lastId.Length - 1];
+				if (charVal == 255)
+					lastId += (char) 0;
+				else
+				{
+					charVal ++;
+					lastId = lastId.Substring(0, lastId.Length - 1) + (char) charVal;
+				}
+				id = lastId;
+			}
 		}
 
 		void OnDestroy ()
@@ -28,12 +43,12 @@ namespace EternityEngine
 			GameManager.assets.Remove(this);
 		}
 
-		public static T Get<T> (string name) where T : Asset
+		public static T Get<T> (string id) where T : Asset
 		{
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];
-				if (asset.name == name)
+				if (asset.id == id)
 					return (T) asset;
 			}
 			return null;
@@ -48,7 +63,22 @@ namespace EternityEngine
 		public virtual void SetData ()
 		{
 			InitData ();
+			SetIdOfData ();
 			SetNameOfData ();
+		}
+
+		public void SetIdOfData ()
+		{
+			_Data.id = id;
+		}
+
+		public void SetIdFromData ()
+		{
+			id = _Data.id;
+			if (id.Length > lastId.Length)
+				lastId = id;
+			else if (id.Length == lastId.Length && (byte) id[id.Length - 1] > (byte) lastId[lastId.Length - 1])
+				lastId = id;
 		}
 
 		public void SetNameOfData ()
@@ -64,6 +94,7 @@ namespace EternityEngine
 		[Serializable]
 		public class Data
 		{
+			public string id;
 			public string name;
 
 			public virtual object GenAsset ()
@@ -73,7 +104,8 @@ namespace EternityEngine
 
 			public virtual void Apply (Asset asset)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
+				asset.SetIdFromData ();
 				asset.SetNameFromData ();
 			}
 		}

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorValue
   val: {r: 1, g: 1, b: 1, a: 1}
   component: {fileID: 0}
-  setableValues: []
+  setters: []
   rValue: {fileID: 1725794314844669198}
   gValue: {fileID: 6165620212904018891}
   bValue: {fileID: 4364689799243166397}

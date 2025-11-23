@@ -136,55 +136,81 @@ namespace EternityEngine
 				else
 				{
 					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
-					InspectorEntry[] entriesForEntriesPrefabs = entreisForEntriesPrefabsDict[entryPrefab];
+					if (!entreisForEntriesPrefabsDict.TryGetValue(entryPrefab, out InspectorEntry[] entriesForEntriesPrefabs) || entriesForEntriesPrefabs == null || entriesForEntriesPrefabs.Length == 0)
+					{
+						entry = inspectorPanel.NewEntry(component);
+						inspectorPanel.entries = inspectorPanel.entries.Add(entry);
+						output[i] = entry;
+						continue;
+					}
+					List<_Component> selectedComponents = new List<_Component>();
+					for (int i2 = 0; i2 < selectedHierarchyEntries.Length; i2 ++)
+					{
+						HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i2];
+						_Component[] obComponents = hierarchyEntry.ob.components;
+						for (int i3 = 0; i3 < obComponents.Length; i3 ++)
+						{
+							_Component obComponent = obComponents[i3];
+							if (obComponent.inspectorEntryPrefab == entryPrefab)
+								selectedComponents.Add(obComponent);
+						}
+					}
+					if (selectedComponents.Count == 0)
+					{
+						entry = inspectorPanel.NewEntry(component);
+						inspectorPanel.entries = inspectorPanel.entries.Add(entry);
+						output[i] = entry;
+						continue;
+					}
 					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
 					string[] strings = new string[entryPrefab.stringValuesEntries.Length];
-					_Component[] components = new _Component[entriesForEntriesPrefabs.Length];
-					for (int i2 = 0; i2 < entriesForEntriesPrefabs.Length; i2 ++)
+					for (int i2 = 0; i2 < selectedComponents.Count; i2 ++)
 					{
-						InspectorEntry _entry = entriesForEntriesPrefabs[i2];
-						for (int i3 = 0; i3 < _entry.floatValuesEntries.Length; i3 ++)
+						_Component _component = selectedComponents[i2];
+						for (int i3 = 0; i3 < _component.floatValues.Length && i3 < floats.Length; i3 ++)
 						{
-							FloatValueEntry floatValueEntry = _entry.floatValuesEntries[i3];
-							float f = floatValueEntry.value.val;
+							FloatValue floatValue = _component.floatValues[i3];
+							float f = floatValue.val;
 							if (i2 == 0)
 								floats[i3] = f;
-							else if (f != floats[i3])
+							else
 							{
-								floats[i3] = null;
-								break;
+								float? _f = floats[i3];
+								if (!_f.HasValue || f != _f.Value)
+									floats[i3] = null;
 							}
 						}
-						for (int i3 = 0; i3 < _entry.stringValuesEntries.Length; i3 ++)
+						for (int i3 = 0; i3 < _component.stringValues.Length && i3 < strings.Length; i3 ++)
 						{
-							StringValueEntry stringValueEntry = _entry.stringValuesEntries[i3];
-							string str = stringValueEntry.value.val;
+							StringValue stringValue = _component.stringValues[i3];
+							string str = stringValue.val;
 							if (i2 == 0)
 								strings[i3] = str;
-							else if (str != strings[i3])
+							else
 							{
-								strings[i3] = null;
-								break;
+								string _str = strings[i3];
+								if (_str == null || str != _str)
+									strings[i3] = null;
 							}
 						}
-						components[i2] = _entry.component;
 					}
+					_Component[] components = selectedComponents.ToArray();
 					entry = inspectorPanel.NewEntry(components);
 					for (int i2 = 0; i2 < floats.Length; i2 ++)
 					{
 						float? f = floats[i2];
 						if (f == null)
-							entry.floatValuesEntries[i2].valueSetter.text = "—";
+							entry.floatValuesEntries[i2].setter.text = "—";
 						else
-							entry.floatValuesEntries[i2].valueSetter.text = "" + f;
+							entry.floatValuesEntries[i2].setter.text = "" + f;
 					}
 					for (int i2 = 0; i2 < strings.Length; i2 ++)
 					{
 						string str = strings[i2];
 						if (str == null)
-							entry.stringValuesEntries[i2].valueSetter.text = "—";
+							entry.stringValuesEntries[i2].setter.text = "—";
 						else
-							entry.stringValuesEntries[i2].valueSetter.text = "" + str;
+							entry.stringValuesEntries[i2].setter.text = "" + str;
 					}
 				}
 				inspectorPanel.entries = inspectorPanel.entries.Add(entry);

@@ -18,6 +18,7 @@ namespace EternityEngine
 				data = value;
 			}
 		}
+		public Transform trs;
 		public ObjectData obData;
 		public _Component[] components = new _Component[0];
 		[HideInInspector]
@@ -85,24 +86,24 @@ namespace EternityEngine
 
 		void SetComponentsNamesOfData ()
 		{
-			_Data.componentsNames = new string[components.Length];
+			_Data.componentIds = new string[components.Length];
 			for (int i = 0; i < components.Length; i ++)
 			{
 				_Component component = components[i];
-				_Data.componentsNames[i] = component.name;
+				_Data.componentIds[i] = component.id;
 			}
 		}
 
 		void SetComponentsNamesFromData ()
 		{
-			components = new _Component[_Data.componentsNames.Length];
-			for (int i = 0; i < _Data.componentsNames.Length; i ++)
+			components = new _Component[_Data.componentIds.Length];
+			for (int i = 0; i < _Data.componentIds.Length; i ++)
 			{
-				string componentName =_Data.componentsNames[i];
+				string componentId =_Data.componentIds[i];
 				_Component component = null;
-				component = Get<_Component>(componentName);
+				component = Get<_Component>(componentId);
 				if (component == null)
-					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentName].GenAsset();
+					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
 				components[i] = component;
 			}
 		}
@@ -124,7 +125,7 @@ namespace EternityEngine
 		[Serializable]
 		public class Data : Asset.Data
 		{
-			public string[] componentsNames = new string[0];
+			public string[] componentIds = new string[0];
 			public bool selected;
 
 			public override object GenAsset ()
@@ -136,7 +137,7 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
 				ob.SetComponentsNamesFromData ();
@@ -146,7 +147,7 @@ namespace EternityEngine
 				{
 					_Component component = ob.components[i];
 					ob.SetupComponent (component, i);
-					InspectorPanel.AddOrUpdateEntries (component);
+					// InspectorPanel.AddOrUpdateEntries (component);
 				}
 				ob.SetSelectedFromData ();
 			}

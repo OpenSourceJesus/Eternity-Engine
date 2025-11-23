@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Extensions;
 using UnityEngine;
@@ -7,6 +8,17 @@ namespace EternityEngine
 {
 	public class _Image : _Component
 	{
+		public new Data _Data
+		{
+			get
+			{
+				return (Data) data;
+			}
+			set
+			{
+				data = value;
+			}
+		}
 		[HideInInspector]
 		public Image[] imgs = new Image[0];
 		public StringValue path;
@@ -21,6 +33,11 @@ namespace EternityEngine
 			imgs = new Image[ScenePanel.instances.Length];
 			imgs[0] = sceneEntry.img;
 			tex = new Texture2D(1, 1);
+			Transform obTrs = ob.trs;
+			Transform sceneEntryTrs = sceneEntry.rectTrs;
+			sceneEntryTrs.position = obTrs.position;
+			sceneEntryTrs.eulerAngles = obTrs.eulerAngles;
+			sceneEntryTrs.localScale = obTrs.localScale;
 			for (int i = 1; i < ScenePanel.instances.Length; i ++)
 			{
 				ScenePanel scenePanel = ScenePanel.instances[i];
@@ -86,6 +103,50 @@ namespace EternityEngine
 			{
 				Image img = imgs[i];
 				img.color = tint.val;
+			}
+		}
+
+		public override void InitData ()
+		{
+			if (data == null)
+				data = new Data();
+		}
+
+		public override void SetData ()
+		{
+			InitData ();
+			base.SetData ();
+			SetPathOfData ();
+		}
+
+		void SetPathOfData ()
+		{
+			_Data.path = path.val;
+		}
+
+		void SetPathFromData ()
+		{
+			path.val = _Data.path;
+		}
+
+		[Serializable]
+		public class Data : _Component.Data
+		{
+			public string path;
+
+			public override object GenAsset ()
+			{
+				_Image img = Instantiate(EternityEngine.instance.imgPrefab);
+				Apply (img);
+				return img;
+			}
+
+			public override void Apply (Asset asset)
+			{
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
+				base.Apply (asset);
+				_Image img = (_Image) asset;
+				img.SetPathFromData ();
 			}
 		}
 	}

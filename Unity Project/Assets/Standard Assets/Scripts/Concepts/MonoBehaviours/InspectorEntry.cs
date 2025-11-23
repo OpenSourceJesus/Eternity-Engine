@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,19 @@ using UnityEngine.InputSystem;
 
 namespace EternityEngine
 {
-	public class InspectorEntry : MonoBehaviour, IUpdatable
+	public class InspectorEntry : Asset, IUpdatable
 	{
+		public new Data _Data
+		{
+			get
+			{
+				return (Data) data;
+			}
+			set
+			{
+				data = value;
+			}
+		}
 		public RectTransform rectTrs;
 		[HideInInspector]
 		public _Component component;
@@ -65,7 +77,7 @@ namespace EternityEngine
 				{
 					_Component component = components[i2];
 					FloatValue floatValue = component.floatValues[i];
-					floatValue.setableValues = floatValue.setableValues.Add(floatValueEntry);
+					floatValue.setters = floatValue.setters.Add(floatValueEntry);
 					values[i2] = floatValue;
 				}
 				floatValueEntry.SetValues (values);
@@ -79,7 +91,7 @@ namespace EternityEngine
 				{
 					_Component component = components[i2];
 					StringValue stringValue = component.stringValues[i];
-					stringValue.setableValues = stringValue.setableValues.Add(stringValueEntry);
+					stringValue.setters = stringValue.setters.Add(stringValueEntry);
 					values[i2] = stringValue;
 				}
 				stringValueEntry.SetValues (values);
@@ -159,6 +171,84 @@ namespace EternityEngine
 			}
 			else
 				GameManager.updatables = GameManager.updatables.Remove(optionsUpdater);
+		}
+
+		public override void InitData ()
+		{
+			if (data == null)
+				data = new Data();
+		}
+
+		public override void SetData ()
+		{
+			InitData ();
+			base.SetData ();
+			SetActiveOfData ();
+			SetComponentIdOfData ();
+		}
+
+		void SetActiveOfData ()
+		{
+			_Data.active = gameObject.activeSelf;
+		}
+
+		void SetActiveFromData ()
+		{
+			gameObject.SetActive(_Data.active);
+		}
+
+		void SetComponentIdOfData ()
+		{
+			_Data.componentId = component.id;
+		}
+
+		void SetComponentIdFromData ()
+		{
+			_Component component = Get<_Component>(_Data.componentId);
+			if (component == null)
+				component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[_Data.componentId].GenAsset();
+		}
+
+		[Serializable]
+		public class Data : Asset.Data
+		{
+			public bool active;
+			public string componentId;
+
+			public override object GenAsset ()
+			{
+				_Component component = Get<_Component>(componentId);
+				if (component == null)
+					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
+				InspectorEntry inspectorEntryPrefab = EternityEngine.instance.obDataEntryPrefab;
+				for (int i = 0; i < EternityEngine.instance.componentsPrefabs.Length; i ++)
+				{
+					_Component componentPrefab = EternityEngine.instance.componentsPrefabs[i];
+					if (component.inspectorEntryPrefab == componentPrefab.inspectorEntryPrefab)
+					{
+						inspectorEntryPrefab = component.inspectorEntryPrefab;
+						break;
+					}
+				}
+				InspectorPanel firstInspectorPanel = InspectorPanel.instances[0];
+				InspectorEntry inspectorEntry = Instantiate(inspectorEntryPrefab, firstInspectorPanel.entriesParent);
+				Apply (inspectorEntry);
+				for (int i = 1; i < InspectorPanel.instances.Length; i ++)
+				{
+					InspectorPanel inspectorPanel = InspectorPanel.instances[i];
+					inspectorEntry = Instantiate(inspectorEntry, inspectorPanel.entriesParent);
+				}
+				return inspectorEntry;
+			}
+
+			public override void Apply (Asset asset)
+			{
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
+				base.Apply (asset);
+				InspectorEntry inspectorEntry = (InspectorEntry) asset;
+				inspectorEntry.SetComponentIdFromData ();
+				inspectorEntry.SetActiveFromData ();
+			}
 		}
 
 		class OptionsUpdater : IUpdatable

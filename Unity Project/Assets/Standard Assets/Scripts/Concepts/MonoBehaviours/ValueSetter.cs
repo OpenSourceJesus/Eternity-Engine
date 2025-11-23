@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class SetableValue : MonoBehaviour
+	public class ValueSetter : MonoBehaviour
 	{
-		public TMP_InputField valueSetter;
+		public TMP_InputField setter;
 		
 		public virtual void TrySet (string text)
 		{

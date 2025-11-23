@@ -11,10 +11,12 @@ namespace EternityEngine
 	public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 	{
 		public static SaveData saveData = new SaveData();
+		public static bool isLoading;
 
 		public static void Init ()
 		{
 #if !UNITY_WEBGL
+			saveData.assetsDatasDict = new Dictionary<string, Asset.Data>();
 			saveData.boolDict = new Dictionary<string, bool>();
 			saveData.intDict = new Dictionary<string, int>();
 			saveData.floatDict = new Dictionary<string, float>();
@@ -32,13 +34,12 @@ namespace EternityEngine
 		public static void Save (string saveFilePath)
 		{
 #if !UNITY_WEBGL
-			saveData.assetsDatasDict = new Dictionary<string, Asset.Data>();
 			GameManager.assets.Sort(new AssetComperer());
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];
 				asset.SetData ();
-				saveData.assetsDatasDict[asset.name] = asset._Data;
+				saveData.assetsDatasDict[asset.id] = asset._Data;
 			}
 			FileStream fileStream = new FileStream(saveFilePath, FileMode.Create);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -50,6 +51,7 @@ namespace EternityEngine
 		public static void Load (string saveFilePath)
 		{
 #if !UNITY_WEBGL
+			isLoading = true;
 			FileStream fileStream = new FileStream(saveFilePath, FileMode.Open);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			saveData = (SaveData) binaryFormatter.Deserialize(fileStream);
@@ -57,7 +59,8 @@ namespace EternityEngine
 			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
 					keyValuePair.Value.GenAsset ();
-			InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
+			// InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
+			isLoading = false;
 #endif
 		}
 
@@ -368,7 +371,6 @@ namespace EternityEngine
 			public Dictionary<string, bool[]> boolArrayDict;
 			public Dictionary<string, byte[]> byteArrayDict;
 			public Dictionary<string, _Vector2Int[]> vector2IntArrayDict;
-			public int[] selecteHierarchydEnriesIdxs;
 		}
 	}
 }

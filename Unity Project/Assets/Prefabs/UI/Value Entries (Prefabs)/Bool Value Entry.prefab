@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 443.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d11d3d49b37397749cd2d90cb06ff18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.BoolValueEntry
-  valueSetter: {fileID: 0}
+  setter: {fileID: 0}
   value: {fileID: 0}
   values: []
 --- !u!224 &8355699331202631784 stripped

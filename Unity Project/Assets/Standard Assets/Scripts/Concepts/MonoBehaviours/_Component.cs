@@ -108,25 +108,25 @@ namespace EternityEngine
 		{
 			InitData ();
 			base.SetData ();
-			SetObNameOfData ();
+			SetObIdOfData ();
 		}
 
-		void SetObNameOfData ()
+		void SetObIdOfData ()
 		{
-			_Data.obName = ob.name;
+			_Data.obId = ob.id;
 		}
 
-		void SetObNameFromData ()
+		void SetObIdFromData ()
 		{
-			ob = Get<_Object>(_Data.obName);
+			ob = Get<_Object>(_Data.obId);
 			if (ob == null)
-				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obName].GenAsset();
+				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obId].GenAsset();
 		}
 
 		[Serializable]
 		public class Data : Asset.Data
 		{
-			public string obName;
+			public string obId;
 
 			public override object GenAsset ()
 			{
@@ -137,10 +137,10 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Component component = (_Component) asset;
-				component.SetObNameFromData ();
+				component.SetObIdFromData ();
 			}
 		}
 	}

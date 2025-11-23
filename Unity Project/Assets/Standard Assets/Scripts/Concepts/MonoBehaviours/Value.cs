@@ -9,7 +9,7 @@ namespace EternityEngine
 		public event OnChanged onChanged = () => {};
 		public _Component component;
 		[HideInInspector]
-		public SetableValue[] setableValues = new SetableValue[0];
+		public ValueSetter[] setters = new ValueSetter[0];
 
 		public virtual void Awake ()
 		{
@@ -23,13 +23,13 @@ namespace EternityEngine
 				onChanged -= HandleChange;
 		}
 
-		public void HandleChange ()
+		void HandleChange ()
 		{
 			if (!component.inspectorEntries[0].gameObject.activeSelf)
-				for (int i = 0; i < setableValues.Length; i ++)
+				for (int i = 0; i < setters.Length; i ++)
 				{
-					SetableValue setableValue = setableValues[i];
-					setableValue.valueSetter.text = "" + val;
+					ValueSetter setableValue = setters[i];
+					setableValue.setter.text = "" + val;
 				}
 		}
 

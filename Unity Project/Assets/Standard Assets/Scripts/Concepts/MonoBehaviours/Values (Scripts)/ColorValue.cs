@@ -28,13 +28,9 @@ namespace EternityEngine
 		public void SetSubValues ()
 		{
 			rValue.val = val.r;
-			rValue.HandleChange ();
 			gValue.val = val.g;
-			gValue.HandleChange ();
 			bValue.val = val.b;
-			bValue.HandleChange ();
 			aValue.val = val.a;
-			aValue.HandleChange ();
 		}
 	}
 }

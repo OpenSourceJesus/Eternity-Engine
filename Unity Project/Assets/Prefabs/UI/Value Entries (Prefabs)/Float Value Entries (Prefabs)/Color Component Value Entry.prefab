@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fee21ba0533666138f246f08d9022b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorComponentValueEntry
-  valueSetter: {fileID: 4829352764172181338}
+  setter: {fileID: 4829352764172181338}
   value: {fileID: 0}
   values: []
   uiLineRenderer: {fileID: 6791790458282383093}

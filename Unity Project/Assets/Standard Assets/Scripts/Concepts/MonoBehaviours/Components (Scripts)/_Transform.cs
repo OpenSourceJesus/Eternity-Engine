@@ -37,6 +37,7 @@ namespace EternityEngine
 
 		void OnPosChanged ()
 		{
+			ob.trs.position = pos.val;
 			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
 				SceneEntry sceneEntry = ob.sceneEntries[i];
@@ -46,6 +47,7 @@ namespace EternityEngine
 
 		void OnRotChanged ()
 		{
+			ob.trs.eulerAngles = Vector3.forward * rot.val;
 			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
 				SceneEntry sceneEntry = ob.sceneEntries[i];
@@ -55,6 +57,7 @@ namespace EternityEngine
 
 		void OnSizeChanged ()
 		{
+			ob.trs.localScale = size.val;
 			for (int i = 0; i < ob.sceneEntries.Length; i ++)
 			{
 				SceneEntry sceneEntry = ob.sceneEntries[i];
@@ -125,7 +128,7 @@ namespace EternityEngine
 
 			public override void Apply (Asset asset)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[name];
+				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Transform trs = (_Transform) asset;
 				trs.SetPosFromData ();

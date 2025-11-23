@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class ValueEntry<T> : SetableValue
+	public class ValueEntry<T> : ValueSetter
 	{
 		public Value<T> value;
 		public Value<T>[] values = new Value<T>[0];
@@ -39,7 +39,7 @@ namespace EternityEngine
 				Value<T> target = targets[i];
 				if (target == null)
 					continue;
-				target.setableValues = target.setableValues.Remove(this);
+				target.setters = target.setters.Remove(this);
 			}
 			values = new Value<T>[0];
 			value = null;
