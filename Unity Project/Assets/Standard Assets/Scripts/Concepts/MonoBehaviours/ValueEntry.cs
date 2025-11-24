@@ -37,9 +37,8 @@ namespace EternityEngine
 			for (int i = 0; i < targets.Length; i ++)
 			{
 				Value<T> target = targets[i];
-				if (target == null)
-					continue;
-				target.entries = target.entries.Remove(this);
+				if (target != null)
+					target.entries = target.entries.Remove(this);
 			}
 			values = new Value<T>[0];
 			value = null;

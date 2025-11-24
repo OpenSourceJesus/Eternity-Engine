@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.HierarchyEntry
   id: 
-  save: 1
+  save: 0
   rectTrs: {fileID: 311542800848920874}
   ob: {fileID: 0}
   nameText: {fileID: 3510788512618986784}

@@ -341,6 +341,8 @@ namespace EternityEngine
 			ob = Get<_Object>(_Data.obId);
 			if (ob == null)
 				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obId].GenAsset();
+			nameText.text = ob.name;
+			ob.hierarchyEntries = ob.hierarchyEntries.Add(this);
 		}
 
 		[Serializable]

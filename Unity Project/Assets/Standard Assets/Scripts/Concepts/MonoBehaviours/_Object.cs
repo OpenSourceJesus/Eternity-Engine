@@ -80,8 +80,20 @@ namespace EternityEngine
 		{
 			InitData ();
 			base.SetData ();
+			SetNameOfData ();
 			SetComponentsIdsOfData ();
+			SetHierarchyEntriesIdsOfData ();
 			SetSelectedOfData ();
+		}
+
+		public void SetNameOfData ()
+		{
+			_Data.name = name;
+		}
+
+		public void SetNameFromData ()
+		{
+			name = _Data.name;
 		}
 
 		void SetComponentsIdsOfData ()
@@ -97,13 +109,36 @@ namespace EternityEngine
 		void SetComponentsIdsFromData ()
 		{
 			components = new _Component[_Data.componentsIds.Length];
-			for (int i = 0; i < _Data.componentsIds.Length; i ++)
+			for (int i = 0; i < components.Length; i ++)
 			{
 				string componentId =_Data.componentsIds[i];
 				_Component component = Get<_Component>(componentId);
 				if (component == null)
 					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
 				components[i] = component;
+			}
+		}
+
+		void SetHierarchyEntriesIdsOfData ()
+		{
+			_Data.hierarchyEntriesIds = new string[hierarchyEntries.Length];
+			for (int i = 0; i < hierarchyEntries.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = hierarchyEntries[i];
+				_Data.hierarchyEntriesIds[i] = hierarchyEntry.id;
+			}
+		}
+
+		void SetHierarchyEntriesIdsFromData ()
+		{
+			hierarchyEntries = new HierarchyEntry[_Data.hierarchyEntriesIds.Length];
+			for (int i = 0; i < hierarchyEntries.Length; i ++)
+			{
+				string hierarchyEntryId =_Data.hierarchyEntriesIds[i];
+				HierarchyEntry hierarchyEntry = Get<HierarchyEntry>(hierarchyEntryId);
+				if (hierarchyEntry == null)
+					hierarchyEntry = (HierarchyEntry) SaveAndLoadManager.saveData.assetsDatasDict[hierarchyEntryId].GenAsset();
+				hierarchyEntries[i] = hierarchyEntry;
 			}
 		}
 
@@ -124,7 +159,9 @@ namespace EternityEngine
 		[Serializable]
 		public class Data : Asset.Data
 		{
+			public string name;
 			public string[] componentsIds = new string[0];
+			public string[] hierarchyEntriesIds = new string[0];
 			public bool selected;
 
 			public override object GenAsset ()
@@ -139,11 +176,17 @@ namespace EternityEngine
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
+				ob.SetNameFromData ();
 				ob.SetComponentsIdsFromData ();
-				// ob.Init ();
+				// ob.SetHierarchyEntriesIdsFromData ();
+				ob.Init ();
 				EternityEngine.obs = EternityEngine.obs.Add(ob);
-				// for (int i
-				
+				for (int i = 0; i < ob.components.Length; i ++)
+				{
+					_Component component = ob.components[i];
+					ob.SetupComponent (component, i);
+					InspectorPanel.AddOrUpdateEntries (component);
+				}
 				ob.SetSelectedFromData ();
 			}
 		}

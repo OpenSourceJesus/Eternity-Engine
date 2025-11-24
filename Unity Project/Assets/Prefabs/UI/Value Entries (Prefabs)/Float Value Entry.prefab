@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValueEntry
   id: 
-  save: 1
+  save: 0
   inputField: {fileID: 960945108605707742}
   value: {fileID: 0}
   values: []

@@ -40,7 +40,8 @@ namespace EternityEngine
 				Asset asset = GameManager.assets[i];
 				asset.SetData ();
 				saveData.assetsDatasDict[asset.id] = asset._Data;
-				// print(asset.name + " : " + (byte) asset.id[0]);
+				if (asset.id.Length > 0)
+					print(asset.name + " : " + (byte) asset.id[0]);
 			}
 			saveData.exportBackgroundColor = _Vector4.FromColor(EternityEngine.instance.backgroundColor.val);
 			saveData.useGravity = EternityEngine.instance.useGravity.val;
@@ -66,7 +67,8 @@ namespace EternityEngine
 			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
 				{
-					// print((byte) keyValuePair.Key[0]);
+					if (keyValuePair.Key.Length > 0)
+						print((byte) keyValuePair.Key[0]);
 					keyValuePair.Value.GenAsset ();
 				}
 			EternityEngine.instance.backgroundColor.Set (saveData.exportBackgroundColor.ToColor());
@@ -75,7 +77,7 @@ namespace EternityEngine
 			EternityEngine.instance.unitLen.Set (saveData.unitLen);
 			EternityEngine.instance.exportPath.Set (saveData.exportPath);
 			EternityEngine.instance.debugMode.Set (saveData.debugMode);
-			// InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
+			InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
 			isLoading = false;
 #endif
 		}

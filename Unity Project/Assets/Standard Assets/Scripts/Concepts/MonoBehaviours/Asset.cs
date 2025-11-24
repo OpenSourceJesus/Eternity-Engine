@@ -67,7 +67,6 @@ namespace EternityEngine
 		{
 			InitData ();
 			SetIdOfData ();
-			SetNameOfData ();
 		}
 
 		public void SetIdOfData ()
@@ -84,21 +83,10 @@ namespace EternityEngine
 				lastId = id;
 		}
 
-		public void SetNameOfData ()
-		{
-			_Data.name = name;
-		}
-
-		public void SetNameFromData ()
-		{
-			name = _Data.name;
-		}
-
 		[Serializable]
 		public class Data
 		{
 			public string id;
-			public string name;
 
 			public virtual object GenAsset ()
 			{
@@ -109,7 +97,6 @@ namespace EternityEngine
 			{
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				asset.SetIdFromData ();
-				asset.SetNameFromData ();
 			}
 		}
 	}

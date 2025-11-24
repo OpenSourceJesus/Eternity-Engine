@@ -78,7 +78,7 @@ namespace EternityEngine
 		void SetEntriesIdsFromData ()
 		{
 			entries = new ValueEntry<T>[_Data.entriesIds.Length];
-			for (int i = 0; i < _Data.entriesIds.Length; i ++)
+			for (int i = 0; i < entries.Length; i ++)
 			{
 				string entryId =_Data.entriesIds[i];
 				ValueEntry<T> entry = Get<ValueEntry<T>>(entryId);

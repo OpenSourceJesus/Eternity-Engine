@@ -90,7 +90,8 @@ namespace EternityEngine
 						}
 						Destroy(entry.gameObject);
 						_Component component = entry.component;
-						component.inspectorEntries = component.inspectorEntries.Remove(entry);
+						if (component != null)
+							component.inspectorEntries = component.inspectorEntries.Remove(entry);
 					}
 					else
 						entry.gameObject.SetActive(false);

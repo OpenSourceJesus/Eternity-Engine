@@ -17,7 +17,6 @@ namespace EternityEngine
 		public _Object obPrefab;
 		public HierarchyEntry hierarchyEntryPrefab;
 		public Image insertionIndicatorPrefab;
-		public _Component componentPrefab;
 		public ObjectData obDataPrefab;
 		public _Transform trsPrefab;
 		public _Image imgPrefab;
@@ -28,6 +27,12 @@ namespace EternityEngine
 		public Vector2Value vector2ValuePrefab;
 		public Vector3Value vector3ValuePrefab;
 		public ColorValue colorValuePrefab;
+		public BoolValueEntry boolValuesEntryPrefab;
+		public FloatValueEntry floatValueEntryPrefab;
+		public StringValueEntry stringValueEntryPrefab;
+		public Vector2ValueEntry vector2ValueEntryPrefab;
+		public Vector3ValueEntry vector3ValueEntryPrefab;
+		public ColorValueEntry colorValueEntryPrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;

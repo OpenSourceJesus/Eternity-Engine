@@ -44,5 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1276f04aada6e86842f2e087e0e5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Component
+  id: 
+  save: 0
+  sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 8306095026889529738, guid: 34954f8f2c4fe05e0af49f015d7e719c, type: 3}
+  collapsed: 0
+  boolValues: []
+  floatValues: []
+  stringValues: []
+  vector2Values: []
+  vector3Values: []
+  colorValues: []
+  inspectorEntries: []
+  sceneEntries: []
+  requiredComponentIdxs: 
+  dependsOn: []
+  dependsOnMe: []

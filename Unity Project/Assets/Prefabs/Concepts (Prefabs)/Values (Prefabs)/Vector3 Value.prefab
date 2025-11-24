@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector3Value
   id: 
-  save: 1
+  save: 0
   val: {x: 0, y: 0, z: 0}
   component: {fileID: 0}
-  setters: []
+  entries: []
   xValue: {fileID: 1725794314844669198}
   yValue: {fileID: 6165620212904018891}
   zValue: {fileID: 4364689799243166397}

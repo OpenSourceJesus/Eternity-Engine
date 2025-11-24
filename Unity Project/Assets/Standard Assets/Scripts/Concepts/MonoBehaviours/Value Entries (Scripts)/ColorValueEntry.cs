@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,17 @@ namespace EternityEngine
 {
 	public class ColorValueEntry : ValueEntry<Color>
 	{
+		public new Data _Data
+		{
+			get
+			{
+				return (Data) data;
+			}
+			set
+			{
+				data = value;
+			}
+		}
 		public ColorComponentValueEntry rValueEntry;
 		public ColorComponentValueEntry gValueEntry;
 		public ColorComponentValueEntry bValueEntry;
@@ -36,6 +48,23 @@ namespace EternityEngine
 		public void ToggleSubValueEntries ()
 		{
 			subValueEntriesParentGo.SetActive(!subValueEntriesParentGo.activeSelf);
+		}
+
+		public override void InitData ()
+		{
+			if (data == null)
+				data = new Data();
+		}
+
+		[Serializable]
+		public class Data : Asset.Data
+		{
+			public override object GenAsset ()
+			{
+				ColorValueEntry colorValueEntry = Instantiate(EternityEngine.instance.colorValueEntryPrefab);
+				Apply (colorValueEntry);
+				return colorValueEntry;
+			}
 		}
 	}
 }

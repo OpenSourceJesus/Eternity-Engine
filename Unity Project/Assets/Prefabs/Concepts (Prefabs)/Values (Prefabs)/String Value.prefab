@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.StringValue
   id: 
-  save: 1
+  save: 0
   val: 
   component: {fileID: 0}
-  setters: []
+  entries: []

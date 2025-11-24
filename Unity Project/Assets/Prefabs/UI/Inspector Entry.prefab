@@ -344,16 +344,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529319c8a2a949b80bf999451e9be721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.InspectorEntry
+  id: 
+  save: 0
   rectTrs: {fileID: 311542800848920874}
   component: {fileID: 0}
   inspectorPanel: {fileID: 0}
   collapButtonRectTrs: {fileID: 1908843119970835633}
   goToGetCollapsed: {fileID: 4573525836683300475}
   onlyAllowOnePerObject: 0
+  boolValuesEntries: []
   floatValuesEntries: []
   stringValuesEntries: []
   vector2ValuesEntries: []
   vector3ValuesEntries: []
+  colorValueEntries: []
   optionsRectTrs: {fileID: 7704219063976739218}
 --- !u!114 &4388007333669894051
 MonoBehaviour:
