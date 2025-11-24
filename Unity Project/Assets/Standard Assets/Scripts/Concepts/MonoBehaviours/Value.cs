@@ -39,15 +39,15 @@ namespace EternityEngine
 
 		public virtual void Set (T val)
 		{
-			// T prevVal = this.val;
+			T prevVal = this.val;
 			this.val = val;
 			for (int i = 0; i < entries.Length; i ++)
 			{
 				ValueEntry<T> entry = entries[i];
 				entry.UpdateDisplay (val);
 			}
-			// if (prevVal.Equals(val))
-			// 	onChanged ();
+			if (!prevVal.Equals(val))
+				onChanged ();
 		}
 	}
 }

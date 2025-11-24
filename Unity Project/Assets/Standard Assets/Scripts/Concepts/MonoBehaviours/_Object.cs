@@ -168,8 +168,8 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
 				ob.SetNameFromData ();
-				ob.SetComponentsIdsFromData ();
 				ob.Init ();
+				ob.SetComponentsIdsFromData ();
 				EternityEngine.obs = EternityEngine.obs.Add(ob);
 				for (int i = 0; i < ob.components.Length; i ++)
 				{
