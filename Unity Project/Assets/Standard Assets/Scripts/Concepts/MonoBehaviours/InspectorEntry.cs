@@ -185,6 +185,7 @@ namespace EternityEngine
 			base.SetData ();
 			SetActiveOfData ();
 			SetComponentIdOfData ();
+			SetCollapsedOfData ();
 		}
 
 		void SetActiveOfData ()
@@ -209,11 +210,22 @@ namespace EternityEngine
 				component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[_Data.componentId].GenAsset();
 		}
 
+		void SetCollapsedOfData ()
+		{
+			_Data.collapsed = component.collapsed;
+		}
+
+		void SetCollapsedFromData ()
+		{
+			SetCollapsed (_Data.collapsed);
+		}
+
 		[Serializable]
 		public class Data : Asset.Data
 		{
 			public bool active;
 			public string componentId;
+			public bool collapsed;
 
 			public override object GenAsset ()
 			{
@@ -233,10 +245,15 @@ namespace EternityEngine
 				InspectorPanel firstInspectorPanel = InspectorPanel.instances[0];
 				InspectorEntry inspectorEntry = Instantiate(inspectorEntryPrefab, firstInspectorPanel.entriesParent);
 				Apply (inspectorEntry);
+				inspectorEntry.inspectorPanel = firstInspectorPanel;
+				firstInspectorPanel.entries = firstInspectorPanel.entries.Add(inspectorEntry);
 				for (int i = 1; i < InspectorPanel.instances.Length; i ++)
 				{
 					InspectorPanel inspectorPanel = InspectorPanel.instances[i];
 					inspectorEntry = Instantiate(inspectorEntry, inspectorPanel.entriesParent);
+					inspectorEntry.save = false;
+					inspectorEntry.inspectorPanel = inspectorPanel;
+					inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
 				}
 				return inspectorEntry;
 			}
@@ -248,6 +265,7 @@ namespace EternityEngine
 				InspectorEntry inspectorEntry = (InspectorEntry) asset;
 				inspectorEntry.SetComponentIdFromData ();
 				inspectorEntry.SetActiveFromData ();
+				inspectorEntry.SetCollapsedFromData ();
 			}
 		}
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class ValueSetter : MonoBehaviour
+	public class ValueSetter : Asset
 	{
 		public TMP_InputField setter;
 		

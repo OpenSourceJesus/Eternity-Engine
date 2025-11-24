@@ -80,28 +80,27 @@ namespace EternityEngine
 		{
 			InitData ();
 			base.SetData ();
-			SetComponentsNamesOfData ();
+			SetComponentsIdsOfData ();
 			SetSelectedOfData ();
 		}
 
-		void SetComponentsNamesOfData ()
+		void SetComponentsIdsOfData ()
 		{
-			_Data.componentIds = new string[components.Length];
+			_Data.componentsIds = new string[components.Length];
 			for (int i = 0; i < components.Length; i ++)
 			{
 				_Component component = components[i];
-				_Data.componentIds[i] = component.id;
+				_Data.componentsIds[i] = component.id;
 			}
 		}
 
-		void SetComponentsNamesFromData ()
+		void SetComponentsIdsFromData ()
 		{
-			components = new _Component[_Data.componentIds.Length];
-			for (int i = 0; i < _Data.componentIds.Length; i ++)
+			components = new _Component[_Data.componentsIds.Length];
+			for (int i = 0; i < _Data.componentsIds.Length; i ++)
 			{
-				string componentId =_Data.componentIds[i];
-				_Component component = null;
-				component = Get<_Component>(componentId);
+				string componentId =_Data.componentsIds[i];
+				_Component component = Get<_Component>(componentId);
 				if (component == null)
 					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
 				components[i] = component;
@@ -125,7 +124,7 @@ namespace EternityEngine
 		[Serializable]
 		public class Data : Asset.Data
 		{
-			public string[] componentIds = new string[0];
+			public string[] componentsIds = new string[0];
 			public bool selected;
 
 			public override object GenAsset ()
@@ -140,7 +139,7 @@ namespace EternityEngine
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
-				ob.SetComponentsNamesFromData ();
+				ob.SetComponentsIdsFromData ();
 				ob.Init ();
 				EternityEngine.obs = EternityEngine.obs.Add(ob);
 				for (int i = 0; i < ob.components.Length; i ++)

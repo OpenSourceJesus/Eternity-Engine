@@ -22,6 +22,8 @@ namespace EternityEngine
 		public _Transform trsPrefab;
 		public _Image imgPrefab;
 		public InspectorEntry obDataEntryPrefab;
+		public BoolValue boolValuePrefab;
+		public FloatValue floatValuePrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;

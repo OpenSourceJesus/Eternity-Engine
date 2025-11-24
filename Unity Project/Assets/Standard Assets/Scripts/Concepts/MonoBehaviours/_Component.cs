@@ -109,6 +109,7 @@ namespace EternityEngine
 			InitData ();
 			base.SetData ();
 			SetObIdOfData ();
+			SetBoolValuesIdsOfData ();
 		}
 
 		void SetObIdOfData ()
@@ -123,10 +124,34 @@ namespace EternityEngine
 				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obId].GenAsset();
 		}
 
+		void SetBoolValuesIdsOfData ()
+		{
+			_Data.boolValuesIds = new string[boolValues.Length];
+			for (int i = 0; i < boolValues.Length; i ++)
+			{
+				BoolValue boolValue = boolValues[i];
+				_Data.boolValuesIds[i] = boolValue.id;
+			}
+		}
+
+		void SetBoolValuesIdsFromData ()
+		{
+			boolValues = new BoolValue[_Data.boolValuesIds.Length];
+			for (int i = 0; i < _Data.boolValuesIds.Length; i ++)
+			{
+				string boolValueId =_Data.boolValuesIds[i];
+				BoolValue boolValue = Get<BoolValue>(boolValueId);
+				if (boolValue == null)
+					boolValue = (BoolValue) SaveAndLoadManager.saveData.assetsDatasDict[boolValueId].GenAsset();
+				boolValues[i] = boolValue;
+			}
+		}
+
 		[Serializable]
 		public class Data : Asset.Data
 		{
 			public string obId;
+			public string[] boolValuesIds = new string[0];
 
 			public override object GenAsset ()
 			{
@@ -141,6 +166,7 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Component component = (_Component) asset;
 				component.SetObIdFromData ();
+				component.SetBoolValuesIdsFromData ();
 			}
 		}
 	}
