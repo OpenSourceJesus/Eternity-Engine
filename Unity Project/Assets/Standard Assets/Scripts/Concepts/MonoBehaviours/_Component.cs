@@ -21,7 +21,7 @@ namespace EternityEngine
 				data = value;
 			}
 		}
-		public int templatePrefabIdx;
+		public int prefabIdx;
 		public SceneEntry sceneEntry;
         public _Object ob;
         public InspectorEntry inspectorEntryPrefab;
@@ -37,7 +37,7 @@ namespace EternityEngine
         public InspectorEntry[] inspectorEntries = new InspectorEntry[0];
 		[HideInInspector]
         public SceneEntry[] sceneEntries = new SceneEntry[0];
-		public int[] requiredComponentIdxs = new int[0];
+		public int[] requiredComponentsIdxs = new int[0];
 		public List<_Component> dependsOn = new List<_Component>();
 		public List<_Component> dependsOnMe = new List<_Component>();
 
@@ -49,9 +49,9 @@ namespace EternityEngine
 				_Component component = ob.components[i];
 				inspectorEntriesPrefabs.Add(component.inspectorEntryPrefab);
 			}
-			for (int i = 0; i < requiredComponentIdxs.Length; i ++)
+			for (int i = 0; i < requiredComponentsIdxs.Length; i ++)
 			{
-				int requiredComponentIdx = requiredComponentIdxs[i];
+				int requiredComponentIdx = requiredComponentsIdxs[i];
 				_Component componentPrefab = EternityEngine.instance.componentsPrefabs[requiredComponentIdx];
 				if (!inspectorEntriesPrefabs.Contains(componentPrefab.inspectorEntryPrefab))
 				{
@@ -102,19 +102,33 @@ namespace EternityEngine
 			return true;
 		}
 
+		public (Data data, _Component component) GetDataAndComponent ()
+		{
+			ObjectData obData = this as ObjectData;
+			if (obData != null)
+				return (obData._Data, obData);
+			_Transform trs = this as _Transform;
+			if (trs != null)
+				return (trs._Data, trs);
+			_Image img = this as _Image;
+			if (img != null)
+				return (img._Data, img);
+			return (null, null);
+		}
+
 		[Serializable]
 		public class Data
 		{
-			public int templatePrefabIdx;
+			public int prefabIdx;
 			
 			public virtual void Set (_Component component)
 			{
-				templatePrefabIdx = component.templatePrefabIdx;
+				prefabIdx = component.prefabIdx;
 			}
 
 			public virtual void Apply (_Component component)
 			{
-				component.templatePrefabIdx = templatePrefabIdx;
+				component.prefabIdx = prefabIdx;
 			}
 		}
 	}

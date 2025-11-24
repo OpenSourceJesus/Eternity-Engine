@@ -2,6 +2,7 @@ using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace EternityEngine
 {
@@ -97,51 +98,37 @@ namespace EternityEngine
 
 		void SetComponentsIdsOfData ()
 		{
-			_Data.componentsDatas = new _Component.Data[components.Length];
+			List<_Component.Data> componentsDatas = new List<_Component.Data>(); 
 			for (int i = 0; i < components.Length; i ++)
 			{
 				_Component component = components[i];
-				_Component.Data componentData = null;
-				if (i == 0)
-				{
-					ObjectData obData = (ObjectData) component;
-					componentData = obData._Data;
-					componentData.Set (obData);
-				}
-				else
-				{
-					_Transform trs = component as _Transform;
-					if (trs != null)
-					{
-						componentData = trs._Data;
-						componentData.Set (trs);
-					}
-					else
-					{
-						_Image img = component as _Image;
-						if (img != null)
-						{
-							componentData = img._Data;
-							componentData.Set (img);
-						}
-						else
-						{
-							
-						}
-					}
-				}
-				_Data.componentsDatas[i] = component._Data;
+				(_Component.Data data, _Component component) dataAndComponent = component.GetDataAndComponent();
+				dataAndComponent.data.Set (dataAndComponent.component);
+				componentsDatas.Add(dataAndComponent.data);
 			}
+			componentsDatas.Sort(new ComponentDataComparer());
+			_Data.componentsDatas = componentsDatas.ToArray();
 		}
 
 		void SetComponentsIdsFromData ()
 		{
 			for (int i = 0; i < _Data.componentsDatas.Length; i ++)
 			{
-				_Component.Data componentData =_Data.componentsDatas[i];
-				_Component component = obData;
-				if (i > 0)
-					component = EternityEngine.instance.AddComponent (this, componentData.templatePrefabIdx);
+				_Component.Data componentData = _Data.componentsDatas[i];
+				_Component component = null;
+				bool addNewComponent = true;
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component _component = components[i2];
+					if (_component.prefabIdx == componentData.prefabIdx)
+					{
+						component = _component.GetDataAndComponent().component;
+						addNewComponent = false;
+						break;
+					}
+				}
+				if (addNewComponent)
+					component = EternityEngine.instance.AddComponent (this, componentData.prefabIdx);
 				componentData.Apply (component);
 			}
 		}
@@ -191,6 +178,21 @@ namespace EternityEngine
 					InspectorPanel.AddOrUpdateEntries (component);
 				}
 				ob.SetSelectedFromData ();
+			}
+		}
+
+		class ComponentDataComparer : IComparer<_Component.Data>
+		{
+			public int Compare (_Component.Data componentData, _Component.Data componentData2)
+			{
+				_Component componentPrefab = EternityEngine.instance.componentsPrefabs[componentData.prefabIdx];
+				_Component componentPrefab2 = EternityEngine.instance.componentsPrefabs[componentData2.prefabIdx];
+				if (componentPrefab.requiredComponentsIdxs.Contains(componentData2.prefabIdx))
+					return -1;
+				else if (componentPrefab2.requiredComponentsIdxs.Contains(componentData.prefabIdx))
+					return 1;
+				else
+					return 0;
 			}
 		}
 	}

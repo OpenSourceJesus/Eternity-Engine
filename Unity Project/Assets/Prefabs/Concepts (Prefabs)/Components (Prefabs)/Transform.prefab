@@ -409,8 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2261e77f08436ff07b254d385ca64504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
-  id: 
-  save: 0
+  prefabIdx: 1
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
@@ -431,7 +430,7 @@ MonoBehaviour:
   colorValues: []
   inspectorEntries: []
   sceneEntries: []
-  requiredComponentIdxs: 
+  requiredComponentsIdxs: 
   dependsOn: []
   dependsOnMe: []
   pos: {fileID: 8018763865761092866}

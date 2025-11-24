@@ -55,24 +55,8 @@ MonoBehaviour:
   obPrefab: {fileID: 7550459198398753375, guid: 8e86c0f490f3d450c819cfb4ed6fec30, type: 3}
   hierarchyEntryPrefab: {fileID: 2077112351387511479, guid: fcf15853281a35949bc297928b0ce43e, type: 3}
   insertionIndicatorPrefab: {fileID: 4879857732329685177, guid: 2e03ac7f65c608a7e9d8d09d08670fc1, type: 3}
-  componentPrefab: {fileID: 2278549369278915289, guid: 552b994166718d114809ee820a481314, type: 3}
-  obDataPrefab: {fileID: 6445755035653220395, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
-  trsPrefab: {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
-  imgPrefab: {fileID: 7813554479563803767, guid: 7677e9c56d7bfe58083d7af971d46520, type: 3}
-  obDataEntryPrefab: {fileID: 2056876532790364720, guid: 439895098f2237cc4b6230537b15fa86, type: 3}
-  boolValuePrefab: {fileID: 1884413249038991354, guid: e66e8d1e4da3fab5a83744d553605fa5, type: 3}
-  floatValuePrefab: {fileID: 3137408170603405900, guid: 302933486735cce76869b8faf66e8a0e, type: 3}
-  stringValuePrefab: {fileID: 1501202070641553078, guid: cb2adf8faa77dc590860119fccb6b32e, type: 3}
-  vector2ValuePrefab: {fileID: 6858677111106858477, guid: 108ae9f33b6a25504b9b66612888cd9a, type: 3}
-  vector3ValuePrefab: {fileID: 6524301404991983643, guid: 105201359f4882cd48a31447c118c909, type: 3}
-  colorValuePrefab: {fileID: 9175644090777771691, guid: b90651930a1fbceaeaccf4cc2bef6bb6, type: 3}
-  boolValuesEntryPrefab: {fileID: 2105743322457644822, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
-  floatValueEntryPrefab: {fileID: 7782514256163345263, guid: 26dc3b40efd0677acbaa7e052cee2de8, type: 3}
-  stringValueEntryPrefab: {fileID: 432820986822135825, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
-  vector2ValueEntryPrefab: {fileID: 3898065412797832795, guid: f843cc50abe656a3f8b1040d6825ccf7, type: 3}
-  vector3ValueEntryPrefab: {fileID: 2783786533515434269, guid: 003d3064c88286f4eab4afc26fd60e3c, type: 3}
-  colorValueEntryPrefab: {fileID: 5990412566626538477, guid: 7038ee9799741550eaf56f7e88d209ef, type: 3}
   componentsPrefabs:
+  - {fileID: 6445755035653220395, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
   - {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
   - {fileID: 7813554479563803767, guid: 7677e9c56d7bfe58083d7af971d46520, type: 3}
   onlyOneComponentPerObjectAllowedNotificationGo: {fileID: 0}
