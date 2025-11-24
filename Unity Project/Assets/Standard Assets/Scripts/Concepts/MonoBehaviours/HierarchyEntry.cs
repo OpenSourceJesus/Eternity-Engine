@@ -1,5 +1,4 @@
 using TMPro;
-using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,19 +7,8 @@ using System.Collections.Generic;
 
 namespace EternityEngine
 {
-	public class HierarchyEntry : Asset, IUpdatable
+	public class HierarchyEntry : MonoBehaviour, IUpdatable
 	{
-		public new Data _Data
-		{
-			get
-			{
-				return (Data) data;
-			}
-			set
-			{
-				data = value;
-			}
-		}
 		public RectTransform rectTrs;
 		[HideInInspector]
 		public _Object ob;
@@ -315,65 +303,6 @@ namespace EternityEngine
 					}
 				}
 				prevClicking = clicking;
-			}
-		}
-
-		public override void InitData ()
-		{
-			if (data == null)
-				data = new Data();
-		}
-
-		public override void SetData ()
-		{
-			InitData ();
-			base.SetData ();
-			SetObIdOfData ();
-		}
-
-		void SetObIdOfData ()
-		{
-			_Data.obId = ob.id;
-		}
-
-		void SetObIdFromData ()
-		{
-			ob = Get<_Object>(_Data.obId);
-			if (ob == null)
-				ob = (_Object) SaveAndLoadManager.saveData.assetsDatasDict[_Data.obId].GenAsset();
-			nameText.text = ob.name;
-			ob.hierarchyEntries = ob.hierarchyEntries.Add(this);
-		}
-
-		[Serializable]
-		public class Data : Asset.Data
-		{
-			public string obId;
-
-			public override object GenAsset ()
-			{
-				HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
-				HierarchyEntry hierarchyEntry = Instantiate(EternityEngine.instance.hierarchyEntryPrefab, firstHierarchyPanel.entriesParent);
-				Apply (hierarchyEntry);
-				hierarchyEntry.hierarchyPanel = firstHierarchyPanel;
-				firstHierarchyPanel.entries = firstHierarchyPanel.entries.Add(hierarchyEntry);
-				for (int i = 1; i < InspectorPanel.instances.Length; i ++)
-				{
-					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
-					hierarchyEntry = Instantiate(hierarchyEntry, hierarchyPanel.entriesParent);
-					hierarchyEntry.save = false;
-					hierarchyEntry.hierarchyPanel = hierarchyPanel;
-					hierarchyPanel.entries = hierarchyPanel.entries.Add(hierarchyEntry);
-				}
-				return hierarchyEntry;
-			}
-
-			public override void Apply (Asset asset)
-			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
-				base.Apply (asset);
-				HierarchyEntry hierarchyEntry = (HierarchyEntry) asset;
-				hierarchyEntry.SetObIdFromData ();
 			}
 		}
 

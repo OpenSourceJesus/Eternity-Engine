@@ -8,6 +8,8 @@ namespace EternityEngine
 		{
 			get
 			{
+				if (data == null)
+					data = new Data();
 				return (Data) data;
 			}
 			set
@@ -17,47 +19,23 @@ namespace EternityEngine
 		}
 		public BoolValue export;
 
-		public override void InitData ()
-		{
-			if (data == null)
-				data = new Data();
-		}
-
-		public override void SetData ()
-		{
-			InitData ();
-			base.SetData ();
-			SetExportOfData ();
-		}
-
-		void SetExportOfData ()
-		{
-			_Data.export = export.val;
-		}
-
-		void SetExportFromData ()
-		{
-			export.val = _Data.export;
-		}
-
 		[Serializable]
 		public class Data : _Component.Data
 		{
 			public bool export;
 
-			public override object GenAsset ()
+			public override void Set (_Component component)
 			{
-				ObjectData obData = Instantiate(EternityEngine.instance.obDataPrefab);
-				Apply (obData);
-				return obData;
+				base.Set (component);
+				ObjectData obData = (ObjectData) component;
+				export = obData.export.val;
 			}
 
-			public override void Apply (Asset asset)
+			public override void Apply (_Component component)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
-				base.Apply (asset);
-				ObjectData obData = (ObjectData) asset;
-				obData.SetExportFromData ();
+				base.Apply (component);
+				ObjectData obData = (ObjectData) component;
+				obData.export.Set (export);
 			}
 		}
 	}

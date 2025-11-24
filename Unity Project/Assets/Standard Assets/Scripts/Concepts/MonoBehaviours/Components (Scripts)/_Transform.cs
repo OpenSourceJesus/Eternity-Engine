@@ -10,6 +10,8 @@ namespace EternityEngine
 		{
 			get
 			{
+				if (data == null)
+					data = new Data();
 				return (Data) data;
 			}
 			set
@@ -65,51 +67,6 @@ namespace EternityEngine
 			}
 		}
 
-		public override void InitData ()
-		{
-			if (data == null)
-				data = new Data();
-		}
-
-		public override void SetData ()
-		{
-			InitData ();
-			base.SetData ();
-			SetPosOfData ();
-			SetRotOfData ();
-			SetSizeOfData ();
-		}
-
-		void SetPosOfData ()
-		{
-			_Data.pos = _Vector3.FromVec3(pos.val);
-		}
-
-		void SetPosFromData ()
-		{
-			pos.Set (_Data.pos.ToVec3());
-		}
-
-		void SetRotOfData ()
-		{
-			_Data.rot = rot.val;
-		}
-
-		void SetRotFromData ()
-		{
-			rot.Set (_Data.rot);
-		}
-
-		void SetSizeOfData ()
-		{
-			_Data.size = _Vector2.FromVec2(size.val);
-		}
-
-		void SetSizeFromData ()
-		{
-			size.Set (_Data.size.ToVec2());
-		}
-
 		[Serializable]
 		public class Data : _Component.Data
 		{
@@ -117,21 +74,22 @@ namespace EternityEngine
 			public float rot;
 			public _Vector2 size;
 
-			public override object GenAsset ()
+			public override void Set (_Component component)
 			{
-				_Transform trs = Instantiate(EternityEngine.instance.trsPrefab);
-				Apply (trs);
-				return trs;
+				base.Set (component);
+				_Transform trs = (_Transform) component;
+				pos = _Vector3.FromVec3(trs.pos.val);
+				rot = trs.rot.val;
+				size = _Vector2.FromVec2(trs.size.val);
 			}
 
-			public override void Apply (Asset asset)
+			public override void Apply (_Component component)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
-				base.Apply (asset);
-				_Transform trs = (_Transform) asset;
-				trs.SetPosFromData ();
-				trs.SetRotFromData ();
-				trs.SetSizeFromData ();
+				base.Apply (component);
+				_Transform trs = (_Transform) component;
+				trs.pos.Set (pos.ToVec3());
+				trs.rot.Set (rot);
+				trs.size.Set (size.ToVec2());
 			}
 		}
 	}

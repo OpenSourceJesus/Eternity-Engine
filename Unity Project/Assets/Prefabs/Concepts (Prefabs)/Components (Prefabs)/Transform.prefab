@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
   id: 
-  save: 1
+  save: 0
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}

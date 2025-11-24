@@ -40,8 +40,6 @@ namespace EternityEngine
 				Asset asset = GameManager.assets[i];
 				asset.SetData ();
 				saveData.assetsDatasDict[asset.id] = asset._Data;
-				if (asset.id.Length > 0)
-					print(asset.name + " : " + (byte) asset.id[0]);
 			}
 			saveData.exportBackgroundColor = _Vector4.FromColor(EternityEngine.instance.backgroundColor.val);
 			saveData.useGravity = EternityEngine.instance.useGravity.val;
@@ -66,11 +64,7 @@ namespace EternityEngine
 			fileStream.Close();
 			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
-				{
-					if (keyValuePair.Key.Length > 0)
-						print((byte) keyValuePair.Key[0]);
 					keyValuePair.Value.GenAsset ();
-				}
 			EternityEngine.instance.backgroundColor.Set (saveData.exportBackgroundColor.ToColor());
 			EternityEngine.instance.useGravity.Set (saveData.useGravity);
 			EternityEngine.instance.gravity.Set (saveData.gravity.ToVec3());
@@ -350,15 +344,10 @@ namespace EternityEngine
 #if UNITY_WEBGL
 			PlayerPrefs.DeleteAll();
 #else
-			saveData.boolDict.Clear();
-			saveData.intDict.Clear();
-			saveData.floatDict.Clear();
-			saveData.stringDict.Clear();
-			saveData.vector2Dict.Clear();
-			saveData.boolArrayDict.Clear();
-			saveData.byteArrayDict.Clear();
-			saveData.vector2IntArrayDict.Clear();
-			// Save ();
+			string autoSaveFilePath = Path.Combine(Application.dataPath, "Auto Save.txt");
+			if (File.Exists(autoSaveFilePath))
+				File.Delete(autoSaveFilePath);
+			Init ();
 #endif
 		}
 
@@ -366,12 +355,14 @@ namespace EternityEngine
 		{
 			public int Compare (Asset asset, Asset asset2)
 			{
-				bool assetIsOb = asset is _Object;
-				bool asset2IsOb = asset2 is _Object;
-				if (assetIsOb && !asset2IsOb)
+				_Object ob = asset as _Object;
+				_Object ob2 = asset2 as _Object;
+				if (ob != null && ob2 == null)
 					return -1;
-				else if (!assetIsOb && asset2IsOb)
+				else if (ob == null && ob2 != null)
 					return 1;
+				else if (ob != null && ob2 != null)
+					return MathfExtensions.Sign(EternityEngine.obs.IndexOf(ob) - EternityEngine.obs.IndexOf(ob2));
 				else
 					return 0;
 			}

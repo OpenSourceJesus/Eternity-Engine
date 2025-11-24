@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Image
   id: 
-  save: 1
+  save: 0
   sceneEntry: {fileID: 7251970396155826793}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: e919a317a03e6fcb181bdcbef4bc1a2e, type: 3}

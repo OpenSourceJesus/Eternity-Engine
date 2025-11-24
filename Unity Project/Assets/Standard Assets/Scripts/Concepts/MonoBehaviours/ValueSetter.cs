@@ -1,8 +1,9 @@
 using TMPro;
+using UnityEngine;
 
 namespace EternityEngine
 {
-	public class ValueSetter : Asset
+	public class ValueSetter : MonoBehaviour
 	{
 		public TMP_InputField inputField;
 		

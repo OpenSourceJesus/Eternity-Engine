@@ -12,6 +12,8 @@ namespace EternityEngine
 		{
 			get
 			{
+				if (data == null)
+					data = new Data();
 				return (Data) data;
 			}
 			set
@@ -106,47 +108,29 @@ namespace EternityEngine
 			}
 		}
 
-		public override void InitData ()
-		{
-			if (data == null)
-				data = new Data();
-		}
-
-		public override void SetData ()
-		{
-			InitData ();
-			base.SetData ();
-			SetPathOfData ();
-		}
-
-		void SetPathOfData ()
-		{
-			_Data.path = path.val;
-		}
-
-		void SetPathFromData ()
-		{
-			path.Set (_Data.path);
-		}
-
 		[Serializable]
 		public class Data : _Component.Data
 		{
 			public string path;
+			public _Vector2 pivot;
+			public _Vector4 tint;
 
-			public override object GenAsset ()
+			public override void Set (_Component component)
 			{
-				_Image img = Instantiate(EternityEngine.instance.imgPrefab);
-				Apply (img);
-				return img;
+				base.Set (component);
+				_Image img = (_Image) component;
+				path = img.path.val;
+				pivot = _Vector2.FromVec2(img.pivot.val);
+				tint = _Vector4.FromColor(img.tint.val);
 			}
 
-			public override void Apply (Asset asset)
+			public override void Apply (_Component component)
 			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
-				base.Apply (asset);
-				_Image img = (_Image) asset;
-				img.SetPathFromData ();
+				base.Apply (component);
+				_Image img = (_Image) component;
+				img.path.Set (path);
+				img.pivot.Set (pivot.ToVec2());
+				img.tint.Set (tint.ToColor());
 			}
 		}
 	}

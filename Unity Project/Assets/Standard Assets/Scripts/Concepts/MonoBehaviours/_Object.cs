@@ -82,7 +82,6 @@ namespace EternityEngine
 			base.SetData ();
 			SetNameOfData ();
 			SetComponentsIdsOfData ();
-			SetHierarchyEntriesIdsOfData ();
 			SetSelectedOfData ();
 		}
 
@@ -98,47 +97,52 @@ namespace EternityEngine
 
 		void SetComponentsIdsOfData ()
 		{
-			_Data.componentsIds = new string[components.Length];
+			_Data.componentsDatas = new _Component.Data[components.Length];
 			for (int i = 0; i < components.Length; i ++)
 			{
 				_Component component = components[i];
-				_Data.componentsIds[i] = component.id;
+				_Component.Data componentData = null;
+				if (i == 0)
+				{
+					ObjectData obData = (ObjectData) component;
+					componentData = obData._Data;
+					componentData.Set (obData);
+				}
+				else
+				{
+					_Transform trs = component as _Transform;
+					if (trs != null)
+					{
+						componentData = trs._Data;
+						componentData.Set (trs);
+					}
+					else
+					{
+						_Image img = component as _Image;
+						if (img != null)
+						{
+							componentData = img._Data;
+							componentData.Set (img);
+						}
+						else
+						{
+							
+						}
+					}
+				}
+				_Data.componentsDatas[i] = component._Data;
 			}
 		}
 
 		void SetComponentsIdsFromData ()
 		{
-			components = new _Component[_Data.componentsIds.Length];
-			for (int i = 0; i < components.Length; i ++)
+			for (int i = 0; i < _Data.componentsDatas.Length; i ++)
 			{
-				string componentId =_Data.componentsIds[i];
-				_Component component = Get<_Component>(componentId);
-				if (component == null)
-					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
-				components[i] = component;
-			}
-		}
-
-		void SetHierarchyEntriesIdsOfData ()
-		{
-			_Data.hierarchyEntriesIds = new string[hierarchyEntries.Length];
-			for (int i = 0; i < hierarchyEntries.Length; i ++)
-			{
-				HierarchyEntry hierarchyEntry = hierarchyEntries[i];
-				_Data.hierarchyEntriesIds[i] = hierarchyEntry.id;
-			}
-		}
-
-		void SetHierarchyEntriesIdsFromData ()
-		{
-			hierarchyEntries = new HierarchyEntry[_Data.hierarchyEntriesIds.Length];
-			for (int i = 0; i < hierarchyEntries.Length; i ++)
-			{
-				string hierarchyEntryId =_Data.hierarchyEntriesIds[i];
-				HierarchyEntry hierarchyEntry = Get<HierarchyEntry>(hierarchyEntryId);
-				if (hierarchyEntry == null)
-					hierarchyEntry = (HierarchyEntry) SaveAndLoadManager.saveData.assetsDatasDict[hierarchyEntryId].GenAsset();
-				hierarchyEntries[i] = hierarchyEntry;
+				_Component.Data componentData =_Data.componentsDatas[i];
+				_Component component = obData;
+				if (i > 0)
+					component = EternityEngine.instance.AddComponent (this, componentData.templatePrefabIdx);
+				componentData.Apply (component);
 			}
 		}
 
@@ -160,7 +164,7 @@ namespace EternityEngine
 		public class Data : Asset.Data
 		{
 			public string name;
-			public string[] componentsIds = new string[0];
+			public _Component.Data[] componentsDatas = new _Component.Data[0];
 			public string[] hierarchyEntriesIds = new string[0];
 			public bool selected;
 
@@ -178,7 +182,6 @@ namespace EternityEngine
 				_Object ob = (_Object) asset;
 				ob.SetNameFromData ();
 				ob.SetComponentsIdsFromData ();
-				// ob.SetHierarchyEntriesIdsFromData ();
 				ob.Init ();
 				EternityEngine.obs = EternityEngine.obs.Add(ob);
 				for (int i = 0; i < ob.components.Length; i ++)

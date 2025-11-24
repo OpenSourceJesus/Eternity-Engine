@@ -1,4 +1,3 @@
-using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,19 +5,8 @@ using UnityEngine.InputSystem;
 
 namespace EternityEngine
 {
-	public class InspectorEntry : Asset, IUpdatable
+	public class InspectorEntry : MonoBehaviour, IUpdatable
 	{
-		public new Data _Data
-		{
-			get
-			{
-				return (Data) data;
-			}
-			set
-			{
-				data = value;
-			}
-		}
 		public RectTransform rectTrs;
 		[HideInInspector]
 		public _Component component;
@@ -183,108 +171,6 @@ namespace EternityEngine
 			}
 			else
 				GameManager.updatables = GameManager.updatables.Remove(optionsUpdater);
-		}
-
-		public override void InitData ()
-		{
-			if (data == null)
-				data = new Data();
-		}
-
-		public override void SetData ()
-		{
-			InitData ();
-			base.SetData ();
-			SetActiveOfData ();
-			SetComponentIdOfData ();
-			SetCollapsedOfData ();
-		}
-
-		void SetActiveOfData ()
-		{
-			_Data.active = gameObject.activeSelf;
-		}
-
-		void SetActiveFromData ()
-		{
-			gameObject.SetActive(_Data.active);
-		}
-
-		void SetComponentIdOfData ()
-		{
-			if (component != null)
-				_Data.componentId = component.id;
-		}
-
-		void SetComponentIdFromData ()
-		{
-			if (_Data.componentId != null)
-			{
-				_Component component = Get<_Component>(_Data.componentId);
-				if (component == null)
-					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[_Data.componentId].GenAsset();
-			}
-		}
-
-		void SetCollapsedOfData ()
-		{
-			if (component != null)
-				_Data.collapsed = component.collapsed;
-		}
-
-		void SetCollapsedFromData ()
-		{
-			if (component != null)
-				SetCollapsed (_Data.collapsed);
-		}
-
-		[Serializable]
-		public class Data : Asset.Data
-		{
-			public bool active;
-			public string componentId;
-			public bool collapsed;
-
-			public override object GenAsset ()
-			{
-				_Component component = Get<_Component>(componentId);
-				if (component == null)
-					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[componentId].GenAsset();
-				InspectorEntry inspectorEntryPrefab = EternityEngine.instance.obDataEntryPrefab;
-				for (int i = 0; i < EternityEngine.instance.componentsPrefabs.Length; i ++)
-				{
-					_Component componentPrefab = EternityEngine.instance.componentsPrefabs[i];
-					if (component.inspectorEntryPrefab == componentPrefab.inspectorEntryPrefab)
-					{
-						inspectorEntryPrefab = component.inspectorEntryPrefab;
-						break;
-					}
-				}
-				InspectorPanel firstInspectorPanel = InspectorPanel.instances[0];
-				InspectorEntry inspectorEntry = Instantiate(inspectorEntryPrefab, firstInspectorPanel.entriesParent);
-				Apply (inspectorEntry);
-				inspectorEntry.inspectorPanel = firstInspectorPanel;
-				firstInspectorPanel.entries = firstInspectorPanel.entries.Add(inspectorEntry);
-				for (int i = 1; i < InspectorPanel.instances.Length; i ++)
-				{
-					InspectorPanel inspectorPanel = InspectorPanel.instances[i];
-					inspectorEntry = Instantiate(inspectorEntry, inspectorPanel.entriesParent);
-					inspectorEntry.save = false;
-					inspectorEntry.inspectorPanel = inspectorPanel;
-					inspectorPanel.entries = inspectorPanel.entries.Add(inspectorEntry);
-				}
-				return inspectorEntry;
-			}
-
-			public override void Apply (Asset asset)
-			{
-				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
-				base.Apply (asset);
-				InspectorEntry inspectorEntry = (InspectorEntry) asset;
-				inspectorEntry.SetActiveFromData ();
-				inspectorEntry.SetComponentIdFromData ();
-				inspectorEntry.SetCollapsedFromData ();
-			}
 		}
 
 		class OptionsUpdater : IUpdatable
