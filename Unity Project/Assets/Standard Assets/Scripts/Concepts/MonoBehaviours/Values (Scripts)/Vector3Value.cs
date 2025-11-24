@@ -34,11 +34,12 @@ namespace EternityEngine
 			zValue.onChanged -= () => { val.z = zValue.val; _OnChanged (); };
 		}
 
-		public void SetSubValues ()
+		public override void Set (Vector3 val)
 		{
-			xValue.val = val.x;
-			yValue.val = val.y;
-			zValue.val = val.z;
+			base.Set (val);
+			xValue.Set (val.x);
+			yValue.Set (val.y);
+			zValue.Set (val.z);
 		}
 
 		public override void InitData ()
@@ -61,7 +62,7 @@ namespace EternityEngine
 
 		void SetValFromData ()
 		{
-			val = _Data.val.ToVec3();
+			Set (_Data.val.ToVec3());
 		}
 
 		[Serializable]

@@ -126,7 +126,7 @@ namespace EternityEngine
 
 		void SetPathFromData ()
 		{
-			path.val = _Data.path;
+			path.Set (_Data.path);
 		}
 
 		[Serializable]

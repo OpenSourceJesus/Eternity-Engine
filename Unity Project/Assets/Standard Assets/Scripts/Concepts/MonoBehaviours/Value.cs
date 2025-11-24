@@ -20,7 +20,6 @@ namespace EternityEngine
 		public delegate void OnChanged();
 		public event OnChanged onChanged = () => {};
 		public _Component component;
-		// [HideInInspector]
 		public ValueEntry<T>[] entries = new ValueEntry<T>[0];
 
 		public override void Awake ()
@@ -105,7 +104,7 @@ namespace EternityEngine
 			}
 		}
 
-		public void Set (T val)
+		public virtual void Set (T val)
 		{
 			this.val = val;
 			for (int i = 0; i < entries.Length; i ++)

@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 443.25
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -91,6 +91,34 @@ PrefabInstance:
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2105743322457644822}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TrySet
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.BoolValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

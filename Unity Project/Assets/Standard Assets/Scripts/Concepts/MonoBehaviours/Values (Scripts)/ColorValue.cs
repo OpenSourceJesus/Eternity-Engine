@@ -37,12 +37,13 @@ namespace EternityEngine
 			aValue.onChanged -= () => { val.a = aValue.val; _OnChanged (); };
 		}
 
-		public void SetSubValues ()
+		public override void Set (Color val)
 		{
-			rValue.val = val.r;
-			gValue.val = val.g;
-			bValue.val = val.b;
-			aValue.val = val.a;
+			base.Set (val);
+			rValue.Set (val.r);
+			gValue.Set (val.g);
+			bValue.Set (val.b);
+			aValue.Set (val.a);
 		}
 
 		public override void InitData ()
@@ -65,7 +66,7 @@ namespace EternityEngine
 
 		void SetValFromData ()
 		{
-			val = _Data.val.ToColor();
+			Set (_Data.val.ToColor());
 		}
 
 		[Serializable]

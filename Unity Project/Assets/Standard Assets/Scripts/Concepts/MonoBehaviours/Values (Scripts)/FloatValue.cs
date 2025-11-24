@@ -36,7 +36,7 @@ namespace EternityEngine
 
 		void SetValFromData ()
 		{
-			val = _Data.val;
+			Set (_Data.val);
 		}
 
 		[Serializable]

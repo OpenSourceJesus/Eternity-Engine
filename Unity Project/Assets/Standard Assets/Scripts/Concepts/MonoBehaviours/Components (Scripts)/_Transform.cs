@@ -87,8 +87,7 @@ namespace EternityEngine
 
 		void SetPosFromData ()
 		{
-			pos.val = _Data.pos.ToVec3();
-			pos.SetSubValues ();
+			pos.Set (_Data.pos.ToVec3());
 		}
 
 		void SetRotOfData ()
@@ -98,7 +97,7 @@ namespace EternityEngine
 
 		void SetRotFromData ()
 		{
-			rot.val = _Data.rot;
+			rot.Set (_Data.rot);
 		}
 
 		void SetSizeOfData ()
@@ -108,8 +107,7 @@ namespace EternityEngine
 
 		void SetSizeFromData ()
 		{
-			size.val = _Data.size.ToVec2();
-			size.SetSubValues ();
+			size.Set (_Data.size.ToVec2());
 		}
 
 		[Serializable]

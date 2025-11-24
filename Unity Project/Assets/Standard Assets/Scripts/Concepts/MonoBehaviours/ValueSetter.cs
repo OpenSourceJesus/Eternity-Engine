@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine.UI;
 
 namespace EternityEngine
 {

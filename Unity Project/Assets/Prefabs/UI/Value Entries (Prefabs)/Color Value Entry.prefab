@@ -1630,14 +1630,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorValueEntry
   id: 
   save: 1
-  setter: {fileID: 0}
+  inputField: {fileID: 0}
   value: {fileID: 0}
   values: []
   rValueEntry: {fileID: 5226886340254179062}
   gValueEntry: {fileID: 6523357234747509286}
   bValueEntry: {fileID: 1233699243178569413}
   aValueEntry: {fileID: 8224258210864776782}
-  valIndicator: {fileID: 218226535505624713}
+  valIndctr: {fileID: 218226535505624713}
   subValueEntriesParentGo: {fileID: 5251416714183514916}
 --- !u!114 &1707534830953699702
 MonoBehaviour:
