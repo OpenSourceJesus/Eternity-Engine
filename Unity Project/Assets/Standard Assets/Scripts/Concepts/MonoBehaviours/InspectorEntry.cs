@@ -77,7 +77,7 @@ namespace EternityEngine
 				{
 					_Component component = components[i2];
 					FloatValue floatValue = component.floatValues[i];
-					floatValue.setters = floatValue.setters.Add(floatValueEntry);
+					floatValue.entries = floatValue.entries.Add(floatValueEntry);
 					values[i2] = floatValue;
 				}
 				floatValueEntry.SetValues (values);
@@ -91,7 +91,7 @@ namespace EternityEngine
 				{
 					_Component component = components[i2];
 					StringValue stringValue = component.stringValues[i];
-					stringValue.setters = stringValue.setters.Add(stringValueEntry);
+					stringValue.entries = stringValue.entries.Add(stringValueEntry);
 					values[i2] = stringValue;
 				}
 				stringValueEntry.SetValues (values);
@@ -212,12 +212,14 @@ namespace EternityEngine
 
 		void SetCollapsedOfData ()
 		{
-			_Data.collapsed = component.collapsed;
+			if (component != null)
+				_Data.collapsed = component.collapsed;
 		}
 
 		void SetCollapsedFromData ()
 		{
-			SetCollapsed (_Data.collapsed);
+			if (component != null)
+				SetCollapsed (_Data.collapsed);
 		}
 
 		[Serializable]
@@ -263,8 +265,8 @@ namespace EternityEngine
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				InspectorEntry inspectorEntry = (InspectorEntry) asset;
-				inspectorEntry.SetComponentIdFromData ();
 				inspectorEntry.SetActiveFromData ();
+				inspectorEntry.SetComponentIdFromData ();
 				inspectorEntry.SetCollapsedFromData ();
 			}
 		}

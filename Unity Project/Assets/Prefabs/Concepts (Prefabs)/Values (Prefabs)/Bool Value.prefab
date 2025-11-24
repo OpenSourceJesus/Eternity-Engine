@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c16595228174c6ab82ca879d3c7818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.BoolValue
+  id: 
+  save: 1
   val: 0
   component: {fileID: 0}
   setters: []

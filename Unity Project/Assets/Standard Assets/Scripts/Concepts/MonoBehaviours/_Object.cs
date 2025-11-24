@@ -140,14 +140,14 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
 				ob.SetComponentsIdsFromData ();
-				ob.Init ();
+				// ob.Init ();
 				EternityEngine.obs = EternityEngine.obs.Add(ob);
-				for (int i = 0; i < ob.components.Length; i ++)
-				{
-					_Component component = ob.components[i];
-					ob.SetupComponent (component, i);
-					// InspectorPanel.AddOrUpdateEntries (component);
-				}
+				// for (int i = 0; i < ob.components.Length; i ++)
+				// {
+				// 	_Component component = ob.components[i];
+				// 	ob.SetupComponent (component, i);
+				// 	// InspectorPanel.AddOrUpdateEntries (component);
+				// }
 				ob.SetSelectedFromData ();
 			}
 		}

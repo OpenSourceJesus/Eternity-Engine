@@ -20,17 +20,19 @@ namespace EternityEngine
 		public delegate void OnChanged();
 		public event OnChanged onChanged = () => {};
 		public _Component component;
-		[HideInInspector]
-		public ValueSetter[] setters = new ValueSetter[0];
+		// [HideInInspector]
+		public ValueEntry<T>[] entries = new ValueEntry<T>[0];
 
-		public virtual void Awake ()
+		public override void Awake ()
 		{
+			base.Awake ();
 			if (component != null)
 				onChanged += HandleChange;
 		}
 
-		public virtual void OnDestroy ()
+		public override void OnDestroy ()
 		{
+			base.OnDestroy ();
 			if (component != null)
 				onChanged -= HandleChange;
 		}
@@ -38,10 +40,10 @@ namespace EternityEngine
 		void HandleChange ()
 		{
 			if (!component.inspectorEntries[0].gameObject.activeSelf)
-				for (int i = 0; i < setters.Length; i ++)
+				for (int i = 0; i < entries.Length; i ++)
 				{
-					ValueSetter setableValue = setters[i];
-					setableValue.setter.text = "" + val;
+					ValueEntry<T> entry = entries[i];
+					entry.UpdateDisplay (val);
 				}
 		}
 
@@ -60,49 +62,63 @@ namespace EternityEngine
 		{
 			InitData ();
 			base.SetData ();
-			SetSettersIdsOfData ();
+			SetEntriesIdsOfData ();
 			SetComponentIdOfData ();
 		}
 
-		void SetSettersIdsOfData ()
+		void SetEntriesIdsOfData ()
 		{
-			_Data.settersIds = new string[setters.Length];
-			for (int i = 0; i < setters.Length; i ++)
+			_Data.entriesIds = new string[entries.Length];
+			for (int i = 0; i < entries.Length; i ++)
 			{
-				ValueSetter setter = setters[i];
-				_Data.settersIds[i] = setter.id;
+				ValueEntry<T> entry = entries[i];
+				_Data.entriesIds[i] = entry.id;
 			}
 		}
 
-		void SetSettersIdsFromData ()
+		void SetEntriesIdsFromData ()
 		{
-			setters = new ValueSetter[_Data.settersIds.Length];
-			for (int i = 0; i < _Data.settersIds.Length; i ++)
+			entries = new ValueEntry<T>[_Data.entriesIds.Length];
+			for (int i = 0; i < _Data.entriesIds.Length; i ++)
 			{
-				string setterId =_Data.settersIds[i];
-				ValueSetter setter = Get<ValueSetter>(setterId);
-				if (setter == null)
-					setter = (ValueSetter) SaveAndLoadManager.saveData.assetsDatasDict[setterId].GenAsset();
-				setters[i] = setter;
+				string entryId =_Data.entriesIds[i];
+				ValueEntry<T> entry = Get<ValueEntry<T>>(entryId);
+				if (entry == null)
+					entry = (ValueEntry<T>) SaveAndLoadManager.saveData.assetsDatasDict[entryId].GenAsset();
+				entries[i] = entry;
 			}
 		}
 
 		void SetComponentIdOfData ()
 		{
-			_Data.componentId = component.id;
+			if (component != null)
+				_Data.componentId = component.id;
 		}
 
 		void SetComponentIdFromData ()
 		{
-			_Component component = Get<_Component>(_Data.componentId);
-			if (component == null)
-				component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[_Data.componentId].GenAsset();
+			if (_Data.componentId != null)
+			{
+				_Component component = Get<_Component>(_Data.componentId);
+				if (component == null)
+					component = (_Component) SaveAndLoadManager.saveData.assetsDatasDict[_Data.componentId].GenAsset();
+			}
+		}
+
+		public void Set (T val)
+		{
+			this.val = val;
+			for (int i = 0; i < entries.Length; i ++)
+			{
+				ValueEntry<T> entry = entries[i];
+				entry.UpdateDisplay (val);
+			}
 		}
 
 		[Serializable]
 		public class Data : Asset.Data
 		{
-			public string[] settersIds = new string[0];
+			public string[] entriesIds = new string[0];
 			public string componentId;
 
 			public override void Apply (Asset asset)
@@ -110,7 +126,7 @@ namespace EternityEngine
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				Value<T> value = (Value<T>) asset;
-				value.SetSettersIdsFromData ();
+				value.SetEntriesIdsFromData ();
 				value.SetComponentIdFromData ();
 			}
 		}

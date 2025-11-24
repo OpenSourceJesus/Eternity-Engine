@@ -39,10 +39,16 @@ namespace EternityEngine
 				Value<T> target = targets[i];
 				if (target == null)
 					continue;
-				target.setters = target.setters.Remove(this);
+				target.entries = target.entries.Remove(this);
 			}
 			values = new Value<T>[0];
 			value = null;
+		}
+
+		public virtual void UpdateDisplay (T val)
+		{
+			if (inputField != null)
+				inputField.text = "" + val;
 		}
 	}
 }

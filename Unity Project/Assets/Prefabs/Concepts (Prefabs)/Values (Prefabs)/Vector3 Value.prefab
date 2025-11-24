@@ -47,7 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf84d7aca681b6c382ea4265cdaf7d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector3Value
+  id: 
+  save: 1
   val: {x: 0, y: 0, z: 0}
+  component: {fileID: 0}
+  setters: []
   xValue: {fileID: 1725794314844669198}
   yValue: {fileID: 6165620212904018891}
   zValue: {fileID: 4364689799243166397}

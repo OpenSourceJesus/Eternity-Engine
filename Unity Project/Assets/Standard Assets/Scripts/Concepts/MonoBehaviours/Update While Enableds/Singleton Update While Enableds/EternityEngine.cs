@@ -24,6 +24,10 @@ namespace EternityEngine
 		public InspectorEntry obDataEntryPrefab;
 		public BoolValue boolValuePrefab;
 		public FloatValue floatValuePrefab;
+		public StringValue stringValuePrefab;
+		public Vector2Value vector2ValuePrefab;
+		public Vector3Value vector3ValuePrefab;
+		public ColorValue colorValuePrefab;
 		public _Component[] componentsPrefabs = new _Component[0];
 		public GameObject  onlyOneComponentPerObjectAllowedNotificationGo;
 		public TMP_Text  onlyOneComponentPerObjectAllowedNotificationText;

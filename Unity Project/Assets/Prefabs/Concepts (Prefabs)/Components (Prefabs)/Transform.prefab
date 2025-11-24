@@ -409,10 +409,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2261e77f08436ff07b254d385ca64504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Transform
+  id: 
+  save: 1
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: c1985c8f555f6fea49964cf5bc0131a9, type: 3}
   collapsed: 0
+  boolValues: []
   floatValues:
   - {fileID: 2464003386940850199}
   - {fileID: 6940618931179636434}
@@ -425,12 +428,12 @@ MonoBehaviour:
   - {fileID: 8836013766403111204}
   vector3Values:
   - {fileID: 8018763865761092866}
+  colorValues: []
   inspectorEntries: []
   sceneEntries: []
   requiredComponentIdxs: 
   dependsOn: []
   dependsOnMe: []
-  trs: {fileID: 7335552380223399591}
   pos: {fileID: 8018763865761092866}
   rot: {fileID: 3989851964556364172}
   size: {fileID: 8836013766403111204}

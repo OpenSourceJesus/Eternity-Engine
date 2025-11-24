@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d6f54fd6e5a4a6e857e66dac20711a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorValue
+  id: 
+  save: 1
   val: {r: 1, g: 1, b: 1, a: 1}
   component: {fileID: 0}
   setters: []

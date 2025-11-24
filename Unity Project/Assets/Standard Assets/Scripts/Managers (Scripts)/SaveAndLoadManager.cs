@@ -40,7 +40,14 @@ namespace EternityEngine
 				Asset asset = GameManager.assets[i];
 				asset.SetData ();
 				saveData.assetsDatasDict[asset.id] = asset._Data;
+				// print(asset.name + " : " + (byte) asset.id[0]);
 			}
+			saveData.exportBackgroundColor = _Vector4.FromColor(EternityEngine.instance.backgroundColor.val);
+			saveData.useGravity = EternityEngine.instance.useGravity.val;
+			saveData.gravity = _Vector3.FromVec3(EternityEngine.instance.gravity.val);
+			saveData.unitLen = EternityEngine.instance.unitLen.val;
+			saveData.exportPath = EternityEngine.instance.exportPath.val;
+			saveData.debugMode = EternityEngine.instance.debugMode.val;
 			FileStream fileStream = new FileStream(saveFilePath, FileMode.Create);
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			binaryFormatter.Serialize(fileStream, saveData);
@@ -58,7 +65,16 @@ namespace EternityEngine
 			fileStream.Close();
 			foreach (KeyValuePair<string, Asset.Data> keyValuePair in saveData.assetsDatasDict)
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
+				{
+					// print((byte) keyValuePair.Key[0]);
 					keyValuePair.Value.GenAsset ();
+				}
+			EternityEngine.instance.backgroundColor.Set (saveData.exportBackgroundColor.ToColor());
+			EternityEngine.instance.useGravity.Set (saveData.useGravity);
+			EternityEngine.instance.gravity.Set (saveData.gravity.ToVec3());
+			EternityEngine.instance.unitLen.Set (saveData.unitLen);
+			EternityEngine.instance.exportPath.Set (saveData.exportPath);
+			EternityEngine.instance.debugMode.Set (saveData.debugMode);
 			// InspectorPanel.RegenEntries (HierarchyPanel.instances[0].selected.Length > 1);
 			isLoading = false;
 #endif
@@ -363,6 +379,12 @@ namespace EternityEngine
 		public struct SaveData
 		{
 			public Dictionary<string, Asset.Data> assetsDatasDict;
+			public _Vector4 exportBackgroundColor;
+			public bool useGravity;
+			public _Vector3 gravity;
+			public float unitLen;
+			public string exportPath;
+			public bool debugMode;
 			public Dictionary<string, bool> boolDict;
 			public Dictionary<string, int> intDict;
 			public Dictionary<string, float> floatDict;

@@ -22,7 +22,7 @@ namespace EternityEngine
 		}
 		static string lastId = "" + (char) 0;
 
-		void Awake ()
+		public virtual void Awake ()
 		{
 			if (save)
 				GameManager.assets.Add(this);
@@ -40,7 +40,7 @@ namespace EternityEngine
 			}
 		}
 
-		void OnDestroy ()
+		public virtual void OnDestroy ()
 		{
 			if (save)
 				GameManager.assets.Remove(this);

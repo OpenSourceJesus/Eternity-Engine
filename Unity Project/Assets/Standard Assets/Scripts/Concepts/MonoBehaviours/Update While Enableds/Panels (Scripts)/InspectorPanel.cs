@@ -200,17 +200,17 @@ namespace EternityEngine
 					{
 						float? f = floats[i2];
 						if (f == null)
-							entry.floatValuesEntries[i2].setter.text = "—";
+							entry.floatValuesEntries[i2].inputField.text = "—";
 						else
-							entry.floatValuesEntries[i2].setter.text = "" + f;
+							entry.floatValuesEntries[i2].inputField.text = "" + f;
 					}
 					for (int i2 = 0; i2 < strings.Length; i2 ++)
 					{
 						string str = strings[i2];
 						if (str == null)
-							entry.stringValuesEntries[i2].setter.text = "—";
+							entry.stringValuesEntries[i2].inputField.text = "—";
 						else
-							entry.stringValuesEntries[i2].setter.text = "" + str;
+							entry.stringValuesEntries[i2].inputField.text = "" + str;
 					}
 				}
 				inspectorPanel.entries = inspectorPanel.entries.Add(entry);

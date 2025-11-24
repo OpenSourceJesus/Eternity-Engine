@@ -381,8 +381,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54815e4fefa6e80aad4b246e11b4068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValueEntry
+  id: 
+  save: 1
+  inputField: {fileID: 960945108605707742}
   value: {fileID: 0}
-  setter: {fileID: 960945108605707742}
+  values: []
 --- !u!224 &8355699331202631784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}

@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b116d8e6d41adff8a90bcc855a6ad798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ObjectData
+  id: 
+  save: 1
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: 439895098f2237cc4b6230537b15fa86, type: 3}

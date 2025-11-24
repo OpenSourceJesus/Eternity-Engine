@@ -130,6 +130,17 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7440175245011056723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8970292210423044390, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
+  m_PrefabInstance: {fileID: 1962494983486431605}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440175245011056721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8416589487355932759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -290,9 +301,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d11d3d49b37397749cd2d90cb06ff18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.BoolValueEntry
-  setter: {fileID: 0}
+  id: 
+  save: 1
+  inputField: {fileID: 0}
   value: {fileID: 0}
   values: []
+  toggle: {fileID: 7440175245011056723}
 --- !u!224 &8355699331202631784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
