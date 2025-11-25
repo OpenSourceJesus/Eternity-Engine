@@ -57,13 +57,6 @@ namespace EternityEngine
 			path.onChanged -= OnPathChanged;
 			pivot.onChanged -= OnPivotChanged;
 			tint.onChanged -= OnTintChanged;
-			for (int i = 1; i < imgs.Length; i ++)
-			{
-				Image img = imgs[i];
-				ScenePanel scenePanel = ScenePanel.instances[i];
-				scenePanel.entries = scenePanel.entries.Remove(sceneEntries[i]);
-				Destroy(img.gameObject);
-			}
 		}
 
 		void OnPathChanged ()

@@ -24,7 +24,7 @@ namespace EternityEngine
 
 		void HandleChange ()
 		{
-			if (!component.inspectorEntries[0].gameObject.activeSelf)
+			if (component.inspectorEntries.Length > 0 && !component.inspectorEntries[0].gameObject.activeSelf)
 				for (int i = 0; i < entries.Length; i ++)
 				{
 					ValueEntry<T> entry = entries[i];

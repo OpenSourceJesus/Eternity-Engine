@@ -149,15 +149,30 @@ namespace EternityEngine
 
 		public void TryDelete ()
 		{
-			if (component.TryDelete())
+			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+			for (int i = 0; i < firstHierarchyPanel.selected.Length; i ++)
 			{
-				int idx = rectTrs.GetSiblingIndex();
-				for (int i = 0; i < InspectorPanel.instances.Length; i ++)
+				HierarchyEntry hierarchyEntry = firstHierarchyPanel.selected[i];
+				_Component deleteComponent = null;
+				for (int i2 = 0; i2 < hierarchyEntry.ob.components.Length; i2 ++)
 				{
-					InspectorPanel inspectorPanel = InspectorPanel.instances[i];
-					inspectorPanel.entries = inspectorPanel.entries.RemoveAt(idx);
+					_Component _component = hierarchyEntry.ob.components[i2];
+					if (_component.prefabIdx == component.prefabIdx)
+					{
+						deleteComponent = _component;
+						break;
+					}
 				}
-				Destroy(gameObject);
+				if (deleteComponent.TryDelete())
+				{
+					int idx = inspectorPanel.entries.IndexOf(this);
+					for (int i2 = 0; i2 < InspectorPanel.instances.Length; i2 ++)
+					{
+						InspectorPanel inspectorPanel = InspectorPanel.instances[i2];
+						inspectorPanel.entries = inspectorPanel.entries.RemoveAt(idx);
+					}
+					Destroy(gameObject);
+				}
 			}
 		}
 

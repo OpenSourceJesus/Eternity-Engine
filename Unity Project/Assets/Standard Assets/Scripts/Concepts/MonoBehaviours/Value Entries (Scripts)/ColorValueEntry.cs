@@ -14,18 +14,26 @@ namespace EternityEngine
 
 		void Start ()
 		{
-			rValueEntry.value.onChanged += () => { valIndctr.color = value.val; };
-			gValueEntry.value.onChanged += () => { valIndctr.color = value.val; };
-			bValueEntry.value.onChanged += () => { valIndctr.color = value.val; };
-			aValueEntry.value.onChanged += () => { valIndctr.color = value.val; };
+			rValueEntry.value.onChanged += OnChanged;
+			gValueEntry.value.onChanged += OnChanged;
+			bValueEntry.value.onChanged += OnChanged;
+			aValueEntry.value.onChanged += OnChanged;
 		}
 
 		void OnDestroy ()
 		{
-			rValueEntry.value.onChanged -= () => { valIndctr.color = value.val; };
-			gValueEntry.value.onChanged -= () => { valIndctr.color = value.val; };
-			bValueEntry.value.onChanged -= () => { valIndctr.color = value.val; };
-			aValueEntry.value.onChanged -= () => { valIndctr.color = value.val; };
+			if (rValueEntry.value == null)
+				return;
+			rValueEntry.value.onChanged -= OnChanged;
+			gValueEntry.value.onChanged -= OnChanged;
+			bValueEntry.value.onChanged -= OnChanged;
+			aValueEntry.value.onChanged -= OnChanged;
+		}
+
+		void OnChanged ()
+		{
+			if (value != null)
+				valIndctr.color = value.val;
 		}
 
 		public override void UpdateDisplay (Color val)

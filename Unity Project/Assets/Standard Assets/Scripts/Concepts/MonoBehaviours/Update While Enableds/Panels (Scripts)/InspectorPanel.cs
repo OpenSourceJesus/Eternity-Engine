@@ -36,15 +36,47 @@ namespace EternityEngine
 		{
 			ClearEntries (destroy);
 			HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
+			if (selectedHierarchyEntries.Length == 0)
+				return;
+			if (selectedHierarchyEntries.Length == 1)
+			{
+				HierarchyEntry hierarchyEntry = selectedHierarchyEntries[0];
+				_Component[] components = hierarchyEntry.ob.components;
+				for (int i = 0; i < components.Length; i ++)
+				{
+					_Component component = components[i];
+					AddOrUpdateEntries (component);
+				}
+				return;
+			}
+			Dictionary<InspectorEntry, int> componentTypeCounts = new Dictionary<InspectorEntry, int>();
 			for (int i = 0; i < selectedHierarchyEntries.Length; i ++)
 			{
 				HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i];
 				_Component[] components = hierarchyEntry.ob.components;
+				HashSet<InspectorEntry> seenTypes = new HashSet<InspectorEntry>();
 				for (int i2 = 0; i2 < components.Length; i2 ++)
 				{
 					_Component component = components[i2];
-					AddOrUpdateEntries (component);
+					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
+					if (!seenTypes.Contains(entryPrefab))
+					{
+						seenTypes.Add(entryPrefab);
+						if (componentTypeCounts.ContainsKey(entryPrefab))
+							componentTypeCounts[entryPrefab] ++;
+						else
+							componentTypeCounts[entryPrefab] = 1;
+					}
 				}
+			}
+			HierarchyEntry firstHierarchyEntry = selectedHierarchyEntries[0];
+			_Component[] firstComponents = firstHierarchyEntry.ob.components;
+			for (int i = 0; i < firstComponents.Length; i ++)
+			{
+				_Component component = firstComponents[i];
+				InspectorEntry entryPrefab = component.inspectorEntryPrefab;
+				if (componentTypeCounts.TryGetValue(entryPrefab, out int cnt) && cnt == selectedHierarchyEntries.Length)
+					AddOrUpdateEntries (component);
 			}
 		}
 

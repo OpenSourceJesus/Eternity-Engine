@@ -8,7 +8,6 @@ namespace EternityEngine
 		[HideInInspector]
 		public string id;
 		public object data;
-		public bool save;
 		public Data _Data
 		{
 			get
@@ -24,8 +23,7 @@ namespace EternityEngine
 
 		public virtual void Awake ()
 		{
-			if (save)
-				GameManager.assets.Add(this);
+			GameManager.assets.Add(this);
 			if (!SaveAndLoadManager.isLoading)
 			{
 				byte charVal = (byte) lastId[lastId.Length - 1];
@@ -42,8 +40,7 @@ namespace EternityEngine
 
 		public virtual void OnDestroy ()
 		{
-			if (save)
-				GameManager.assets.Remove(this);
+			GameManager.assets.Remove(this);
 		}
 
 		public static T Get<T> (string id) where T : Asset

@@ -263,6 +263,9 @@ namespace EternityEngine
 			entries = entries.Insert(this, insertAt);
 			hierarchyPanel.entries = entries;
 			hierarchyPanel.entriesParent.GetChild(idx).SetSiblingIndex(insertAt);
+			Asset asset = GameManager.assets[idx];
+			GameManager.assets.RemoveAt(idx);
+			GameManager.assets.Insert(insertAt, ob);
 			if (HierarchyPanel.lastEntryIdxHadSelectionSet == idx)
 				HierarchyPanel.lastEntryIdxHadSelectionSet = insertAt;
 		}

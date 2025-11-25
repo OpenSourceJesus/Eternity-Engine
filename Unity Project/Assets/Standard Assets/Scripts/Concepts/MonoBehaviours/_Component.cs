@@ -98,6 +98,15 @@ namespace EternityEngine
 				InspectorEntry inspectorEntry = inspectorEntries[i];
 				Destroy(inspectorEntry.gameObject);
 			}
+			for (int i = 0; i < ob.sceneEntries.Length; i ++)
+			{
+				SceneEntry sceneEntry = ob.sceneEntries[i];
+				ScenePanel scenePanel = ScenePanel.instances[i];
+				scenePanel.entries = scenePanel.entries.Remove(sceneEntry);
+				Destroy(sceneEntry.gameObject);
+				ob.sceneEntries = ob.sceneEntries.RemoveAt(i);
+				i --;
+			}
 			Destroy(gameObject);
 			return true;
 		}

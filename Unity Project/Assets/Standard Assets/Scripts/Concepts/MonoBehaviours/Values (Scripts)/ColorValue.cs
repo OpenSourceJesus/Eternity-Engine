@@ -27,7 +27,6 @@ namespace EternityEngine
 
 		public override void Set (Color val)
 		{
-			base.Set (val);
 			rValue.Set (val.r);
 			gValue.Set (val.g);
 			bValue.Set (val.b);

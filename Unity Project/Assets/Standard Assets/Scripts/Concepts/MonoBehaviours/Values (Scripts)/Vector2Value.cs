@@ -21,7 +21,6 @@ namespace EternityEngine
 
 		public override void Set (Vector2 val)
 		{
-			base.Set (val);
 			xValue.Set (val.x);
 			yValue.Set (val.y);
 		}
