@@ -10,6 +10,7 @@ namespace EternityEngine
 		public ColorComponentValueEntry bValueEntry;
 		public ColorComponentValueEntry aValueEntry;
 		public Image valIndctr;
+		public GameObject multipleValuesIndctrGo;
 		public GameObject subValueEntriesParentGo;
 
 		void Start ()
@@ -33,7 +34,11 @@ namespace EternityEngine
 		void OnChanged ()
 		{
 			if (value != null)
+			{
 				valIndctr.color = value.val;
+				if (rValueEntry.inputField.text != "—" && gValueEntry.inputField.text != "—" && bValueEntry.inputField.text != "—" && aValueEntry.inputField.text != "—")
+					multipleValuesIndctrGo.SetActive(false);
+			}
 		}
 
 		public override void UpdateDisplay (Color val)

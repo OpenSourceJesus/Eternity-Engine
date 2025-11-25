@@ -197,10 +197,11 @@ namespace EternityEngine
 					}
 					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
 					string[] strings = new string[entryPrefab.stringValuesEntries.Length];
+					Color?[] colors = new Color?[entryPrefab.colorValueEntries.Length];
 					for (int i2 = 0; i2 < selectedComponents.Count; i2 ++)
 					{
 						_Component _component = selectedComponents[i2];
-						for (int i3 = 0; i3 < _component.floatValues.Length && i3 < floats.Length; i3 ++)
+						for (int i3 = 0; i3 < floats.Length; i3 ++)
 						{
 							FloatValue floatValue = _component.floatValues[i3];
 							float f = floatValue.val;
@@ -213,7 +214,7 @@ namespace EternityEngine
 									floats[i3] = null;
 							}
 						}
-						for (int i3 = 0; i3 < _component.stringValues.Length && i3 < strings.Length; i3 ++)
+						for (int i3 = 0; i3 < strings.Length; i3 ++)
 						{
 							StringValue stringValue = _component.stringValues[i3];
 							string str = stringValue.val;
@@ -224,6 +225,19 @@ namespace EternityEngine
 								string _str = strings[i3];
 								if (_str == null || str != _str)
 									strings[i3] = null;
+							}
+						}
+						for (int i3 = 0; i3 < colors.Length; i3 ++)
+						{
+							ColorValue colorValue = _component.colorValues[i3];
+							Color clr = colorValue.val;
+							if (i2 == 0)
+								colors[i3] = clr;
+							else
+							{
+								Color? _clr = colors[i3];
+								if (!_clr.HasValue || clr != _clr.Value)
+									colors[i3] = null;
 							}
 						}
 					}
@@ -244,6 +258,11 @@ namespace EternityEngine
 							entry.stringValuesEntries[i2].inputField.text = "—";
 						else
 							entry.stringValuesEntries[i2].inputField.text = "" + str;
+					}
+					for (int i2 = 0; i2 < colors.Length; i2 ++)
+					{
+						Color? clr = colors[i2];
+						entry.colorValueEntries[i2].multipleValuesIndctrGo.gameObject.SetActive(clr == null);
 					}
 				}
 				inspectorPanel.entries = inspectorPanel.entries.Add(entry);
