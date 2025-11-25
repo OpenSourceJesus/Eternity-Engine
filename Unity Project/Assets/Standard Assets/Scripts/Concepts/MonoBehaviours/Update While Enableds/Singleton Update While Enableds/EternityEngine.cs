@@ -856,15 +856,15 @@ while running:
 							int collisionGroupMembership = 0;
 							for (int i2 = 0; i2 < collider.collisionGroupMembership.Length; i2 ++)
 							{
-								BoolValue boolValue = collider.collisionGroupMembership[i2];
-								if (boolValue.val)
+								BoolValue isCollisionGroupMemberValue = collider.collisionGroupMembership[i2];
+								if (isCollisionGroupMemberValue.val)
 									collisionGroupMembership |= (1 << i);
 							}
 							int collisionGroupFilter = 0;
 							for (int i2 = 0; i2 < collider.collisionGroupFilter.Length; i2 ++)
 							{
-								BoolValue boolValue = collider.collisionGroupFilter[i2];
-								if (boolValue.val)
+								BoolValue collideWithCollisionGroup = collider.collisionGroupFilter[i2];
+								if (collideWithCollisionGroup.val)
 									collisionGroupFilter |= (1 << i);
 							}
 						}

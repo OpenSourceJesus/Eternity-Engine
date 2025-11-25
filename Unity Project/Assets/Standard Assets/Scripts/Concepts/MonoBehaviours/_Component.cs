@@ -125,6 +125,9 @@ namespace EternityEngine
 			_Image img = this as _Image;
 			if (img != null)
 				return (img._Data, img);
+			RigidBody rigidBody = this as RigidBody;
+			if (rigidBody != null)
+				return (rigidBody._Data, rigidBody);
 			Script script = this as Script;
 			if (script != null)
 				return (script._Data, script);

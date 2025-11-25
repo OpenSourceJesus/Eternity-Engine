@@ -48,7 +48,7 @@ namespace EternityEngine
 			UpdateDisplay (component);
 		}
 
-		void UpdateDisplay (_Component component)
+		public virtual void UpdateDisplay (_Component component)
 		{
 			for (int i = 0; i < boolValuesEntries.Length; i ++)
 				boolValuesEntries[i].UpdateDisplay (component.boolValues[i].val);
