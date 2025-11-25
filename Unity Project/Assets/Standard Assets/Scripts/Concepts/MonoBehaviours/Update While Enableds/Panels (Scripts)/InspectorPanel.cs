@@ -95,6 +95,11 @@ namespace EternityEngine
 							BoolValueEntry boolValuesEntry = entry.boolValuesEntries[i3];
 							boolValuesEntry.DetachValues ();
 						}
+						for (int i3 = 0; i3 < entry.intValuesEntries.Length; i3 ++)
+						{
+							IntValueEntry intValueEntry = entry.intValuesEntries[i3];
+							intValueEntry.DetachValues ();
+						}
 						for (int i3 = 0; i3 < entry.floatValuesEntries.Length; i3 ++)
 						{
 							FloatValueEntry floatValueEntry = entry.floatValuesEntries[i3];
@@ -196,12 +201,26 @@ namespace EternityEngine
 						output[i] = entry;
 						continue;
 					}
+					int?[] ints = new int?[entryPrefab.intValuesEntries.Length];
 					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
 					string[] strings = new string[entryPrefab.stringValuesEntries.Length];
 					Color?[] colors = new Color?[entryPrefab.colorValueEntries.Length];
 					for (int i2 = 0; i2 < selectedComponents.Count; i2 ++)
 					{
 						_Component _component = selectedComponents[i2];
+						for (int i3 = 0; i3 < ints.Length; i3 ++)
+						{
+							IntValue intValue = _component.intValues[i3];
+							int _i = intValue.val;
+							if (i2 == 0)
+								ints[i3] = _i;
+							else
+							{
+								int? _i2 = ints[i3];
+								if (!_i2.HasValue || _i != _i2.Value)
+									ints[i3] = null;
+							}
+						}
 						for (int i3 = 0; i3 < floats.Length; i3 ++)
 						{
 							FloatValue floatValue = _component.floatValues[i3];
@@ -244,6 +263,14 @@ namespace EternityEngine
 					}
 					_Component[] components = selectedComponents.ToArray();
 					entry = inspectorPanel.NewEntry(components);
+					for (int i2 = 0; i2 < ints.Length; i2 ++)
+					{
+						int? f = ints[i2];
+						if (f == null)
+							entry.intValuesEntries[i2].inputField.text = "—";
+						else
+							entry.intValuesEntries[i2].inputField.text = "" + f;
+					}
 					for (int i2 = 0; i2 < floats.Length; i2 ++)
 					{
 						float? f = floats[i2];

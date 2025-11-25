@@ -21,16 +21,6 @@ namespace EternityEngine
 		public StringValue path;
 		public BoolValue runtime;
 		public BoolValue runAtStart;
-		
-		void Start ()
-		{
-			EternityEngine.scripts = EternityEngine.scripts.Add(this);
-		}
-
-		void OnDestroy ()
-		{
-			EternityEngine.scripts = EternityEngine.scripts.Remove(this);
-		}
 
 		[Serializable]
 		public class Data : _Component.Data

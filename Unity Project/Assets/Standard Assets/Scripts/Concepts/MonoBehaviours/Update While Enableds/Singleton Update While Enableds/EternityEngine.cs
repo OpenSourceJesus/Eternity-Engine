@@ -29,12 +29,12 @@ namespace EternityEngine
 		public FloatValue unitLen;
 		public StringValue exportPath;
 		public BoolValue debugMode;
-		public static Script[] scripts = new Script[0];
 		public static string saveFilePaths;
 		public static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
+		static string[] RIGID_BODY_TYPES = new string[] { "dynamic", "fixed", "kinematicPositionBased", "kinematicVelocityBased" };
 		static StreamReader errorReader;
 		static Dictionary<string, string> attributes = new Dictionary<string, string>();
 		static string apiCode;
@@ -678,30 +678,6 @@ while running:
 			apiCode = "";
 			initCode = "";
 			updateCode = "";
-			for (int i = 0; i < scripts.Length; i ++)
-			{
-				Script script = scripts[i];
-				if (File.Exists(script.path.val))
-				{
-					string scriptText = File.ReadAllText(script.path.val);
-					if (!script.runtime.val)
-						apiCode	+= scriptText;
-					else
-					{
-						if (script.runAtStart.val)
-							initCode += scriptText;
-						else
-						{
-							string[] lines = scriptText.Split('\n');
-							for (int i2 = 0; i2 < lines.Length; i2 ++)
-							{
-								string line = lines[i2];
-								updateCode += "	" + line + '\n';
-							}
-						}
-					}
-				}
-			}
 			rigidBodies = new Dictionary<_Object, string>();
 			colliders = new Dictionary<_Object, string>();
 			joints = new Dictionary<_Object, string>();
@@ -858,6 +834,68 @@ while running:
 					if (!img.enabled)
 						renderCodeClause += "\nhide.append('" + obVarName + "')";
 					renderCode.Add(renderCodeClause);
+				}
+				else
+				{
+					RigidBody rigidBody = component as RigidBody;
+					if (rigidBody != null)
+					{
+						string rigidBodyName = obVarName + "RigidBody";
+						string rigidBodyDescName = rigidBodyName + "Desc";
+						bool enabled = true;
+						Transform trs = ob.trs;
+						rigidBodies[ob] = rigidBodyName + " = sim.add_rigid_body(" + enabled + ", " + RIGID_BODY_TYPES.IndexOf(rigidBody.type.val) + ", [" + trs.position.x + ", " + -trs.position.y + "], " + trs.position.z + ", " + rigidBody.gravityScale.val + ", " + rigidBody.dominance.val + ", " + rigidBody.canRot.val + ", " + rigidBody.linearDrag.val + ", " + rigidBody.angDrag.val + ", " + rigidBody.canSleep.val + ", " + rigidBody.continuousCollideDetect.val + ")\nrigidBodiesIds['" + obVarName + "'] = " + rigidBodyName;
+						vars = vars.Add(rigidBodyName + " = (-1, -1)");
+						globals = globals.Add(rigidBodyName);
+					}
+					else
+					{
+						_Collider collider = component as _Collider;
+						if (collider != null)
+						{
+							int collisionGroupMembership = 0;
+							for (int i2 = 0; i2 < collider.collisionGroupMembership.Length; i2 ++)
+							{
+								BoolValue boolValue = collider.collisionGroupMembership[i2];
+								if (boolValue.val)
+									collisionGroupMembership |= (1 << i);
+							}
+							int collisionGroupFilter = 0;
+							for (int i2 = 0; i2 < collider.collisionGroupFilter.Length; i2 ++)
+							{
+								BoolValue boolValue = collider.collisionGroupFilter[i2];
+								if (boolValue.val)
+									collisionGroupFilter |= (1 << i);
+							}
+						}
+						else
+						{
+							Script script = component as Script;
+							if (script != null)
+							{
+								if (File.Exists(script.path.val))
+								{
+									string scriptText = File.ReadAllText(script.path.val);
+									if (!script.runtime.val)
+										apiCode	+= scriptText;
+									else
+									{
+										if (script.runAtStart.val)
+											initCode += scriptText;
+										else
+										{
+											string[] lines = scriptText.Split('\n');
+											for (int i2 = 0; i2 < lines.Length; i2 ++)
+											{
+												string line = lines[i2];
+												updateCode += "	" + line + '\n';
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

@@ -16,6 +16,7 @@ namespace EternityEngine
 		public GameObject goToGetCollapsed;
 		public bool onlyAllowOnePerObject;
 		public BoolValueEntry[] boolValuesEntries = new BoolValueEntry[0];
+		public IntValueEntry[] intValuesEntries = new IntValueEntry[0];
 		public FloatValueEntry[] floatValuesEntries = new FloatValueEntry[0];
 		public StringValueEntry[] stringValuesEntries = new StringValueEntry[0];
 		public Vector2ValueEntry[] vector2ValuesEntries = new Vector2ValueEntry[0];
@@ -51,6 +52,8 @@ namespace EternityEngine
 		{
 			for (int i = 0; i < boolValuesEntries.Length; i ++)
 				boolValuesEntries[i].UpdateDisplay (component.boolValues[i].val);
+			for (int i = 0; i < intValuesEntries.Length; i ++)
+				intValuesEntries[i].UpdateDisplay (component.intValues[i].val);
 			for (int i = 0; i < floatValuesEntries.Length; i ++)
 				floatValuesEntries[i].UpdateDisplay (component.floatValues[i].val);
 			for (int i = 0; i < stringValuesEntries.Length; i ++)
@@ -77,6 +80,20 @@ namespace EternityEngine
 					values[i2] = component.boolValues[i];
 				}
 				boolValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < intValuesEntries.Length; i ++)
+			{
+				IntValueEntry intValueEntry = intValuesEntries[i];
+				intValueEntry.DetachValues ();
+				Value<int>[] values = new Value<int>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					IntValue intValue = component.intValues[i];
+					intValue.entries = intValue.entries.Add(intValueEntry);
+					values[i2] = intValue;
+				}
+				intValueEntry.SetValues (values);
 			}
 			for (int i = 0; i < floatValuesEntries.Length; i ++)
 			{

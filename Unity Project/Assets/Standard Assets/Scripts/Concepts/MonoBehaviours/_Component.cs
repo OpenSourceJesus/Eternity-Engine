@@ -28,6 +28,7 @@ namespace EternityEngine
 		[HideInInspector]
 		public bool collapsed;
 		public BoolValue[] boolValues = new BoolValue[0];
+		public IntValue[] intValues = new IntValue[0];
 		public FloatValue[] floatValues = new FloatValue[0];
 		public StringValue[] stringValues = new StringValue[0];
 		public Vector2Value[] vector2Values = new Vector2Value[0];
@@ -38,7 +39,9 @@ namespace EternityEngine
 		[HideInInspector]
         public SceneEntry[] sceneEntries = new SceneEntry[0];
 		public int[] requiredComponentsIdxs = new int[0];
+		[HideInInspector]
 		public List<_Component> dependsOn = new List<_Component>();
+		[HideInInspector]
 		public List<_Component> dependsOnMe = new List<_Component>();
 
 		public virtual void Init ()
