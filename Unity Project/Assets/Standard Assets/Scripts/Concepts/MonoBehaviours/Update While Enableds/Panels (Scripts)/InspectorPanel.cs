@@ -165,6 +165,7 @@ namespace EternityEngine
 						entry = component.inspectorEntries[i];
 						entry.gameObject.SetActive(true);
 					}
+					entry.BindToComponent (component);
 				}
 				else
 				{

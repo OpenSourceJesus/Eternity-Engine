@@ -41,6 +41,28 @@ namespace EternityEngine
 				ToggleOptions ();
 		}
 
+		public void BindToComponent (_Component component)
+		{
+			SetValueEntries (component);
+			UpdateDisplay (component);
+		}
+
+		void UpdateDisplay (_Component component)
+		{
+			for (int i = 0; i < boolValuesEntries.Length; i ++)
+				boolValuesEntries[i].UpdateDisplay (component.boolValues[i].val);
+			for (int i = 0; i < floatValuesEntries.Length; i ++)
+				floatValuesEntries[i].UpdateDisplay (component.floatValues[i].val);
+			for (int i = 0; i < stringValuesEntries.Length; i ++)
+				stringValuesEntries[i].UpdateDisplay (component.stringValues[i].val);
+			for (int i = 0; i < vector2ValuesEntries.Length; i ++)
+				vector2ValuesEntries[i].UpdateDisplay (component.vector2Values[i].val);
+			for (int i = 0; i < vector3ValuesEntries.Length; i ++)
+				vector3ValuesEntries[i].UpdateDisplay( component.vector3Values[i].val);
+			for (int i = 0; i < colorValueEntries.Length; i ++)
+				colorValueEntries[i].UpdateDisplay (component.colorValues[i].val);
+		}
+
 		public void SetValueEntries (params _Component[] components)
 		{
 			_Component firstComponent = components[0];
@@ -55,8 +77,6 @@ namespace EternityEngine
 					values[i2] = component.boolValues[i];
 				}
 				boolValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					boolValueEntry.UpdateDisplay (values[0].val);
 			}
 			for (int i = 0; i < floatValuesEntries.Length; i ++)
 			{
@@ -71,8 +91,6 @@ namespace EternityEngine
 					values[i2] = floatValue;
 				}
 				floatValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					floatValueEntry.UpdateDisplay (values[0].val);
 			}
 			for (int i = 0; i < stringValuesEntries.Length; i ++)
 			{
@@ -87,8 +105,6 @@ namespace EternityEngine
 					values[i2] = stringValue;
 				}
 				stringValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					stringValueEntry.UpdateDisplay (values[0].val);
 			}
 			for (int i = 0; i < vector2ValuesEntries.Length; i ++)
 			{
@@ -101,8 +117,6 @@ namespace EternityEngine
 					values[i2] = component.vector2Values[i];
 				}
 				vector2ValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					vector2ValueEntry.UpdateDisplay (values[0].val);
 			}
 			for (int i = 0; i < vector3ValuesEntries.Length; i ++)
 			{
@@ -115,8 +129,6 @@ namespace EternityEngine
 					values[i2] = component.vector3Values[i];
 				}
 				vector3ValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					vector3ValueEntry.UpdateDisplay (values[0].val);
 			}
 			for (int i = 0; i < colorValueEntries.Length; i ++)
 			{
@@ -129,8 +141,6 @@ namespace EternityEngine
 					values[i2] = component.colorValues[i];
 				}
 				colorValueEntry.SetValues (values);
-				if (SaveAndLoadManager.isLoading)
-					colorValueEntry.UpdateDisplay (values[0].val);
 			}
 			component = firstComponent;
 		}
