@@ -34,7 +34,6 @@ namespace EternityEngine
 		public static void Save (string saveFilePath)
 		{
 #if !UNITY_WEBGL
-			GameManager.assets.Sort(new AssetComperer());
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];
@@ -349,23 +348,6 @@ namespace EternityEngine
 				File.Delete(autoSaveFilePath);
 			Init ();
 #endif
-		}
-
-		public class AssetComperer : IComparer<Asset>
-		{
-			public int Compare (Asset asset, Asset asset2)
-			{
-				_Object ob = asset as _Object;
-				_Object ob2 = asset2 as _Object;
-				if (ob != null && ob2 == null)
-					return -1;
-				else if (ob == null && ob2 != null)
-					return 1;
-				else if (ob != null && ob2 != null)
-					return MathfExtensions.Sign(EternityEngine.obs.IndexOf(ob) - EternityEngine.obs.IndexOf(ob2));
-				else
-					return 0;
-			}
 		}
 
 		[Serializable]

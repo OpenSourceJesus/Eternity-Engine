@@ -122,6 +122,9 @@ namespace EternityEngine
 			_Image img = this as _Image;
 			if (img != null)
 				return (img._Data, img);
+			Script script = this as Script;
+			if (script != null)
+				return (script._Data, script);
 			return (null, null);
 		}
 

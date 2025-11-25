@@ -59,6 +59,8 @@ MonoBehaviour:
   - {fileID: 6445755035653220395, guid: e9766343aacd42aee9a51e4c176a43fb, type: 3}
   - {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
   - {fileID: 7813554479563803767, guid: 7677e9c56d7bfe58083d7af971d46520, type: 3}
+  - {fileID: 0}
+  - {fileID: 757848023684321748, guid: 6eb514ffd3d93883a97b1d1bf7306cc0, type: 3}
   onlyOneComponentPerObjectAllowedNotificationGo: {fileID: 0}
   onlyOneComponentPerObjectAllowedNotificationText: {fileID: 0}
   cantDeleteComponentNotificationGo: {fileID: 0}

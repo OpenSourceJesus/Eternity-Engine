@@ -29,6 +29,7 @@ namespace EternityEngine
 		public FloatValue unitLen;
 		public StringValue exportPath;
 		public BoolValue debugMode;
+		public static Script[] scripts = new Script[0];
 		public static string saveFilePaths;
 		public static _Object[] obs = new _Object[0];
 		static bool prevDoDuplicate;
@@ -38,7 +39,7 @@ namespace EternityEngine
 		static Dictionary<string, string> attributes = new Dictionary<string, string>();
 		static string apiCode;
 		static string initCode;
-		static string[] updateScripts = new string[0];
+		static string updateCode;
 		static Dictionary<_Object, string> rigidBodies = new Dictionary<_Object, string>();
 		static Dictionary<_Object, string> colliders = new Dictionary<_Object, string>();
 		static Dictionary<_Object, string> joints = new Dictionary<_Object, string>();
@@ -676,7 +677,31 @@ while running:
 			attributes = new Dictionary<string, string>();
 			apiCode = "";
 			initCode = "";
-			updateScripts = new string[0];
+			updateCode = "";
+			for (int i = 0; i < scripts.Length; i ++)
+			{
+				Script script = scripts[i];
+				if (File.Exists(script.path.val))
+				{
+					string scriptText = File.ReadAllText(script.path.val);
+					if (!script.runtime.val)
+						apiCode	+= scriptText;
+					else
+					{
+						if (script.runAtStart.val)
+							initCode += scriptText;
+						else
+						{
+							string[] lines = scriptText.Split('\n');
+							for (int i2 = 0; i2 < lines.Length; i2 ++)
+							{
+								string line = lines[i2];
+								updateCode += "	" + line + '\n';
+							}
+						}
+					}
+				}
+			}
 			rigidBodies = new Dictionary<_Object, string>();
 			colliders = new Dictionary<_Object, string>();
 			joints = new Dictionary<_Object, string>();
@@ -765,22 +790,10 @@ while running:
 			code = code.Replace("# Init Physics", physicsInitCode);
 			code = code.Replace("# Init Rendering", string.Join('\n', renderCode));
 			code = code.Replace("# Init Particle Systems", particleSystemsCode);
-			code = code.Replace("# Init User Code", string.Join('\n', initCode));
-			for (int i = 0; i < updateScripts.Length; i ++)
-			{
-				string updateScript = updateScripts[i];
-				string _updateScript = "";
-				string[] lines = updateScript.Split('\n');
-				for (int i2 = 0; i2 < lines.Length; i2 ++)
-				{
-					string line = lines[i2];
-					_updateScript += "	" + line + '\n';
-				}
-				updateScripts[i] = updateScript;
-			}
+			code = code.Replace("# Init User Code", initCode);
 			if (globals.Length > 0)
 				code = code.Replace("# Globals", "	global " + string.Join(", ", globals));
-			code = code.Replace("# Update", string.Join('\n', updateScripts));
+			code = code.Replace("# Update", updateCode);
 			Color _backgroundColor = backgroundColor.val;
 			code = code.Replace("# Background", "	screen.fill([" + _backgroundColor.r * 255 + ", " + _backgroundColor.g * 255 + ", " + _backgroundColor.b * 255 + "])");
 			string scriptPath = Path.Combine(Application.temporaryCachePath, "Eternity Engine Export.py");

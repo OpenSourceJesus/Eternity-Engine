@@ -1775,6 +1775,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1910407431}
     m_Modifications:
+    - target: {fileID: 548667925140117863, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 548667925140117863, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321595290502689285, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321595290502689285, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321595290502689285, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321595290502689285, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4142342605788552443, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1861,6 +1885,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5965934396035700971, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859827537738759297, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859827537738759297, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7630567881268258424, guid: 74ac7bef1a10ee19b98d935310eb9135, type: 3}
