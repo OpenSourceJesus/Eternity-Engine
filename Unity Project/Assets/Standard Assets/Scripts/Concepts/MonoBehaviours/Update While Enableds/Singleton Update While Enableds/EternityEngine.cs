@@ -858,25 +858,19 @@ while running:
 					_Collider collider = component as _Collider;
 					if (collider != null)
 					{
-						// matrix = ob.matrix_world
-						// pos = matrix.to_translation()
-						// rot = matrix.to_euler()
-						// rot.x = 0
-						// rot.y = 0
-						// rotAndSizeMatrix = Matrix.LocRotScale(Vector((0, 0, 0)), rot, ob.scale)
-						// rotatedSize = rot.to_matrix() @ ob.scale
-						// maxRotatedSizeComponent = max(rotatedSize.x, rotatedSize.y)
-						// radius = collider.Radius * maxRotatedSizeComponent
-						// normal = (rotAndSizeMatrix @ Vector(list(collider.Normal) + [0])).to_2d()
-						// size = (rotAndSizeMatrix @ Vector(list(collider.Size) + [0])).to_2d()
-						// cuboidBorderRadius = collider.CuboidBorderRadius * maxRotatedSizeComponent
-						// triangleBorderRadius = collider.TriangleBorderRadius * maxRotatedSizeComponent
-						// if collider.IsVertical:
-						// 	capsuleHeight = (rotAndSizeMatrix @ Vector((0, collider.CapsuleHeight, 0))).y
-						// 	capsuleRadius = (rotAndSizeMatrix @ Vector((collider.CapsuleHeight, 0, 0))).x
-						// else:
-						// 	capsuleHeight = (rotAndSizeMatrix @ Vector((collider.CapsuleHeight, 0, 0))).x
-						// 	capsuleRadius = (rotAndSizeMatrix @ Vector((0, collider.CapsuleHeight, 0))).y
+						Transform trs = ob.trs;
+						Vector2 normal = trs.TransformDirection(collider.normal.val);
+						Vector2 size = trs.TransformVector(collider.size.val);
+						float maxRotatedSizeComponent = Mathf.Max(trs.localScale.x, trs.localScale.y);
+						float radius = collider.radius.val * maxRotatedSizeComponent;
+						float cuboidBorderRadius = collider.cuboidBorderRadius.val * maxRotatedSizeComponent;
+						float triangleBorderRadius = collider.triangleBorderRadius.val * maxRotatedSizeComponent;
+						float capsuleHeight = collider.capsuleHeight.val;
+						float capsuleRadius = collider.capsuleRadius.val;
+						if (collider.isVertical.val)
+							capsuleRadius = capsuleHeight;
+						else
+							capsuleHeight = capsuleRadius;
 						// polylinePnts = []
 						// for i in range(MAX_SHAPE_PNTS):
 						// 	if getattr(ob, 'useColliderPolylinePnt%i' %i):
@@ -936,34 +930,33 @@ while running:
 						string colliderName = obVarName + "Collider";
 						string colliderStr = "";
 						bool enabled = true;
-						Transform trs = ob.trs;
-						string posStr = "[" + trs.position.x + ", " + -trs.position.y + "]";
+						Vector2 pygamePos = trs.position.SetY(-trs.position.y);
 						if (collider.type.val == 0)
-							colliderStr = colliderName + " = sim.add_ball_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + collider.radius.val + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "halfspace")
-							colliderStr = colliderName + " = sim.add_halfspace_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(normal)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "cuboid")
-							colliderStr = colliderName + " = sim.add_cuboid_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(size)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "roundCuboid")
-							colliderStr = colliderName + " = sim.add_round_cuboid_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.Size)) + ", " + str(cuboidBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "capsule")
-							colliderStr = colliderName + " = sim.add_capsule_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(capsuleHeight) + ", " + str(collider.CapsuleRadius) + ", " + str(collider.IsVertical) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "segment")
-							colliderStr = colliderName + " = sim.add_segment_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.SegmentPnt0)) + ", " + str(list(collider.SegmentPnt1)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "triangle")
-							colliderStr = colliderName + " = sim.add_triangle_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.TrianglePnt0)) + ", " + str(list(collider.TrianglePnt1)) + ", " + str(list(collider.TrianglePnt2)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "roundTriangle")
-							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.TrianglePnt0)) + ", " + str(list(collider.TrianglePnt1)) + ", " + str(list(collider.TrianglePnt2)) + ", " + str(triangleBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "polyline")
-							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(polylinePnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + polylineIdxsStr + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "trimesh")
-							colliderStr = colliderName + " = sim.add_trimesh_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(trimeshPnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(trimeshIdxs) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "convexHull")
-							colliderStr = colliderName + " = sim.add_convex_hull_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(convexHullPnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "roundConvexHull")
-							colliderStr = colliderName + " = sim.add_round_convex_hull_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(convexHullPnts) + ", " + str(convexHullBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
-						else if (collider.ShapeType == "heightfield")
-							colliderStr = colliderName + " = sim.add_heightfield_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(heights) + "," + str(list(heightfieldScale)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+							colliderStr = colliderName + " = sim.add_ball_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + collider.radius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 1)
+							colliderStr = colliderName + " = sim.add_halfspace_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(normal) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 2)
+							colliderStr = colliderName + " = sim.add_cuboid_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(size) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 3)
+							colliderStr = colliderName + " = sim.add_round_cuboid_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(size) + ", " + collider.cuboidBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 4)
+							colliderStr = colliderName + " = sim.add_capsule_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + collider.capsuleHeight.val + ", " + collider.capsuleRadius.val + ", " + collider.isVertical.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 5)
+							colliderStr = colliderName + " = sim.add_segment_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.segmentPnt0.val) + ", " + VecToStr(collider.segmentPnt1.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 6)
+							colliderStr = colliderName + " = sim.add_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 7)
+							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + collider.triangleBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 8)
+							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.polylinePnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + polylineIdxsStr + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 9)
+							colliderStr = colliderName + " = sim.add_trimesh_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trimeshPnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + VecToStr(collider.trimeshIdxs.val) + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 10)
+							colliderStr = colliderName + " = sim.add_convex_hull_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.convexHullPnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 11)
+							colliderStr = colliderName + " = sim.add_round_convex_hull_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.convexHullPnts.val) + ", " + collider.convexHullBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+						else if (collider.type.val == 12)
+							colliderStr = colliderName + " = sim.add_heightfield_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.heights.val) + "," + VecToStr(collider.heightfieldScale.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						if (rigidBody == null)
 							colliderStr += ')';
 						else
@@ -1151,6 +1144,11 @@ while running:
 					return commonPath;
 
 			return null;
+		}
+
+		static string VecToStr (Vector2 v)
+		{
+			return "[" + v.x + ", " + v.y + "]";
 		}
 
 		public enum PresetObjectType

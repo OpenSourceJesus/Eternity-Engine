@@ -1,5 +1,6 @@
 using System;
 using Extensions;
+using UnityEngine;
 
 namespace EternityEngine
 {
@@ -19,9 +20,28 @@ namespace EternityEngine
 			}
 		}
 		public IntValue type;
-		public BoolValue[] collisionGroupMembership = new BoolValue[0];
-		public BoolValue[] collisionGroupFilter = new BoolValue[0];
+		public ArrayValue<bool> collisionGroupMembership;
+		public ArrayValue<bool> collisionGroupFilter;
 		public FloatValue radius;
+		public Vector2Value normal;
+		public Vector2Value size;
+		public FloatValue cuboidBorderRadius;
+		public FloatValue triangleBorderRadius;
+		public FloatValue capsuleHeight;
+		public FloatValue capsuleRadius;
+		public BoolValue isVertical;
+		public ArrayValue<Vector2> polylinePnts;
+		public ArrayValue<int> polylineIdxs;
+		public ArrayValue<Vector2> trimeshPnts;
+		public ArrayValue<int> trimeshIdxs;
+		public ArrayValue<Vector2> convexHullPnts;
+		public FloatValue convexHullBorderRadius;
+		public Vector2Value heightfieldScale;
+		public ArrayValue<float> heightfieldHeights;
+		public BoolValue isSensor;
+		public FloatValue density;
+		public FloatValue bounciness;
+		public StringValue bouncinessCombineRule;
 
 		[Serializable]
 		public class Data : _Component.Data
@@ -30,6 +50,25 @@ namespace EternityEngine
 			public float radius;
 			public bool[] collisionGroupMembership = new bool[0];
 			public bool[] collisionGroupFilter = new bool[0];
+			public bool isSensor;
+			public float density;
+			public float bounciness;
+			public string bouncinessCombineRule;
+			public _Vector2 normal;
+			public _Vector2 size;
+			public float cuboidBorderRadius;
+			public float triangleBorderRadius;
+			public float capsuleHeight;
+			public float capsuleRadius;
+			public bool isVertical;
+			public _Vector2[] polylinePnts = new _Vector2[0];
+			public int[] polylineIdxs;
+			public _Vector2[] trimeshPnts = new _Vector2[0];
+			public int[] trimeshIdxs;
+			public _Vector2[] convexHullPnts = new _Vector2[0];
+			public float convexHullBorderRadius;
+			public _Vector2 heightfieldScale;
+			public float[] heightfieldHeights = new float[0];
 
 			public override void Set (_Component component)
 			{
@@ -37,18 +76,16 @@ namespace EternityEngine
 				_Collider collider = (_Collider) component;
 				type = collider.type.val;
 				radius = collider.radius.val;
-				collisionGroupMembership = new bool[collider.collisionGroupMembership.Length];
-				for (int i = 0; i < collider.collisionGroupMembership.Length; i ++)
-				{
-					BoolValue isCollisionGroupMember = collider.collisionGroupMembership[i];
-					collisionGroupMembership[i] = isCollisionGroupMember.val;
-				}
-				collisionGroupFilter = new bool[collider.collisionGroupFilter.Length];
-				for (int i = 0; i < collider.collisionGroupFilter.Length; i ++)
-				{
-					BoolValue collideWithCollisionGroup = collider.collisionGroupFilter[i];
-					collisionGroupFilter[i] = collideWithCollisionGroup.val;
-				}
+				normal = _Vector2.FromVec2(collider.normal.val);
+				isSensor = collider.isSensor.val;
+				density = collider.density.val;
+				bounciness = collider.bounciness.val;
+				bouncinessCombineRule = collider.bouncinessCombineRule.val;
+				convexHullBorderRadius = collider.convexHullBorderRadius.val;
+				heightfieldScale = _Vector2.FromVec2(collider.heightfieldScale.val);
+				heightfieldHeights = collider.heightfieldHeights.val;
+				collisionGroupMembership = collider.collisionGroupMembership.val;
+				collisionGroupFilter = collider.collisionGroupFilter.val;
 			}
 
 			public override void Apply (_Component component)
@@ -57,18 +94,10 @@ namespace EternityEngine
 				_Collider collider = (_Collider) component;
 				collider.type.Set (type);
 				collider.radius.Set (radius);
-				for (int i = 0; i < collisionGroupMembership.Length; i ++)
-				{
-					bool isCollisionGroupMember = collisionGroupMembership[i];
-					BoolValue isCollisionGroupMemberValue = collider.collisionGroupMembership[i];
-					isCollisionGroupMemberValue.Set (isCollisionGroupMember);
-				}
-				for (int i = 0; i < collisionGroupFilter.Length; i ++)
-				{
-					bool isCollisionGroupMember = collisionGroupFilter[i];
-					BoolValue collideWithCollisionGroup = collider.collisionGroupFilter[i];
-					collideWithCollisionGroup.Set (isCollisionGroupMember);
-				}
+				collider.isSensor.Set (isSensor);
+				collider.normal.Set (normal.ToVec2());
+				collider.collisionGroupMembership.Set (collisionGroupMembership);
+				collider.collisionGroupFilter.Set (collisionGroupFilter);
 			}
 		}
 	}

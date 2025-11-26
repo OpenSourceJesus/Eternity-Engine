@@ -5,6 +5,7 @@ namespace EternityEngine
 {
 	public class ValueEntry<T> : ValueSetter
 	{
+		public Transform trs;
 		public Value<T> value;
 		public Value<T>[] values = new Value<T>[0];
 		protected Value<T>[] TargetValues
