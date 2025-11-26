@@ -101,14 +101,13 @@ namespace EternityEngine
 				InspectorEntry inspectorEntry = inspectorEntries[i];
 				Destroy(inspectorEntry.gameObject);
 			}
-			for (int i = 0; i < ob.sceneEntries.Length; i ++)
+			for (int i = 0; i < sceneEntries.Length; i ++)
 			{
-				SceneEntry sceneEntry = ob.sceneEntries[i];
+				SceneEntry sceneEntry = sceneEntries[i];
 				ScenePanel scenePanel = ScenePanel.instances[i];
 				scenePanel.entries = scenePanel.entries.Remove(sceneEntry);
 				Destroy(sceneEntry.gameObject);
-				ob.sceneEntries = ob.sceneEntries.RemoveAt(i);
-				i --;
+				ob.sceneEntries = ob.sceneEntries.Remove(sceneEntry);
 			}
 			Destroy(gameObject);
 			return true;
@@ -128,6 +127,9 @@ namespace EternityEngine
 			RigidBody rigidBody = this as RigidBody;
 			if (rigidBody != null)
 				return (rigidBody._Data, rigidBody);
+			_Collider collider = this as _Collider;
+			if (collider != null)
+				return (collider._Data, collider);
 			Script script = this as Script;
 			if (script != null)
 				return (script._Data, script);

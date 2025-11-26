@@ -21,11 +21,13 @@ namespace EternityEngine
 		public IntValue type;
 		public BoolValue[] collisionGroupMembership = new BoolValue[0];
 		public BoolValue[] collisionGroupFilter = new BoolValue[0];
+		public FloatValue radius;
 
 		[Serializable]
 		public class Data : _Component.Data
 		{
 			public int type;
+			public float radius;
 			public bool[] collisionGroupMembership = new bool[0];
 			public bool[] collisionGroupFilter = new bool[0];
 
@@ -34,6 +36,7 @@ namespace EternityEngine
 				base.Set (component);
 				_Collider collider = (_Collider) component;
 				type = collider.type.val;
+				radius = collider.radius.val;
 				collisionGroupMembership = new bool[collider.collisionGroupMembership.Length];
 				for (int i = 0; i < collider.collisionGroupMembership.Length; i ++)
 				{
@@ -53,6 +56,7 @@ namespace EternityEngine
 				base.Apply (component);
 				_Collider collider = (_Collider) component;
 				collider.type.Set (type);
+				collider.radius.Set (radius);
 				for (int i = 0; i < collisionGroupMembership.Length; i ++)
 				{
 					bool isCollisionGroupMember = collisionGroupMembership[i];

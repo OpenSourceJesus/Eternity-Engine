@@ -421,7 +421,7 @@ MonoBehaviour:
   prefabIdx: 3
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
-  inspectorEntryPrefab: {fileID: 1510841870201934998, guid: 76453f7a4504e7926984f30da75999cf, type: 3}
+  inspectorEntryPrefab: {fileID: 2056876532790364720, guid: 76453f7a4504e7926984f30da75999cf, type: 3}
   collapsed: 0
   boolValues:
   - {fileID: 499591805500638756}

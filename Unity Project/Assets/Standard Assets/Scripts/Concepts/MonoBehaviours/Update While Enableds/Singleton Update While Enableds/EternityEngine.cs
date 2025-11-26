@@ -124,7 +124,7 @@ def copy_object (name : str, newName : str, pos : tuple[float, float], rot : flo
 		surfaces[newName] = surface
 		pivots[newName] = pivots[name].copy()
 		initRots[newName] = rot
-		sortedObNames.append(newName)
+		sortedObNames.Add(newName)
 	if name in attributes:
 		attributes[newName] = attributes[name].copy()
 	if name in zOrders:
@@ -155,7 +155,7 @@ def copy_object (name : str, newName : str, pos : tuple[float, float], rot : flo
 				particleRot = get_object_rotation(particle.name)
 				newParticleName = newName + ':' + str(particleSystem.lastId)
 				copy_object (particle.name, newParticleName, rotate_vector(particlePos, pos, rot), particleRot + rot)
-				newParticleSystem.particles.append(Particle(newParticleName, particle.life))
+				newParticleSystem.particles.Add(Particle(newParticleName, particle.life))
 		particleSystems[newName] = newParticleSystem
 
 class ParticleSystem:
@@ -274,7 +274,7 @@ class ParticleSystem:
 		sim.set_angular_drag (rigidBody, uniform(self.minAngDrag, self.maxAngDrag))
 		sim.set_rigid_body_enabled (rigidBody, True)
 		sim.set_linear_velocity (rigidBody, ang_to_dir(math.degrees(randRad)) * uniform(self.minSpeed, self.maxSpeed))
-		self.particles.append(Particle(newParticleName, uniform(self.minLife, self.maxLife)))
+		self.particles.Add(Particle(newParticleName, uniform(self.minLife, self.maxLife)))
 
 	def set_enabled (self, enable : bool):
 		if enable and not self.enable:
@@ -804,6 +804,24 @@ while running:
 		{
 			string obVarName = GetVarNameForObject(ob);
 			Dictionary<string, string> attributes = GetAttributes(ob);
+			RigidBody rigidBody = null;
+			for (int i = 0; i < ob.components.Length; i ++)
+			{
+				_Component component = ob.components[i];
+				rigidBody = component as RigidBody;
+				if (rigidBody != null)
+					break;
+			}
+			if (rigidBody != null)
+			{
+				string rigidBodyName = obVarName + "RigidBody";
+				string rigidBodyDescName = rigidBodyName + "Desc";
+				bool enabled = true;
+				Transform trs = ob.trs;
+				rigidBodies[ob] = rigidBodyName + " = sim.add_rigid_body(" + enabled + ", " + rigidBody.type.val + ", [" + trs.position.x + ", " + -trs.position.y + "], " + trs.position.z + ", " + rigidBody.gravityScale.val + ", " + rigidBody.dominance.val + ", " + rigidBody.canRot.val + ", " + rigidBody.linearDrag.val + ", " + rigidBody.angDrag.val + ", " + rigidBody.canSleep.val + ", " + rigidBody.continuousCollideDetect.val + ")\nrigidBodiesIds['" + obVarName + "'] = " + rigidBodyName;
+				vars = vars.Add(rigidBodyName + " = (-1, -1)");
+				globals = globals.Add(rigidBodyName);
+			}
 			for (int i = 0; i < ob.components.Length; i ++)
 			{
 				_Component component = ob.components[i];
@@ -831,65 +849,151 @@ while running:
 					pos.y *= -1;
 					renderCodeClause += "initRots['" + obVarName + "'] = " + trs.eulerAngles.z + "\nsurfaces['" + obVarName + "'] = " + obVarName + "\n" + surfaceRect + " = " + obVarName + ".get_rect().move(" + pos.x + ", " + pos.y + ")\nsurfacesRects['" + obVarName + "'] = " + surfaceRect + "\nzOrders['" + obVarName + "'] = " + trs.position.z;
 					if (!img.enabled)
-						renderCodeClause += "\nhide.append('" + obVarName + "')";
+						renderCodeClause += "\nhide.Add('" + obVarName + "')";
 					renderCode.Add(renderCodeClause);
 					pivots[obVarName] = img.pivot.val;
 				}
 				else
 				{
-					RigidBody rigidBody = component as RigidBody;
-					if (rigidBody != null)
+					_Collider collider = component as _Collider;
+					if (collider != null)
 					{
-						string rigidBodyName = obVarName + "RigidBody";
-						string rigidBodyDescName = rigidBodyName + "Desc";
+						// matrix = ob.matrix_world
+						// pos = matrix.to_translation()
+						// rot = matrix.to_euler()
+						// rot.x = 0
+						// rot.y = 0
+						// rotAndSizeMatrix = Matrix.LocRotScale(Vector((0, 0, 0)), rot, ob.scale)
+						// rotatedSize = rot.to_matrix() @ ob.scale
+						// maxRotatedSizeComponent = max(rotatedSize.x, rotatedSize.y)
+						// radius = collider.Radius * maxRotatedSizeComponent
+						// normal = (rotAndSizeMatrix @ Vector(list(collider.Normal) + [0])).to_2d()
+						// size = (rotAndSizeMatrix @ Vector(list(collider.Size) + [0])).to_2d()
+						// cuboidBorderRadius = collider.CuboidBorderRadius * maxRotatedSizeComponent
+						// triangleBorderRadius = collider.TriangleBorderRadius * maxRotatedSizeComponent
+						// if collider.IsVertical:
+						// 	capsuleHeight = (rotAndSizeMatrix @ Vector((0, collider.CapsuleHeight, 0))).y
+						// 	capsuleRadius = (rotAndSizeMatrix @ Vector((collider.CapsuleHeight, 0, 0))).x
+						// else:
+						// 	capsuleHeight = (rotAndSizeMatrix @ Vector((collider.CapsuleHeight, 0, 0))).x
+						// 	capsuleRadius = (rotAndSizeMatrix @ Vector((0, collider.CapsuleHeight, 0))).y
+						// polylinePnts = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderPolylinePnt%i' %i):
+						// 		pnt = getattr(ob, 'colliderPolylinePnt%i' %i)
+						// 		pnt = (rotAndSizeMatrix @ Vector(list(pnt) + [0])).to_2d()
+						// 		polylinePnts.Add(list(pnt))
+						// polylineIdxs = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderPolylineIdx%i' %i):
+						// 		idx = getattr(ob, 'colliderPolylineIdx%i' %i)
+						// 		polylineIdxs.Add(list(idx))
+						// polylineIdxsStr = ''
+						// if polylineIdxs != []:
+						// 	polylineIdxsStr = str(polylineIdxs)
+						// 	if len(polylineIdxs) == 1:
+						// 		polylineIdxsStr = '[' + polylineIdxsStr + ']'
+						// 	polylineIdxsStr =', ' + polylineIdxsStr
+						// trimeshPnts = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderTrimeshPnt%i' %i):
+						// 		pnt = getattr(ob, 'colliderTrimeshPnt%i' %i)
+						// 		pnt = (rotAndSizeMatrix @ Vector(list(pnt) + [0])).to_2d()
+						// 		trimeshPnts.Add(list(pnt))
+						// trimeshIdxs = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderTrimeshIdx%i' %i):
+						// 		idx = getattr(ob, 'colliderTrimeshIdx%i' %i)
+						// 		trimeshIdxs.Add(list(idx))
+						// convexHullPnts = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderConvexHullPnt%i' %i):
+						// 		pnt = getattr(ob, 'colliderConvexHullPnt%i' %i)
+						// 		pnt = (rotAndSizeMatrix @ Vector(list(pnt) + [0])).to_2d()
+						// 		convexHullPnts.Add(list(pnt))
+						// heights = []
+						// for i in range(MAX_SHAPE_PNTS):
+						// 	if getattr(ob, 'useColliderHeight%i' %i):
+						// 		height = getattr(ob, 'colliderHeight%i' %i)
+						// 		pnt = (rotAndSizeMatrix @ Vector(list(pnt) + [0])).to_2d()
+						// 		heights.Add(height)
+						// convexHullBorderRadius = collider.ConvexHullBorderRadius * maxRotatedSizeComponent
+						// heightfieldScale = (rotAndSizeMatrix @ Vector(list(collider.HeightfieldScale) + [0])).to_2d()
+						int collisionGroupMembership = 0;
+						for (int i2 = 0; i2 < collider.collisionGroupMembership.Length; i2 ++)
+						{
+							BoolValue isCollisionGroupMemberValue = collider.collisionGroupMembership[i2];
+							if (isCollisionGroupMemberValue.val)
+								collisionGroupMembership |= (1 << i);
+						}
+						int collisionGroupFilter = 0;
+						for (int i2 = 0; i2 < collider.collisionGroupFilter.Length; i2 ++)
+						{
+							BoolValue collideWithCollisionGroup = collider.collisionGroupFilter[i2];
+							if (collideWithCollisionGroup.val)
+								collisionGroupFilter |= (1 << i);
+						}
+						string colliderName = obVarName + "Collider";
+						string colliderStr = "";
 						bool enabled = true;
 						Transform trs = ob.trs;
-						rigidBodies[ob] = rigidBodyName + " = sim.add_rigid_body(" + enabled + ", " + rigidBody.type.val + ", [" + trs.position.x + ", " + -trs.position.y + "], " + trs.position.z + ", " + rigidBody.gravityScale.val + ", " + rigidBody.dominance.val + ", " + rigidBody.canRot.val + ", " + rigidBody.linearDrag.val + ", " + rigidBody.angDrag.val + ", " + rigidBody.canSleep.val + ", " + rigidBody.continuousCollideDetect.val + ")\nrigidBodiesIds['" + obVarName + "'] = " + rigidBodyName;
-						vars = vars.Add(rigidBodyName + " = (-1, -1)");
-						globals = globals.Add(rigidBodyName);
+						string posStr = "[" + trs.position.x + ", " + -trs.position.y + "]";
+						if (collider.type.val == 0)
+							colliderStr = colliderName + " = sim.add_ball_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + collider.radius.val + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "halfspace")
+							colliderStr = colliderName + " = sim.add_halfspace_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(normal)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "cuboid")
+							colliderStr = colliderName + " = sim.add_cuboid_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(size)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "roundCuboid")
+							colliderStr = colliderName + " = sim.add_round_cuboid_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.Size)) + ", " + str(cuboidBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "capsule")
+							colliderStr = colliderName + " = sim.add_capsule_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(capsuleHeight) + ", " + str(collider.CapsuleRadius) + ", " + str(collider.IsVertical) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "segment")
+							colliderStr = colliderName + " = sim.add_segment_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.SegmentPnt0)) + ", " + str(list(collider.SegmentPnt1)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "triangle")
+							colliderStr = colliderName + " = sim.add_triangle_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.TrianglePnt0)) + ", " + str(list(collider.TrianglePnt1)) + ", " + str(list(collider.TrianglePnt2)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "roundTriangle")
+							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(list(collider.TrianglePnt0)) + ", " + str(list(collider.TrianglePnt1)) + ", " + str(list(collider.TrianglePnt2)) + ", " + str(triangleBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "polyline")
+							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(polylinePnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + polylineIdxsStr + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "trimesh")
+							colliderStr = colliderName + " = sim.add_trimesh_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(trimeshPnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(trimeshIdxs) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "convexHull")
+							colliderStr = colliderName + " = sim.add_convex_hull_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(convexHullPnts) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "roundConvexHull")
+							colliderStr = colliderName + " = sim.add_round_convex_hull_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(convexHullPnts) + ", " + str(convexHullBorderRadius) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						else if (collider.ShapeType == "heightfield")
+							colliderStr = colliderName + " = sim.add_heightfield_collider(" + enabled + ", " + posStr + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + str(heights) + "," + str(list(heightfieldScale)) + ", " + str(ob.isSensor) + ", " + str(ob.density) + ", " + str(ob.bounciness) + ", " + str(BOUNCINESS_COMBINE_RULES.index(ob.bouncinessCombineRule));
+						if (rigidBody == null)
+							colliderStr += ')';
+						else
+							colliderStr += ", rigidBodiesIds['" + obVarName + "'])";
+						colliderStr += "\ncollidersIds['" + obVarName + "'] = " + colliderName;
+						vars = vars.Add(colliderName + " = (-1, -1)");
+						globals = globals.Add(colliderName);
+						colliders[ob] = colliderStr;
 					}
 					else
 					{
-						_Collider collider = component as _Collider;
-						if (collider != null)
+						Script script = component as Script;
+						if (script != null)
 						{
-							int collisionGroupMembership = 0;
-							for (int i2 = 0; i2 < collider.collisionGroupMembership.Length; i2 ++)
+							if (File.Exists(script.path.val))
 							{
-								BoolValue isCollisionGroupMemberValue = collider.collisionGroupMembership[i2];
-								if (isCollisionGroupMemberValue.val)
-									collisionGroupMembership |= (1 << i);
-							}
-							int collisionGroupFilter = 0;
-							for (int i2 = 0; i2 < collider.collisionGroupFilter.Length; i2 ++)
-							{
-								BoolValue collideWithCollisionGroup = collider.collisionGroupFilter[i2];
-								if (collideWithCollisionGroup.val)
-									collisionGroupFilter |= (1 << i);
-							}
-						}
-						else
-						{
-							Script script = component as Script;
-							if (script != null)
-							{
-								if (File.Exists(script.path.val))
+								string scriptText = File.ReadAllText(script.path.val);
+								if (!script.runtime.val)
+									apiCode	+= scriptText;
+								else
 								{
-									string scriptText = File.ReadAllText(script.path.val);
-									if (!script.runtime.val)
-										apiCode	+= scriptText;
+									if (script.runAtStart.val)
+										initCode += scriptText;
 									else
 									{
-										if (script.runAtStart.val)
-											initCode += scriptText;
-										else
+										string[] lines = scriptText.Split('\n');
+										for (int i2 = 0; i2 < lines.Length; i2 ++)
 										{
-											string[] lines = scriptText.Split('\n');
-											for (int i2 = 0; i2 < lines.Length; i2 ++)
-											{
-												string line = lines[i2];
-												updateCode += "	" + line + '\n';
-											}
+											string line = lines[i2];
+											updateCode += "	" + line + '\n';
 										}
 									}
 								}

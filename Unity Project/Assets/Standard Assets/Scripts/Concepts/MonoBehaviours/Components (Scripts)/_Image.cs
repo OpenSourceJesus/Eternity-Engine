@@ -34,7 +34,8 @@ namespace EternityEngine
 			base.Init ();
 			imgs = new Image[ScenePanel.instances.Length];
 			imgs[0] = sceneEntry.img;
-			tex = new Texture2D(1, 1);
+			if (tex == null)
+				tex = new Texture2D(1, 1);
 			Transform obTrs = ob.trs;
 			Transform sceneEntryTrs = sceneEntry.rectTrs;
 			sceneEntryTrs.position = obTrs.position;
