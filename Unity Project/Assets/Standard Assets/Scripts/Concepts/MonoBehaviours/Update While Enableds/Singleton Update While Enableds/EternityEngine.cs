@@ -34,7 +34,6 @@ namespace EternityEngine
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
-		static string[] RIGID_BODY_TYPES = new string[] { "dynamic", "fixed", "kinematicPositionBased", "kinematicVelocityBased" };
 		static StreamReader errorReader;
 		static Dictionary<string, string> attributes = new Dictionary<string, string>();
 		static string apiCode;
@@ -71,7 +70,7 @@ if sys.platform == 'win32':
 	TMP_DIR = os.path.expanduser('~\\AppData\\Local\\Temp')
 else:
 	TMP_DIR = '/tmp'
-pivots : dict[str, pyobj] = {}
+pivots : dict[str, List[float]] = {}
 attributes : dict[str, pyobj] = {}
 attributes = {}
 # Attributes
@@ -834,6 +833,7 @@ while running:
 					if (!img.enabled)
 						renderCodeClause += "\nhide.append('" + obVarName + "')";
 					renderCode.Add(renderCodeClause);
+					pivots[obVarName] = img.pivot.val;
 				}
 				else
 				{
@@ -844,7 +844,7 @@ while running:
 						string rigidBodyDescName = rigidBodyName + "Desc";
 						bool enabled = true;
 						Transform trs = ob.trs;
-						rigidBodies[ob] = rigidBodyName + " = sim.add_rigid_body(" + enabled + ", " + RIGID_BODY_TYPES.IndexOf(rigidBody.type.val) + ", [" + trs.position.x + ", " + -trs.position.y + "], " + trs.position.z + ", " + rigidBody.gravityScale.val + ", " + rigidBody.dominance.val + ", " + rigidBody.canRot.val + ", " + rigidBody.linearDrag.val + ", " + rigidBody.angDrag.val + ", " + rigidBody.canSleep.val + ", " + rigidBody.continuousCollideDetect.val + ")\nrigidBodiesIds['" + obVarName + "'] = " + rigidBodyName;
+						rigidBodies[ob] = rigidBodyName + " = sim.add_rigid_body(" + enabled + ", " + rigidBody.type.val + ", [" + trs.position.x + ", " + -trs.position.y + "], " + trs.position.z + ", " + rigidBody.gravityScale.val + ", " + rigidBody.dominance.val + ", " + rigidBody.canRot.val + ", " + rigidBody.linearDrag.val + ", " + rigidBody.angDrag.val + ", " + rigidBody.canSleep.val + ", " + rigidBody.continuousCollideDetect.val + ")\nrigidBodiesIds['" + obVarName + "'] = " + rigidBodyName;
 						vars = vars.Add(rigidBodyName + " = (-1, -1)");
 						globals = globals.Add(rigidBodyName);
 					}

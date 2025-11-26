@@ -22,6 +22,7 @@ namespace EternityEngine
 		public Vector2ValueEntry[] vector2ValuesEntries = new Vector2ValueEntry[0];
 		public Vector3ValueEntry[] vector3ValuesEntries = new Vector3ValueEntry[0];
 		public ColorValueEntry[] colorValueEntries = new ColorValueEntry[0];
+		public EnumValueEntry[] enumValueEntries = new EnumValueEntry[0];
 		public RectTransform optionsRectTrs;
 		OptionsUpdater optionsUpdater;
 		int insertAt;
@@ -53,7 +54,12 @@ namespace EternityEngine
 			for (int i = 0; i < boolValuesEntries.Length; i ++)
 				boolValuesEntries[i].UpdateDisplay (component.boolValues[i].val);
 			for (int i = 0; i < intValuesEntries.Length; i ++)
-				intValuesEntries[i].UpdateDisplay (component.intValues[i].val);
+			{
+				IntValue intValue = component.intValues[i];
+				if (i < enumValueEntries.Length)
+					enumValueEntries[i].UpdateDisplay (intValue.val);
+				intValuesEntries[i].UpdateDisplay (intValue.val);
+			}
 			for (int i = 0; i < floatValuesEntries.Length; i ++)
 				floatValuesEntries[i].UpdateDisplay (component.floatValues[i].val);
 			for (int i = 0; i < stringValuesEntries.Length; i ++)

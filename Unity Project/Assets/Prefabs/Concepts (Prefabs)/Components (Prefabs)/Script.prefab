@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfacb35ce702aceba19d1fd809e1931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine._Script
-  prefabIdx: 4
+  prefabIdx: 5
   sceneEntry: {fileID: 0}
   ob: {fileID: 0}
   inspectorEntryPrefab: {fileID: 2056876532790364720, guid: 00fd701f4208edb1d85822b0cbfaf7b7, type: 3}
@@ -172,6 +172,7 @@ MonoBehaviour:
   boolValues:
   - {fileID: 7387074499294227026}
   - {fileID: 7987831594197721989}
+  intValues: []
   floatValues: []
   stringValues:
   - {fileID: 2329723622761404727}

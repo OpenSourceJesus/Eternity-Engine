@@ -60,6 +60,7 @@ MonoBehaviour:
   - {fileID: 2096868897817817923, guid: 361f759463d2151d7ac9de0b08953da3, type: 3}
   - {fileID: 7813554479563803767, guid: 7677e9c56d7bfe58083d7af971d46520, type: 3}
   - {fileID: 7499214124652624123, guid: d9c8aeed90b147e03a776843aab59974, type: 3}
+  - {fileID: 7597473233818343320, guid: 986dcc9055863c93b95a0898ad72842d, type: 3}
   - {fileID: 757848023684321748, guid: 6eb514ffd3d93883a97b1d1bf7306cc0, type: 3}
   onlyOneComponentPerObjectAllowedNotificationGo: {fileID: 0}
   onlyOneComponentPerObjectAllowedNotificationText: {fileID: 0}
