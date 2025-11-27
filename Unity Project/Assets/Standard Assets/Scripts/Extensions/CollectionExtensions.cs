@@ -9,6 +9,14 @@ namespace Extensions
 {
 	public static class CollectionExtensions 
 	{
+		public static Vector2[] ToVec2s (this _Vector2[] arr)
+		{
+			Vector2[] output = new Vector2[arr.Length];
+			for (int i = 0; i < arr.Length; i ++)
+				output[i] = arr[i].ToVec2();
+			return output;
+		}
+
 		public static List<T> Randomize<T> (this T[] arr)
 		{
 			List<T> output = new List<T>();

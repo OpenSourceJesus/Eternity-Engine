@@ -98,6 +98,20 @@ namespace EternityEngine
 				collider.normal.Set (normal.ToVec2());
 				collider.collisionGroupMembership.Set (collisionGroupMembership);
 				collider.collisionGroupFilter.Set (collisionGroupFilter);
+				collider.size.Set (size.ToVec2());
+				collider.cuboidBorderRadius.Set (cuboidBorderRadius);
+				collider.triangleBorderRadius.Set (triangleBorderRadius);
+				collider.capsuleHeight.Set (capsuleHeight);
+				collider.capsuleRadius.Set (capsuleRadius);
+				collider.isVertical.Set (isVertical);
+				collider.polylinePnts.Set (polylinePnts.ToVec2s());
+				collider.polylineIdxs.Set (polylineIdxs);
+				collider.trimeshPnts.Set (trimeshPnts.ToVec2s());
+				collider.trimeshIdxs.Set (trimeshIdxs);
+				collider.convexHullPnts.Set (convexHullPnts.ToVec2s());
+				collider.convexHullBorderRadius.Set (convexHullBorderRadius);
+				collider.heightfieldScale.Set (heightfieldScale.ToVec2());
+				collider.heightfieldHeights.Set (heightfieldHeights);
 			}
 		}
 	}
