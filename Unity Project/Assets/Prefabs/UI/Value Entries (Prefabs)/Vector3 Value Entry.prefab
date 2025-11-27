@@ -916,7 +916,8 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
@@ -950,9 +951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfea5b44358e119768cb96744797644e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector3ValueEntry
-  id: 
-  save: 0
   inputField: {fileID: 0}
+  rectTrs: {fileID: 8355699331202631784}
   value: {fileID: 0}
   values: []
   xValueEntry: {fileID: 4483846794507213821}

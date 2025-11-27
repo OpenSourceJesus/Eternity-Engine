@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 172.5
+      value: 149.75
       objectReference: {fileID: 0}
     - target: {fileID: 8970292210423044389, guid: 095b73a138f82974b9ed053bfffd35dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -301,6 +301,38 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2105743322457644822}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2105743322457644822}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: _OnMouseDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: _OnMouseUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.BoolValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.BoolValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164309406390761926, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -330,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.BoolValueEntry
   inputField: {fileID: 0}
+  rectTrs: {fileID: 8355699331202631784}
   value: {fileID: 0}
   values: []
   toggle: {fileID: 7440175245011056723}

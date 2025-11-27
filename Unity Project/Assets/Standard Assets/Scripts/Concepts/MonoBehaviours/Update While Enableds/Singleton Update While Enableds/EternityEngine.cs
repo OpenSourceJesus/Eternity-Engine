@@ -948,7 +948,7 @@ while running:
 						else if (collider.type.val == 7)
 							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + collider.triangleBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 8)
-							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(polylinePnts) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + IntsToStr(collider.polylineIdxs.val) + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.polylinePnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + IntsToStr(collider.polylineIdxs.val) + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 9)
 							colliderStr = colliderName + " = sim.add_trimesh_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.trimeshPnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + IntsToStr(collider.trimeshIdxs.val) + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 10)
@@ -1160,6 +1160,34 @@ while running:
 				if (i > 0)
 					output += ", ";
 				output += VecToStr(v);
+			}
+			output += "]";
+			return output;
+		}
+
+		static string IntsToStr (int[] arr)
+		{
+			string output = "[";
+			for (int i = 0; i < arr.Length; i ++)
+			{
+				int _i = arr[i];
+				if (i > 0)
+					output += ", ";
+				output += _i;
+			}
+			output += "]";
+			return output;
+		}
+
+		static string FloatsToStr (float[] arr)
+		{
+			string output = "[";
+			for (int i = 0; i < arr.Length; i ++)
+			{
+				float f = arr[i];
+				if (i > 0)
+					output += ", ";
+				output += f;
 			}
 			output += "]";
 			return output;

@@ -1,13 +1,18 @@
 using Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace EternityEngine
 {
 	public class ValueEntry<T> : ValueSetter
 	{
-		public Transform trs;
+		public RectTransform rectTrs;
 		public Value<T> value;
 		public Value<T>[] values = new Value<T>[0];
+		public delegate void OnMouseDown(ValueEntry<T> valueEntry);
+		public event OnMouseDown onMouseDown;
+		public delegate void OnMouseUp(ValueEntry<T> valueEntry);
+		public event OnMouseDown onMouseUp;
 		protected Value<T>[] TargetValues
 		{
 			get
@@ -49,6 +54,18 @@ namespace EternityEngine
 		{
 			if (inputField != null)
 				inputField.text = "" + val;
+		}
+
+		public void _OnMouseDown ()
+		{
+			if (onMouseDown != null)
+				onMouseDown (this);
+		}
+
+		public void _OnMouseUp ()
+		{
+			if (onMouseUp != null)
+				onMouseUp (this);
 		}
 	}
 }

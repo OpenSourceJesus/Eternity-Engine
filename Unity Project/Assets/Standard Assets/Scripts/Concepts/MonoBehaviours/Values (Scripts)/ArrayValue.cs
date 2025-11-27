@@ -7,7 +7,8 @@ namespace EternityEngine
 	{
 		public Value<T> eltPrefab;
 		public Transform eltsParent;
-        Value<T>[] elts = new Value<T>[0];
+		public bool canResize;
+        public Value<T>[] elts = new Value<T>[0];
 
 		public virtual void Set (T[] val)
 		{

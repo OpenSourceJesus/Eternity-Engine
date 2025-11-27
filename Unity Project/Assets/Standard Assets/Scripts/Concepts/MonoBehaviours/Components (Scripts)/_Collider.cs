@@ -20,8 +20,8 @@ namespace EternityEngine
 			}
 		}
 		public IntValue type;
-		public ArrayValue<bool> collisionGroupMembership;
-		public ArrayValue<bool> collisionGroupFilter;
+		public BoolArrayValue collisionGroupMembership;
+		public BoolArrayValue collisionGroupFilter;
 		public FloatValue radius;
 		public Vector2Value normal;
 		public Vector2Value size;
@@ -30,14 +30,19 @@ namespace EternityEngine
 		public FloatValue capsuleHeight;
 		public FloatValue capsuleRadius;
 		public BoolValue isVertical;
-		public ArrayValue<Vector2> polylinePnts;
-		public ArrayValue<int> polylineIdxs;
-		public ArrayValue<Vector2> trimeshPnts;
-		public ArrayValue<int> trimeshIdxs;
-		public ArrayValue<Vector2> convexHullPnts;
+		public Vector2Value segmentPnt0;
+		public Vector2Value segmentPnt1;
+		public Vector2Value trianglePnt0;
+		public Vector2Value trianglePnt1;
+		public Vector2Value trianglePnt2;
+		public Vector2ArrayValue polylinePnts;
+		public IntArrayValue polylineIdxs;
+		public Vector2ArrayValue trimeshPnts;
+		public IntArrayValue trimeshIdxs;
+		public Vector2ArrayValue convexHullPnts;
 		public FloatValue convexHullBorderRadius;
 		public Vector2Value heightfieldScale;
-		public ArrayValue<float> heightfieldHeights;
+		public FloatArrayValue heights;
 		public BoolValue isSensor;
 		public FloatValue density;
 		public FloatValue bounciness;
@@ -61,6 +66,11 @@ namespace EternityEngine
 			public float capsuleHeight;
 			public float capsuleRadius;
 			public bool isVertical;
+			public _Vector2 segmentPnt0;
+			public _Vector2 segmentPnt1;
+			public _Vector2 trianglePnt0;
+			public _Vector2 trianglePnt1;
+			public _Vector2 trianglePnt2;
 			public _Vector2[] polylinePnts = new _Vector2[0];
 			public int[] polylineIdxs;
 			public _Vector2[] trimeshPnts = new _Vector2[0];
@@ -68,7 +78,7 @@ namespace EternityEngine
 			public _Vector2[] convexHullPnts = new _Vector2[0];
 			public float convexHullBorderRadius;
 			public _Vector2 heightfieldScale;
-			public float[] heightfieldHeights = new float[0];
+			public float[] heights = new float[0];
 
 			public override void Set (_Component component)
 			{
@@ -83,7 +93,7 @@ namespace EternityEngine
 				bouncinessCombineRule = collider.bouncinessCombineRule.val;
 				convexHullBorderRadius = collider.convexHullBorderRadius.val;
 				heightfieldScale = _Vector2.FromVec2(collider.heightfieldScale.val);
-				heightfieldHeights = collider.heightfieldHeights.val;
+				heights = collider.heights.val;
 				collisionGroupMembership = collider.collisionGroupMembership.val;
 				collisionGroupFilter = collider.collisionGroupFilter.val;
 			}
@@ -94,6 +104,11 @@ namespace EternityEngine
 				_Collider collider = (_Collider) component;
 				collider.type.Set (type);
 				collider.radius.Set (radius);
+				collider.segmentPnt0.Set (segmentPnt0.ToVec2());
+				collider.segmentPnt1.Set (segmentPnt1.ToVec2());
+				collider.trianglePnt0.Set (trianglePnt0.ToVec2());
+				collider.trianglePnt1.Set (trianglePnt1.ToVec2());
+				collider.trianglePnt2.Set (trianglePnt2.ToVec2());
 				collider.isSensor.Set (isSensor);
 				collider.normal.Set (normal.ToVec2());
 				collider.collisionGroupMembership.Set (collisionGroupMembership);
@@ -111,7 +126,7 @@ namespace EternityEngine
 				collider.convexHullPnts.Set (convexHullPnts.ToVec2s());
 				collider.convexHullBorderRadius.Set (convexHullBorderRadius);
 				collider.heightfieldScale.Set (heightfieldScale.ToVec2());
-				collider.heightfieldHeights.Set (heightfieldHeights);
+				collider.heights.Set (heights);
 			}
 		}
 	}
