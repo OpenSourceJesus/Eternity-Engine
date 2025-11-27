@@ -12,7 +12,7 @@ namespace EternityEngine
 		public _Component component;
 		[HideInInspector]
 		public InspectorPanel inspectorPanel;
-		public RectTransform collapButtonRectTrs;
+		public RectTransform collapseButtonRectTrs;
 		public GameObject goToGetCollapsed;
 		public bool onlyAllowOnePerObject;
 		public BoolValueEntry[] boolValuesEntries = new BoolValueEntry[0];
@@ -171,7 +171,7 @@ namespace EternityEngine
 		public void SetCollapsed (bool collapse)
 		{
 			goToGetCollapsed.SetActive(!collapse);
-			collapButtonRectTrs.eulerAngles = Vector3.forward * 180 * collapse.GetHashCode();
+			collapseButtonRectTrs.eulerAngles = Vector3.forward * 180 * collapse.GetHashCode();
 			component.collapsed = collapse;
 		}
 

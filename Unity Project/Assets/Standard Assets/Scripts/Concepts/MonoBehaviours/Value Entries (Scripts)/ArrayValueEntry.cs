@@ -12,6 +12,7 @@ namespace EternityEngine
 		public Transform eltsParent;
 		public LayoutElement layoutElement;
 		public ValueEntry<T>[] elts = new ValueEntry<T>[0];
+		public RectTransform collapseButtonRectTrs;
 		ValueEntry<T> dragging;
 		Vector2 offDrag;
 
@@ -32,6 +33,17 @@ namespace EternityEngine
 					}
 				}
 			}
+		}
+
+		void SetCollapsed (bool collapse)
+		{
+			eltsParent.gameObject.SetActive(!collapse);
+			collapseButtonRectTrs.eulerAngles = Vector3.forward * 180 * collapse.GetHashCode();
+		}
+
+		public void ToggleCollapse ()
+		{
+			SetCollapsed (eltsParent.gameObject.activeSelf);
 		}
 
 		public void AddElement ()
