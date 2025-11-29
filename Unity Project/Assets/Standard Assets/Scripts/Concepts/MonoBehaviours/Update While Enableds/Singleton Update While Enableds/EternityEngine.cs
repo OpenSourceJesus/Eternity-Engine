@@ -863,8 +863,7 @@ while running:
 						Vector2 size = trs.TransformVector(collider.size.val);
 						float maxRotatedSizeComponent = Mathf.Max(trs.localScale.x, trs.localScale.y);
 						float radius = collider.radius.val * maxRotatedSizeComponent;
-						float cuboidBorderRadius = collider.cuboidBorderRadius.val * maxRotatedSizeComponent;
-						float triangleBorderRadius = collider.triangleBorderRadius.val * maxRotatedSizeComponent;
+						float borderRadius = collider.borderRadius.val * maxRotatedSizeComponent;
 						float capsuleHeight = collider.capsuleHeight.val;
 						float capsuleRadius = collider.capsuleRadius.val;
 						if (collider.isVertical.val)
@@ -938,7 +937,7 @@ while running:
 						else if (collider.type.val == 2)
 							colliderStr = colliderName + " = sim.add_cuboid_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(size) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 3)
-							colliderStr = colliderName + " = sim.add_round_cuboid_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(size) + ", " + collider.cuboidBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+							colliderStr = colliderName + " = sim.add_round_cuboid_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(size) + ", " + borderRadius + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 4)
 							colliderStr = colliderName + " = sim.add_capsule_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + collider.capsuleHeight.val + ", " + collider.capsuleRadius.val + ", " + collider.isVertical.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 5)
@@ -946,7 +945,7 @@ while running:
 						else if (collider.type.val == 6)
 							colliderStr = colliderName + " = sim.add_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 7)
-							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + collider.triangleBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+							colliderStr = colliderName + " = sim.add_round_triangle_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecToStr(collider.trianglePnt0.val) + ", " + VecToStr(collider.trianglePnt1.val) + ", " + VecToStr(collider.trianglePnt2.val) + ", " + borderRadius + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 8)
 							colliderStr = colliderName + " = sim.add_polyline_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.polylinePnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + IntsToStr(collider.polylineIdxs.val) + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 9)
@@ -954,7 +953,7 @@ while running:
 						else if (collider.type.val == 10)
 							colliderStr = colliderName + " = sim.add_convex_hull_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.convexHullPnts.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 11)
-							colliderStr = colliderName + " = sim.add_round_convex_hull_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.convexHullPnts.val) + ", " + collider.convexHullBorderRadius.val + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
+							colliderStr = colliderName + " = sim.add_round_convex_hull_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + VecsToStr(collider.convexHullPnts.val) + ", " + borderRadius + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						else if (collider.type.val == 12)
 							colliderStr = colliderName + " = sim.add_heightfield_collider(" + enabled + ", " + VecToStr(pygamePos) + ", " + trs.eulerAngles.z + ", " + collisionGroupMembership + ", " + collisionGroupFilter + ", " + FloatsToStr(collider.heights.val) + "," + VecToStr(collider.heightfieldScale.val) + ", " + collider.isSensor.val + ", " + collider.density.val + ", " + collider.bounciness.val + ", " + collider.bouncinessCombineRule.val;
 						if (rigidBody == null)

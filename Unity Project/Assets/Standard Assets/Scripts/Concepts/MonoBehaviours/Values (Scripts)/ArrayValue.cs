@@ -6,7 +6,6 @@ namespace EternityEngine
 	public class ArrayValue<T> : Value<T[]>
 	{
 		public Value<T> eltPrefab;
-		public Transform eltsParent;
 		public bool canResize;
         public Value<T>[] elts = new Value<T>[0];
 

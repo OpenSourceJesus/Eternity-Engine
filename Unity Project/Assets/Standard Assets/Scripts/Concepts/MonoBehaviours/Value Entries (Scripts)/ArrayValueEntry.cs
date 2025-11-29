@@ -13,8 +13,19 @@ namespace EternityEngine
 		public LayoutElement layoutElement;
 		public ValueEntry<T>[] elts = new ValueEntry<T>[0];
 		public RectTransform collapseButtonRectTrs;
+		public GameObject addAndRemoveButtonsParentGo;
+		public GameObject resizeInputFieldGo;
 		ValueEntry<T> dragging;
 		Vector2 offDrag;
+
+		void Start ()
+		{
+			if (((ArrayValue<T>) value).canResize)
+			{
+				addAndRemoveButtonsParentGo.SetActive(true);
+				resizeInputFieldGo.SetActive(true);
+			}
+		}
 
 		public void DoUpdate ()
 		{
@@ -46,6 +57,17 @@ namespace EternityEngine
 			SetCollapsed (eltsParent.gameObject.activeSelf);
 		}
 
+		public void Resize (string sizeStr)
+		{
+			int size = int.Parse(sizeStr);
+			if (size < elts.Length)
+				for (int i = elts.Length - 1; i <= size; i --)
+					RemoveElement (i);
+			else if (size > elts.Length)
+				for (int i = elts.Length; i < size; i ++)
+					AddElement ();
+		}
+
 		public void AddElement ()
 		{
 			ValueEntry<T> elt = Instantiate(eltPrefab, eltsParent);
@@ -54,13 +76,23 @@ namespace EternityEngine
 			elt.onMouseUp += OnElementMouseUp;
 		}
 
-		public void RemoveElement (int idx)
+		void RemoveElement (int idx)
 		{
 			ValueEntry<T> elt = elts[idx];
-			Destroy(elt.gameObject);
 			elts = elts.RemoveAt(idx);
 			elt.onMouseDown -= OnElementMouseDown;
 			elt.onMouseUp -= OnElementMouseUp;
+			DestroyImmediate(elt.gameObject);
+		}
+
+		public void RemoveSelectedElements ()
+		{
+			for (int i = 0; i < elts.Length; i ++)
+			{
+				ValueEntry<T> elt = elts[i];
+				if (elt.selected)
+					RemoveElement (elt.rectTrs.GetSiblingIndex());
+			}
 		}
 
 		public void DuplicateElement (int idx)

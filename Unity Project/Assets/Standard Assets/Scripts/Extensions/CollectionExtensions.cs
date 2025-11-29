@@ -17,6 +17,14 @@ namespace Extensions
 			return output;
 		}
 
+		public static _Vector2[] FromVec2s (this Vector2[] arr)
+		{
+			_Vector2[] output = new _Vector2[arr.Length];
+			for (int i = 0; i < arr.Length; i ++)
+				output[i] = _Vector2.FromVec2(arr[i]);
+			return output;
+		}
+
 		public static List<T> Randomize<T> (this T[] arr)
 		{
 			List<T> output = new List<T>();
