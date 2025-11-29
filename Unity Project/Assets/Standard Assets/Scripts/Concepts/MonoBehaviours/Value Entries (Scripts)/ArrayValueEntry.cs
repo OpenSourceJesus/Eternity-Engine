@@ -74,7 +74,7 @@ namespace EternityEngine
 		void Resize (int size)
 		{
 			if (size < elts.Length)
-				for (int i = elts.Length - 1; i <= size; i --)
+				for (int i = elts.Length - 1; i >= size; i --)
 					RemoveElement (i);
 			else if (size > elts.Length)
 				for (int i = elts.Length; i < size; i ++)

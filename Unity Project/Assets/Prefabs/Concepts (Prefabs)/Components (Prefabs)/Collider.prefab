@@ -127,7 +127,7 @@ PrefabInstance:
       objectReference: {fileID: 7597473233818343320}
     - target: {fileID: 5361949812163608371, guid: 1aaf1fbe87ca0731b94ba32dba9ef39e, type: 3}
       propertyPath: m_Name
-      value: Float Array Value
+      value: Heights Value
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
