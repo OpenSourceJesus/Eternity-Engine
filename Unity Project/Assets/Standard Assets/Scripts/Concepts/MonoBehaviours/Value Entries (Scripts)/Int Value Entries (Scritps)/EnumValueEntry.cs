@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace EternityEngine
 		public GameObject optionsGo;
 		public Button[] buttons = new Button[0];
 		public TMP_Text[] buttonsTxts = new TMP_Text[0];
+		public GameObjectGroup[] goGroups = new GameObjectGroup[0];
 
 		public void ToggleOptions ()
 		{
@@ -39,8 +41,32 @@ namespace EternityEngine
 			{
 				Button button = buttons[i];
 				button.interactable = val != i;
+				if (val == i && goGroups.Length > i)
+				{
+					for (int i2 = 0; i2 < goGroups.Length; i2 ++)
+					{
+						GameObjectGroup goGroup = goGroups[i2];
+						goGroup.SetActive (false);
+					}
+					goGroups[i].SetActive (true);
+				}
 			}
 			txt.text = buttonsTxts[val].text;
+		}
+
+		[Serializable]
+		public class GameObjectGroup
+		{
+			public GameObject[] gos = new GameObject[0];
+
+			public void SetActive (bool active)
+			{
+				for (int i = 0; i < gos.Length; i ++)
+				{
+					GameObject go = gos[i];
+					go.SetActive(active);
+				}
+			}
 		}
 	}
 }
