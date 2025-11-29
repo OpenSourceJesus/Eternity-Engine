@@ -547,6 +547,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6952699251362984547, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
       value: Options Button
@@ -719,6 +723,10 @@ PrefabInstance:
     - target: {fileID: 520398641906481215, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_Maskable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6952699251362984547, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
@@ -1032,6 +1040,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6952699251362984547, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
       value: Option Button
@@ -1343,6 +1355,10 @@ PrefabInstance:
     - target: {fileID: 520398641906481215, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529803783567388910, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
+      propertyPath: m_Maskable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6952699251362984547, guid: ab47855678f0cdd5da349673e52007ec, type: 3}
       propertyPath: m_Name
@@ -1786,6 +1802,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.EnumValueEntry
   inputField: {fileID: 0}
   rectTrs: {fileID: 1851863580815222162}
+  selectedIndicator: {fileID: 0}
+  selected: 0
+  layoutElt: {fileID: 0}
   value: {fileID: 0}
   values: []
   txt: {fileID: 1142280518295105547}

@@ -1,6 +1,6 @@
 namespace EternityEngine
 {
-	public class FloatrrayValueEntry : ArrayValueEntry<float>
+	public class FloatArrayValueEntry : ArrayValueEntry<float>
 	{
 	}
 }

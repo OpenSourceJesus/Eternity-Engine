@@ -4507,9 +4507,6 @@ PrefabInstance:
       addedObject: {fileID: 1212513281488875608}
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5861132071348604193}
-    - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3157208700666737238}
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
@@ -4520,6 +4517,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4911958589954275695}
+    - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5861132071348604193}
     - targetCorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4384018910514600060}
@@ -4641,8 +4641,8 @@ MonoBehaviour:
   - {fileID: 6820185571669896803}
   floatValues:
   - {fileID: 5152715022649583722}
-  - {fileID: 9119347300449472071}
   - {fileID: 1911069340709391049}
+  - {fileID: 9119347300449472071}
   - {fileID: 3420127362804350040}
   - {fileID: 7860282822330923677}
   - {fileID: 3799945955235577201}

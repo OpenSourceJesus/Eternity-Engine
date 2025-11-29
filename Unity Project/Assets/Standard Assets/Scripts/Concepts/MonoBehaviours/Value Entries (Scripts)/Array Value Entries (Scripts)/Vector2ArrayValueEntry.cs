@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EternityEngine
 {
-	public class Vector2rrayValueEntry : ArrayValueEntry<Vector2>
+	public class Vector2ArrayValueEntry : ArrayValueEntry<Vector2>
 	{
 	}
 }

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_Name
-      value: Int Array Value Entry
+      value: Float Array Value Entry
       objectReference: {fileID: 0}
     - target: {fileID: 419803788951083511, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -95,10 +95,14 @@ PrefabInstance:
     - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 201000335095545766}
+      objectReference: {fileID: 1992007267680108489}
     - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RemoveSelectedElements
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.FloatArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -175,14 +179,14 @@ PrefabInstance:
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 201000335095545766}
+      objectReference: {fileID: 1992007267680108489}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleCollapse
       objectReference: {fileID: 0}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.IntArrayValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.FloatArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -287,14 +291,14 @@ PrefabInstance:
     - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 201000335095545766}
+      objectReference: {fileID: 1992007267680108489}
     - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resize
       objectReference: {fileID: 0}
     - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.IntArrayValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.FloatArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 5669426938541703418, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_fontSize
@@ -303,10 +307,14 @@ PrefabInstance:
     - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 201000335095545766}
+      objectReference: {fileID: 1992007267680108489}
     - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.FloatArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 7157517526836041642, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_Pivot.x
@@ -527,14 +535,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 201000335095545766}
+      addedObject: {fileID: 1992007267680108489}
   m_SourcePrefab: {fileID: 100100000, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
 --- !u!1 &1983351236682538750 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
   m_PrefabInstance: {fileID: 2276283578223002376}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &201000335095545766
+--- !u!114 &1992007267680108489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -543,9 +551,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1983351236682538750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c553a693b9496c28a28e44193b7a2e, type: 3}
+  m_Script: {fileID: 11500000, guid: cff6a7948a780382eb7a3cf9678caa0f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.IntArrayValueEntry
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatrrayValueEntry
   inputField: {fileID: 0}
   rectTrs: {fileID: 8989861734835049634}
   selectedIndicator: {fileID: 0}
@@ -553,12 +561,12 @@ MonoBehaviour:
   layoutElt: {fileID: 0}
   value: {fileID: 0}
   values: []
-  eltPrefab: {fileID: 7408058619071085526, guid: f2faa0dcaf18aca9d8a8ea001e7fb3a4, type: 3}
+  eltPrefab: {fileID: 7782514256163345263, guid: 26dc3b40efd0677acbaa7e052cee2de8, type: 3}
   eltsParent: {fileID: 2537917989251521781}
   elts: []
   collapseButtonRectTrs: {fileID: 6177564618908466298}
-  addAndRemoveButtonsParentGo: {fileID: 5853309633734768878}
-  resizeInputFieldGo: {fileID: 5937675718363066108}
+  addAndRemoveButtonsParentGo: {fileID: 5937675718363066108}
+  resizeInputFieldGo: {fileID: 5853309633734768878}
 --- !u!224 &2537917989251521781 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4372578713630449661, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}

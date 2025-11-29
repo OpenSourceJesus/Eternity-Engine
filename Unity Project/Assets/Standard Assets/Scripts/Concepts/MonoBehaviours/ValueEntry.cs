@@ -10,6 +10,7 @@ namespace EternityEngine
 		public GameObject selectedIndicator;
 		[HideInInspector]
 		public bool selected;
+		public LayoutElement layoutElt;
 		public Value<T> value;
 		public Value<T>[] values = new Value<T>[0];
 		public delegate void OnMouseDown(ValueEntry<T> valueEntry);

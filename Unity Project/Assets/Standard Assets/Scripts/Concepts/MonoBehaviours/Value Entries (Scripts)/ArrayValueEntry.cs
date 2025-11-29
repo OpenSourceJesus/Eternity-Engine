@@ -10,7 +10,6 @@ namespace EternityEngine
 	{
 		public ValueEntry<T> eltPrefab;
 		public Transform eltsParent;
-		public LayoutElement layoutElement;
 		public ValueEntry<T>[] elts = new ValueEntry<T>[0];
 		public RectTransform collapseButtonRectTrs;
 		public GameObject addAndRemoveButtonsParentGo;
@@ -112,13 +111,13 @@ namespace EternityEngine
 		{
 			dragging = elt;
 			offDrag = (Vector2) elt.rectTrs.position - Mouse.current.position.ReadValue();
-			layoutElement.ignoreLayout = true;
+			elt.layoutElt.ignoreLayout = true;
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
 		void OnElementMouseUp (ValueEntry<T> elt)
 		{
-			layoutElement.ignoreLayout = false;
+			elt.layoutElt.ignoreLayout = false;
 			GameManager.updatables = GameManager.updatables.Remove(this);
 			dragging = null;
 		}
