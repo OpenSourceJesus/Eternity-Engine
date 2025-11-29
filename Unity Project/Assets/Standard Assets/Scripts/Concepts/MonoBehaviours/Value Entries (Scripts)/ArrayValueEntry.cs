@@ -17,7 +17,7 @@ namespace EternityEngine
 		ValueEntry<T> dragging;
 		Vector2 offDrag;
 
-		void Start ()
+		public virtual void Start ()
 		{
 			if (((ArrayValue<T>) value).canResize)
 			{
@@ -45,6 +45,16 @@ namespace EternityEngine
 			}
 		}
 
+		public override void UpdateDisplay (T[] val)
+		{
+			Resize (val.Length);
+			for (int i = 0; i < elts.Length; i ++)
+			{
+				ValueEntry<T> elt = elts[i];
+				elt.UpdateDisplay(val[i]);
+			}
+		}
+
 		void SetCollapsed (bool collapse)
 		{
 			eltsParent.gameObject.SetActive(!collapse);
@@ -58,7 +68,11 @@ namespace EternityEngine
 
 		public void Resize (string sizeStr)
 		{
-			int size = int.Parse(sizeStr);
+			Resize (int.Parse(sizeStr));
+		}
+
+		void Resize (int size)
+		{
 			if (size < elts.Length)
 				for (int i = elts.Length - 1; i <= size; i --)
 					RemoveElement (i);
@@ -107,7 +121,7 @@ namespace EternityEngine
 			elts = elts.Insert(elt, idx);
 		}
 
-		void OnElementMouseDown (ValueEntry<T> elt)
+		public void OnElementMouseDown (ValueEntry<T> elt)
 		{
 			dragging = elt;
 			offDrag = (Vector2) elt.rectTrs.position - Mouse.current.position.ReadValue();
@@ -115,11 +129,50 @@ namespace EternityEngine
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
-		void OnElementMouseUp (ValueEntry<T> elt)
+		public void OnElementMouseUp (ValueEntry<T> elt)
 		{
 			elt.layoutElt.ignoreLayout = false;
 			GameManager.updatables = GameManager.updatables.Remove(this);
 			dragging = null;
+		}
+
+		public void OnElementValueChanged (ValueEntry<T> elt)
+		{
+			int idx = elt.rectTrs.GetSiblingIndex();
+			Value<T[]>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			T[] val = null;
+			for (int i = 0; i < targets.Length; i ++)
+			{
+				Value<T[]> target = targets[i];
+				if (target == null)
+					continue;
+				T[] prevVal = target.val;
+				target.val[idx] = elt.value.val;
+				val = target.val;
+				if (!prevVal.Equals(target.val))
+					target._OnChanged ();
+			}
+			UpdateDisplay (val);
+		}
+
+		public new void TrySet (T[] val)
+		{
+			Value<T[]>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			for (int i = 0; i < targets.Length; i ++)
+			{
+				Value<T[]> target = targets[i];
+				if (target == null)
+					continue;
+				T[] prevVal = target.val;
+				target.val = val;
+				if (!prevVal.Equals(val))
+					target._OnChanged ();
+			}
+			UpdateDisplay (val);
 		}
 	}
 }

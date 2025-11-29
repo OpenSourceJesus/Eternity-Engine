@@ -23,6 +23,10 @@ namespace EternityEngine
 		public Vector3ValueEntry[] vector3ValuesEntries = new Vector3ValueEntry[0];
 		public ColorValueEntry[] colorValueEntries = new ColorValueEntry[0];
 		public EnumValueEntry[] enumValueEntries = new EnumValueEntry[0];
+		public BoolArrayValueEntry[] boolArrayValuesEntries = new BoolArrayValueEntry[0];
+		public IntArrayValueEntry[] intArrayValuesEntries = new IntArrayValueEntry[0];
+		public FloatArrayValueEntry[] floatArrayValuesEntries = new FloatArrayValueEntry[0];
+		public Vector2ArrayValueEntry[] vector2ArrayValuesEntries = new Vector2ArrayValueEntry[0];
 		public RectTransform optionsRectTrs;
 		OptionsUpdater optionsUpdater;
 		int insertAt;
@@ -70,6 +74,14 @@ namespace EternityEngine
 				vector3ValuesEntries[i].UpdateDisplay( component.vector3Values[i].val);
 			for (int i = 0; i < colorValueEntries.Length; i ++)
 				colorValueEntries[i].UpdateDisplay (component.colorValues[i].val);
+			for (int i = 0; i < boolArrayValuesEntries.Length; i ++)
+				boolArrayValuesEntries[i].UpdateDisplay (component.boolArrayValues[i].val);
+			for (int i = 0; i < intArrayValuesEntries.Length; i ++)
+				intArrayValuesEntries[i].UpdateDisplay (component.intArrayValues[i].val);
+			for (int i = 0; i < floatArrayValuesEntries.Length; i ++)
+				floatArrayValuesEntries[i].UpdateDisplay (component.floatArrayValues[i].val);
+			for (int i = 0; i < vector2ArrayValuesEntries.Length; i ++)
+				vector2ArrayValuesEntries[i].UpdateDisplay (component.vector2ArrayValues[i].val);
 		}
 
 		public void SetValueEntries (params _Component[] components)
@@ -164,6 +176,54 @@ namespace EternityEngine
 					values[i2] = component.colorValues[i];
 				}
 				colorValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < boolArrayValuesEntries.Length; i ++)
+			{
+				BoolArrayValueEntry boolArrayValueEntry = boolArrayValuesEntries[i];
+				boolArrayValueEntry.DetachValues ();
+				Value<bool[]>[] values = new Value<bool[]>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.boolArrayValues[i];
+				}
+				boolArrayValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < intArrayValuesEntries.Length; i ++)
+			{
+				IntArrayValueEntry intArrayValueEntry = intArrayValuesEntries[i];
+				intArrayValueEntry.DetachValues ();
+				Value<int[]>[] values = new Value<int[]>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.intArrayValues[i];
+				}
+				intArrayValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < floatArrayValuesEntries.Length; i ++)
+			{
+				FloatArrayValueEntry floatArrayValueEntry = floatArrayValuesEntries[i];
+				floatArrayValueEntry.DetachValues ();
+				Value<float[]>[] values = new Value<float[]>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.floatArrayValues[i];
+				}
+				floatArrayValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < vector2ArrayValuesEntries.Length; i ++)
+			{
+				Vector2ArrayValueEntry vector2ArrayValueEntry = vector2ArrayValuesEntries[i];
+				vector2ArrayValueEntry.DetachValues ();
+				Value<Vector2[]>[] values = new Value<Vector2[]>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.vector2ArrayValues[i];
+				}
+				vector2ArrayValueEntry.SetValues (values);
 			}
 			component = firstComponent;
 		}

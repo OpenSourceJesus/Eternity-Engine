@@ -662,7 +662,35 @@ while running:
 
 		public void DeleteSelected ()
 		{
-			
+			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+			HierarchyEntry[] selected = firstHierarchyPanel.selected;
+			int prevSelectedCnt = selected.Length;
+			for (int i = 0; i < selected.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selected[i];
+				_Object ob = hierarchyEntry.ob;
+				Destroy(ob.gameObject);
+				obs = obs.Remove(ob);
+				while (ob.components.Length > 0)
+					for (int i2 = 0; i2 < ob.components.Length; i2 ++)
+					{
+						_Component component = ob.components[i2];
+						if (component.TryDelete ())
+							i2 --;
+						else
+							instance.cantDeleteComponentNotificationGo.SetActive(false);
+					}
+				for (int i2 = 0; i2 < ob.hierarchyEntries.Length; i2 ++)
+				{
+					HierarchyEntry _hierarchyEntry = ob.hierarchyEntries[i2];
+					Destroy(_hierarchyEntry.gameObject);
+					HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i2];
+					hierarchyPanel.entries = hierarchyPanel.entries.Remove(_hierarchyEntry);
+					hierarchyPanel.selected = hierarchyPanel.selected.Remove(_hierarchyEntry);
+				}
+				firstHierarchyPanel.selected = firstHierarchyPanel.selected.Remove(hierarchyEntry);
+			}
+			InspectorPanel.RegenEntries (prevSelectedCnt > 1);
 		}
 
 		public void Export ()

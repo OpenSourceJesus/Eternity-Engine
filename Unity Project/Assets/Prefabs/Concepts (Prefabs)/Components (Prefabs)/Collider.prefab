@@ -4674,9 +4674,21 @@ MonoBehaviour:
   - {fileID: 7287192796370908801}
   vector3Values: []
   colorValues: []
+  boolArrayValues:
+  - {fileID: 3481555792951365262}
+  - {fileID: 627599939314557827}
+  intArrayValues:
+  - {fileID: 573576149382422791}
+  - {fileID: 3746544305386396797}
+  floatArrayValues:
+  - {fileID: 614875387834844668}
+  vector2ArrayValues:
+  - {fileID: 436018815647515053}
+  - {fileID: 782642642027609163}
+  - {fileID: 1739399538504590659}
   inspectorEntries: []
   sceneEntries: []
-  requiredComponentsIdxs: 
+  requiredComponentsIdxs: 01000000
   dependsOn: []
   dependsOnMe: []
   type: {fileID: 5462571176655014980}
