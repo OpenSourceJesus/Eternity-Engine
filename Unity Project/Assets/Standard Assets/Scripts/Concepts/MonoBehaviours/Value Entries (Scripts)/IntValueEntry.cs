@@ -29,5 +29,12 @@ namespace EternityEngine
 				target._OnChanged ();
 			}
 		}
+
+		public override int GetValue ()
+		{
+			int val = 0;
+			int.TryParse(inputField.text, out val);
+			return val;
+		}
 	}
 }

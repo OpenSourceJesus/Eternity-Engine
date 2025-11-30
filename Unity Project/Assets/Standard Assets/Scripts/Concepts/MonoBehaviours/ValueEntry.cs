@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,6 +59,11 @@ namespace EternityEngine
 		{
 			if (inputField != null)
 				inputField.text = "" + val;
+		}
+
+		public virtual T GetValue ()
+		{
+			throw new NotImplementedException();
 		}
 
 		public void _OnMouseDown ()

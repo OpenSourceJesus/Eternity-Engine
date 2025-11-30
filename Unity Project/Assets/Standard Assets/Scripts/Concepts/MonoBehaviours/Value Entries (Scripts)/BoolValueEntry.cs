@@ -27,5 +27,10 @@ namespace EternityEngine
 		{
 			toggle.isOn = val;
 		}
+
+		public override bool GetValue ()
+		{
+			return toggle.isOn;
+		}
 	}
 }

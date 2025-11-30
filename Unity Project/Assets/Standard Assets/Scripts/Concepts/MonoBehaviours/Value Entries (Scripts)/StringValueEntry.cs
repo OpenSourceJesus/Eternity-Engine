@@ -20,5 +20,10 @@ namespace EternityEngine
 					target._OnChanged ();
 			}
 		}
+
+		public override string GetValue ()
+		{
+			return inputField.text;
+		}
 	}
 }

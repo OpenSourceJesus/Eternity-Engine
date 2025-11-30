@@ -177,7 +177,7 @@ namespace EternityEngine
 				if (target == null)
 					continue;
 				T[] prevVal = target.val;
-				target.val[idx] = elt.value.val;
+				target.val[idx] = elt.GetValue();
 				val = target.val;
 				if (!prevVal.Equals(target.val))
 					target._OnChanged ();

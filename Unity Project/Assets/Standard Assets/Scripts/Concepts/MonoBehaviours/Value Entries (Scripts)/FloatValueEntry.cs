@@ -29,5 +29,12 @@ namespace EternityEngine
 				target._OnChanged ();
 			}
 		}
+
+		public override float GetValue ()
+		{
+			float val = 0;
+			float.TryParse(inputField.text, out val);
+			return val;
+		}
 	}
 }
