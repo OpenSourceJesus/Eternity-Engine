@@ -11,6 +11,8 @@ namespace EternityEngine
 		[HideInInspector]
 		public _Component component;
 		[HideInInspector]
+		public _Component[] components = new _Component[0];
+		[HideInInspector]
 		public InspectorPanel inspectorPanel;
 		public RectTransform collapseButtonRectTrs;
 		public GameObject goToGetCollapsed;
@@ -86,6 +88,7 @@ namespace EternityEngine
 
 		public void SetValueEntries (params _Component[] components)
 		{
+			this.components = components;
 			_Component firstComponent = components[0];
 			for (int i = 0; i < boolValuesEntries.Length; i ++)
 			{
@@ -242,30 +245,22 @@ namespace EternityEngine
 
 		public void TryDelete ()
 		{
-			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
-			for (int i = 0; i < firstHierarchyPanel.selected.Length; i ++)
+			bool allDeleted = true;
+			for (int i = 0; i < components.Length; i ++)
 			{
-				HierarchyEntry hierarchyEntry = firstHierarchyPanel.selected[i];
-				_Component deleteComponent = null;
-				for (int i2 = 0; i2 < hierarchyEntry.ob.components.Length; i2 ++)
+				_Component deleteComponent = components[i];
+				if (!deleteComponent.TryDelete())
+					allDeleted = false;
+			}
+			if (allDeleted)
+			{
+				int idx = inspectorPanel.entries.IndexOf(this);
+				for (int i = 0; i < InspectorPanel.instances.Length; i ++)
 				{
-					_Component _component = hierarchyEntry.ob.components[i2];
-					if (_component.prefabIdx == component.prefabIdx)
-					{
-						deleteComponent = _component;
-						break;
-					}
+					InspectorPanel _inspectorPanel = InspectorPanel.instances[i];
+					_inspectorPanel.entries = _inspectorPanel.entries.RemoveAt(idx);
 				}
-				if (deleteComponent.TryDelete())
-				{
-					int idx = inspectorPanel.entries.IndexOf(this);
-					for (int i2 = 0; i2 < InspectorPanel.instances.Length; i2 ++)
-					{
-						InspectorPanel inspectorPanel = InspectorPanel.instances[i2];
-						inspectorPanel.entries = inspectorPanel.entries.RemoveAt(idx);
-					}
-					Destroy(gameObject);
-				}
+				Destroy(gameObject);
 			}
 		}
 

@@ -49,34 +49,56 @@ namespace EternityEngine
 				}
 				return;
 			}
-			Dictionary<InspectorEntry, int> componentTypeCounts = new Dictionary<InspectorEntry, int>();
+			Dictionary<InspectorEntry, int> minComponentTypeCounts = new Dictionary<InspectorEntry, int>();
 			for (int i = 0; i < selectedHierarchyEntries.Length; i ++)
 			{
 				HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i];
 				_Component[] components = hierarchyEntry.ob.components;
-				HashSet<InspectorEntry> seenTypes = new HashSet<InspectorEntry>();
+				Dictionary<InspectorEntry, int> objTypeCounts = new Dictionary<InspectorEntry, int>();
 				for (int i2 = 0; i2 < components.Length; i2 ++)
 				{
 					_Component component = components[i2];
 					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
-					if (!seenTypes.Contains(entryPrefab))
-					{
-						seenTypes.Add(entryPrefab);
-						if (componentTypeCounts.ContainsKey(entryPrefab))
-							componentTypeCounts[entryPrefab] ++;
+					if (objTypeCounts.ContainsKey(entryPrefab))
+						objTypeCounts[entryPrefab] ++;
+					else
+						objTypeCounts[entryPrefab] = 1;
+				}
+				if (i == 0)
+					foreach (KeyValuePair<InspectorEntry, int> keyValuePair in objTypeCounts)
+						minComponentTypeCounts[keyValuePair.Key] = keyValuePair.Value;
+				else
+				{
+					List<InspectorEntry> toRemove = new List<InspectorEntry>();
+					Dictionary<InspectorEntry, int> toUpdate = new Dictionary<InspectorEntry, int>();
+					foreach (KeyValuePair<InspectorEntry, int> keyValuePair in minComponentTypeCounts)
+						if (objTypeCounts.TryGetValue(keyValuePair.Key, out int cnt))
+							toUpdate[keyValuePair.Key] = Mathf.Min(keyValuePair.Value, cnt);
 						else
-							componentTypeCounts[entryPrefab] = 1;
+							toRemove.Add(keyValuePair.Key);
+					foreach (KeyValuePair<InspectorEntry, int> keyValuePair in toUpdate)
+						minComponentTypeCounts[keyValuePair.Key] = keyValuePair.Value;
+					for (int i2 = 0; i2 < toRemove.Count; i2 ++)
+					{
+						InspectorEntry remove = toRemove[i2];
+						minComponentTypeCounts.Remove(remove);
 					}
 				}
 			}
 			HierarchyEntry firstHierarchyEntry = selectedHierarchyEntries[0];
 			_Component[] firstComponents = firstHierarchyEntry.ob.components;
+			Dictionary<InspectorEntry, int> processedTypeCounts = new Dictionary<InspectorEntry, int>();
 			for (int i = 0; i < firstComponents.Length; i ++)
 			{
 				_Component component = firstComponents[i];
 				InspectorEntry entryPrefab = component.inspectorEntryPrefab;
-				if (componentTypeCounts.TryGetValue(entryPrefab, out int cnt) && cnt == selectedHierarchyEntries.Length)
-					AddOrUpdateEntries (component);
+				if (!minComponentTypeCounts.TryGetValue(entryPrefab, out int minCnt) || minCnt == 0)
+					continue;
+				int processedCnt = 0;
+				if (processedTypeCounts.TryGetValue(entryPrefab, out processedCnt) && processedCnt >= minCnt)
+					continue;
+				processedTypeCounts[entryPrefab] = processedCnt + 1;
+				AddOrUpdateEntriesAtIndex (component, processedCnt);
 			}
 		}
 
@@ -159,159 +181,154 @@ namespace EternityEngine
 
 		public static InspectorEntry[] AddOrUpdateEntries (_Component component)
 		{
-			InspectorPanel firstInspectorPanel = instances[0];
-			for (int i = 0; i < firstInspectorPanel.entries.Length; i ++)
-			{
-				InspectorEntry entry = firstInspectorPanel.entries[i];
-				InspectorEntry entryPrefab = entry.component.inspectorEntryPrefab;
-				if (entryPrefab == component.inspectorEntryPrefab)
-					return new InspectorEntry[0];
-			}
 			InspectorEntry[] output = new InspectorEntry[instances.Length];
 			for (int i = 0; i < instances.Length; i ++)
 			{
 				InspectorPanel inspectorPanel = instances[i];
 				InspectorEntry entry = null;
 				HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
-				if (selectedHierarchyEntries.Length < 2)
+				if (component.inspectorEntries.Length <= i)
 				{
-					if (component.inspectorEntries.Length <= i)
-					{
-						entry = inspectorPanel.NewEntry(component);
-						component.inspectorEntries = component.inspectorEntries.Add(entry);
-						InspectorEntry[] entriesForEntriesPrefabs = null;
-						if (entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out entriesForEntriesPrefabs))
-							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = entriesForEntriesPrefabs.Add(entry);
-						else
-							entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { entry };
-					}
+					entry = inspectorPanel.NewEntry(component);
+					component.inspectorEntries = component.inspectorEntries.Add(entry);
+					InspectorEntry[] entriesForEntriesPrefabs = null;
+					if (entreisForEntriesPrefabsDict.TryGetValue(component.inspectorEntryPrefab, out entriesForEntriesPrefabs))
+						entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = entriesForEntriesPrefabs.Add(entry);
 					else
-					{
-						entry = component.inspectorEntries[i];
-						entry.gameObject.SetActive(true);
-					}
-					entry.BindToComponent (component);
+						entreisForEntriesPrefabsDict[component.inspectorEntryPrefab] = new InspectorEntry[] { entry };
 				}
 				else
 				{
-					InspectorEntry entryPrefab = component.inspectorEntryPrefab;
-					if (!entreisForEntriesPrefabsDict.TryGetValue(entryPrefab, out InspectorEntry[] entriesForEntriesPrefabs) || entriesForEntriesPrefabs == null || entriesForEntriesPrefabs.Length == 0)
+					entry = component.inspectorEntries[i];
+					entry.gameObject.SetActive(true);
+				}
+				entry.BindToComponent (component);
+				inspectorPanel.entries = inspectorPanel.entries.Add(entry);
+				output[i] = entry;
+			}
+			return output;
+		}
+
+		public static InspectorEntry[] AddOrUpdateEntriesAtIndex (_Component component, int typeIndex)
+		{
+			InspectorEntry[] output = new InspectorEntry[instances.Length];
+			HierarchyEntry[] selectedHierarchyEntries = HierarchyPanel.instances[0].selected;
+			InspectorEntry entryPrefab = component.inspectorEntryPrefab;
+			List<_Component> selectedComponents = new List<_Component>();
+			for (int i = 0; i < selectedHierarchyEntries.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i];
+				_Component[] obComponents = hierarchyEntry.ob.components;
+				int typeCount = 0;
+				for (int i2 = 0; i2 < obComponents.Length; i2 ++)
+				{
+					_Component obComponent = obComponents[i2];
+					if (obComponent.inspectorEntryPrefab == entryPrefab)
 					{
-						entry = inspectorPanel.NewEntry(component);
-						inspectorPanel.entries = inspectorPanel.entries.Add(entry);
-						output[i] = entry;
-						continue;
+						if (typeCount == typeIndex)
+						{
+							selectedComponents.Add(obComponent);
+							break;
+						}
+						typeCount ++;
 					}
-					List<_Component> selectedComponents = new List<_Component>();
-					for (int i2 = 0; i2 < selectedHierarchyEntries.Length; i2 ++)
+				}
+			}
+			if (selectedComponents.Count == 0)
+				return output;
+			for (int i = 0; i < instances.Length; i ++)
+			{
+				InspectorPanel inspectorPanel = instances[i];
+				int?[] ints = new int?[entryPrefab.intValuesEntries.Length];
+				float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
+				string[] strings = new string[entryPrefab.stringValuesEntries.Length];
+				Color?[] colors = new Color?[entryPrefab.colorValueEntries.Length];
+				for (int i2 = 0; i2 < selectedComponents.Count; i2 ++)
+				{
+					_Component _component = selectedComponents[i2];
+					for (int i3 = 0; i3 < ints.Length; i3 ++)
 					{
-						HierarchyEntry hierarchyEntry = selectedHierarchyEntries[i2];
-						_Component[] obComponents = hierarchyEntry.ob.components;
-						for (int i3 = 0; i3 < obComponents.Length; i3 ++)
-						{
-							_Component obComponent = obComponents[i3];
-							if (obComponent.inspectorEntryPrefab == entryPrefab)
-								selectedComponents.Add(obComponent);
-						}
-					}
-					if (selectedComponents.Count == 0)
-					{
-						entry = inspectorPanel.NewEntry(component);
-						inspectorPanel.entries = inspectorPanel.entries.Add(entry);
-						output[i] = entry;
-						continue;
-					}
-					int?[] ints = new int?[entryPrefab.intValuesEntries.Length];
-					float?[] floats = new float?[entryPrefab.floatValuesEntries.Length];
-					string[] strings = new string[entryPrefab.stringValuesEntries.Length];
-					Color?[] colors = new Color?[entryPrefab.colorValueEntries.Length];
-					for (int i2 = 0; i2 < selectedComponents.Count; i2 ++)
-					{
-						_Component _component = selectedComponents[i2];
-						for (int i3 = 0; i3 < ints.Length; i3 ++)
-						{
-							IntValue intValue = _component.intValues[i3];
-							int _i = intValue.val;
-							if (i2 == 0)
-								ints[i3] = _i;
-							else
-							{
-								int? _i2 = ints[i3];
-								if (!_i2.HasValue || _i != _i2.Value)
-									ints[i3] = null;
-							}
-						}
-						for (int i3 = 0; i3 < floats.Length; i3 ++)
-						{
-							FloatValue floatValue = _component.floatValues[i3];
-							float f = floatValue.val;
-							if (i2 == 0)
-								floats[i3] = f;
-							else
-							{
-								float? _f = floats[i3];
-								if (!_f.HasValue || f != _f.Value)
-									floats[i3] = null;
-							}
-						}
-						for (int i3 = 0; i3 < strings.Length; i3 ++)
-						{
-							StringValue stringValue = _component.stringValues[i3];
-							string str = stringValue.val;
-							if (i2 == 0)
-								strings[i3] = str;
-							else
-							{
-								string _str = strings[i3];
-								if (_str == null || str != _str)
-									strings[i3] = null;
-							}
-						}
-						for (int i3 = 0; i3 < colors.Length; i3 ++)
-						{
-							ColorValue colorValue = _component.colorValues[i3];
-							Color clr = colorValue.val;
-							if (i2 == 0)
-								colors[i3] = clr;
-							else
-							{
-								Color? _clr = colors[i3];
-								if (!_clr.HasValue || clr != _clr.Value)
-									colors[i3] = null;
-							}
-						}
-					}
-					_Component[] components = selectedComponents.ToArray();
-					entry = inspectorPanel.NewEntry(components);
-					for (int i2 = 0; i2 < ints.Length; i2 ++)
-					{
-						int? f = ints[i2];
-						if (f == null)
-							entry.intValuesEntries[i2].inputField.text = "—";
+						IntValue intValue = _component.intValues[i3];
+						int _i = intValue.val;
+						if (i2 == 0)
+							ints[i3] = _i;
 						else
-							entry.intValuesEntries[i2].inputField.text = "" + f;
+						{
+							int? _i2 = ints[i3];
+							if (!_i2.HasValue || _i != _i2.Value)
+								ints[i3] = null;
+						}
 					}
-					for (int i2 = 0; i2 < floats.Length; i2 ++)
+					for (int i3 = 0; i3 < floats.Length; i3 ++)
 					{
-						float? f = floats[i2];
-						if (f == null)
-							entry.floatValuesEntries[i2].inputField.text = "—";
+						FloatValue floatValue = _component.floatValues[i3];
+						float f = floatValue.val;
+						if (i2 == 0)
+							floats[i3] = f;
 						else
-							entry.floatValuesEntries[i2].inputField.text = "" + f;
+						{
+							float? _f = floats[i3];
+							if (!_f.HasValue || f != _f.Value)
+								floats[i3] = null;
+						}
 					}
-					for (int i2 = 0; i2 < strings.Length; i2 ++)
+					for (int i3 = 0; i3 < strings.Length; i3 ++)
 					{
-						string str = strings[i2];
-						if (str == null)
-							entry.stringValuesEntries[i2].inputField.text = "—";
+						StringValue stringValue = _component.stringValues[i3];
+						string str = stringValue.val;
+						if (i2 == 0)
+							strings[i3] = str;
 						else
-							entry.stringValuesEntries[i2].inputField.text = "" + str;
+						{
+							string _str = strings[i3];
+							if (_str == null || str != _str)
+								strings[i3] = null;
+						}
 					}
-					for (int i2 = 0; i2 < colors.Length; i2 ++)
+					for (int i3 = 0; i3 < colors.Length; i3 ++)
 					{
-						Color? clr = colors[i2];
-						entry.colorValueEntries[i2].multipleValuesIndctrGo.gameObject.SetActive(clr == null);
+						ColorValue colorValue = _component.colorValues[i3];
+						Color clr = colorValue.val;
+						if (i2 == 0)
+							colors[i3] = clr;
+						else
+						{
+							Color? _clr = colors[i3];
+							if (!_clr.HasValue || clr != _clr.Value)
+								colors[i3] = null;
+						}
 					}
+				}
+				_Component[] components = selectedComponents.ToArray();
+				InspectorEntry entry = inspectorPanel.NewEntry(components);
+				for (int i2 = 0; i2 < ints.Length; i2 ++)
+				{
+					int? f = ints[i2];
+					if (f == null)
+						entry.intValuesEntries[i2].inputField.text = "—";
+					else
+						entry.intValuesEntries[i2].inputField.text = "" + f;
+				}
+				for (int i2 = 0; i2 < floats.Length; i2 ++)
+				{
+					float? f = floats[i2];
+					if (f == null)
+						entry.floatValuesEntries[i2].inputField.text = "—";
+					else
+						entry.floatValuesEntries[i2].inputField.text = "" + f;
+				}
+				for (int i2 = 0; i2 < strings.Length; i2 ++)
+				{
+					string str = strings[i2];
+					if (str == null)
+						entry.stringValuesEntries[i2].inputField.text = "—";
+					else
+						entry.stringValuesEntries[i2].inputField.text = "" + str;
+				}
+				for (int i2 = 0; i2 < colors.Length; i2 ++)
+				{
+					Color? clr = colors[i2];
+					entry.colorValueEntries[i2].multipleValuesIndctrGo.gameObject.SetActive(clr == null);
 				}
 				inspectorPanel.entries = inspectorPanel.entries.Add(entry);
 				output[i] = entry;

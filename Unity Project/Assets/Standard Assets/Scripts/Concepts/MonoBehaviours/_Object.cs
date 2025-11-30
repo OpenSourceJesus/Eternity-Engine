@@ -157,7 +157,7 @@ namespace EternityEngine
 
 			public override object GenAsset ()
 			{
-				_Object ob = EternityEngine.instance.NewPresetObject(EternityEngine.PresetObjectType.Empty);
+				_Object ob = EternityEngine.instance.NewObject(EternityEngine.instance.obPrefab, name);
 				Apply (ob);
 				return ob;
 			}
@@ -167,7 +167,6 @@ namespace EternityEngine
 				asset.data = SaveAndLoadManager.saveData.assetsDatasDict[id];
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
-				ob.SetNameFromData ();
 				ob.SetComponentsIdsFromData ();
 				for (int i = 0; i < ob.components.Length; i ++)
 				{
