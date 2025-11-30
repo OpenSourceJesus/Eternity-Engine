@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: c6ab668e2c2c7e035900759388dfccb7
+guid: d34150478b1b263a3a2df73b816666d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2413806693520163455
-    second: Circle
+      213: -6323186815579637474
+    second: Draggable Indicator_0
+  - first:
+      213: -1599859696750185252
+    second: Draggable Indicator_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,15 +51,15 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -68,11 +71,11 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -109,124 +112,56 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Circle
+      name: Draggable Indicator_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 256
-        height: 256
+        width: 19
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 33, y: 128}
-        - {x: -33, y: 128}
-        - {x: -95, y: 95}
-        - {x: -128, y: 33}
-        - {x: -128, y: -33}
-        - {x: -95, y: -95}
-        - {x: -33, y: -128}
-        - {x: 33, y: -128}
-        - {x: 95, y: -95}
-        - {x: 128, y: -33}
-        - {x: 128, y: 33}
-        - {x: 95, y: 95}
-      physicsShape:
-      - - {x: 0, y: 128}
-        - {x: -39, y: 121}
-        - {x: -75, y: 103}
-        - {x: -103, y: 75}
-        - {x: -121, y: 39}
-        - {x: -128, y: 0}
-        - {x: -121, y: -39}
-        - {x: -103, y: -75}
-        - {x: -75, y: -103}
-        - {x: -39, y: -121}
-        - {x: 0, y: -128}
-        - {x: 39, y: -121}
-        - {x: 75, y: -103}
-        - {x: 103, y: -75}
-        - {x: 121, y: -39}
-        - {x: 128, y: 0}
-        - {x: 121, y: 39}
-        - {x: 103, y: 75}
-        - {x: 75, y: 103}
-        - {x: 39, y: 121}
-      tessellationDetail: 0
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
       bones: []
-      spriteID: 18d3544e99f608ed0800000000000000
-      internalID: -2413806693520163455
+      spriteID: e1931f8c7178f38a0800000000000000
+      internalID: -6323186815579637474
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline:
-    - - {x: 33, y: 128}
-      - {x: -33, y: 128}
-      - {x: -95, y: 95}
-      - {x: -128, y: 33}
-      - {x: -128, y: -33}
-      - {x: -95, y: -95}
-      - {x: -33, y: -128}
-      - {x: 33, y: -128}
-      - {x: 95, y: -95}
-      - {x: 128, y: -33}
-      - {x: 128, y: 33}
-      - {x: 95, y: 95}
+    - serializedVersion: 2
+      name: Draggable Indicator_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 6
+        width: 43
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd4bdbc05182cc9e0800000000000000
+      internalID: -1599859696750185252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
     customData: 
-    physicsShape:
-    - - {x: 0, y: 128}
-      - {x: -39, y: 121}
-      - {x: -75, y: 103}
-      - {x: -103, y: 75}
-      - {x: -121, y: 39}
-      - {x: -128, y: 0}
-      - {x: -121, y: -39}
-      - {x: -103, y: -75}
-      - {x: -75, y: -103}
-      - {x: -39, y: -121}
-      - {x: 0, y: -128}
-      - {x: 39, y: -121}
-      - {x: 75, y: -103}
-      - {x: 103, y: -75}
-      - {x: 121, y: -39}
-      - {x: 128, y: 0}
-      - {x: 121, y: 39}
-      - {x: 103, y: 75}
-      - {x: 75, y: 103}
-      - {x: 39, y: 121}
+    physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
@@ -238,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Circle: -2413806693520163455
+      Draggable Indicator_0: -6323186815579637474
+      Draggable Indicator_1: -1599859696750185252
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

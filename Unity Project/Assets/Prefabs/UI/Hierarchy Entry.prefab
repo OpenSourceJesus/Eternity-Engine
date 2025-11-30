@@ -201,8 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a949cc4858d04d5832c0a737e0e2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.HierarchyEntry
-  id: 
-  save: 0
   rectTrs: {fileID: 311542800848920874}
   ob: {fileID: 0}
   nameText: {fileID: 3510788512618986784}

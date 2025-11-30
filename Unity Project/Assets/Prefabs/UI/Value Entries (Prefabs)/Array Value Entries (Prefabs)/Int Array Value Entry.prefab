@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 237.5
+      value: 78
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.y
@@ -118,7 +118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 281.25
+      value: 361
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -303,6 +303,10 @@ PrefabInstance:
     - target: {fileID: 5669426938541703418, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_fontSize
       value: 21.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -548,35 +552,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.IntArrayValueEntry
   inputField: {fileID: 0}
   rectTrs: {fileID: 8989861734835049634}
+  draggableIndicator: {fileID: 0}
   selectedIndicator: {fileID: 0}
-  selected: 0
-  layoutElt: {fileID: 0}
+  removeButton: {fileID: 0}
+  removeButtonGo: {fileID: 0}
   value: {fileID: 0}
   values: []
   eltPrefab: {fileID: 7408058619071085526, guid: f2faa0dcaf18aca9d8a8ea001e7fb3a4, type: 3}
   eltsParent: {fileID: 2537917989251521781}
   elts: []
   collapseButtonRectTrs: {fileID: 6177564618908466298}
-  addAndRemoveButtonsParentGo: {fileID: 5853309633734768878}
-  resizeInputFieldGo: {fileID: 5937675718363066108}
+  addEltButtonGo: {fileID: 7400861493909386999}
+  resizeInputField: {fileID: 5853309633734768864}
+  resizeInputFieldGo: {fileID: 5853309633734768878}
 --- !u!224 &2537917989251521781 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4372578713630449661, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
   m_PrefabInstance: {fileID: 2276283578223002376}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5853309633734768864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+  m_PrefabInstance: {fileID: 2276283578223002376}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853309633734768878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5853309633734768878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5669426938262354918, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
   m_PrefabInstance: {fileID: 2276283578223002376}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5937675718363066108 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5616031899625958900, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6177564618908466298 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5345180742735822706, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+  m_PrefabInstance: {fileID: 2276283578223002376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7400861493909386999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8729066293289580031, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
   m_PrefabInstance: {fileID: 2276283578223002376}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &8989861734835049634 stripped

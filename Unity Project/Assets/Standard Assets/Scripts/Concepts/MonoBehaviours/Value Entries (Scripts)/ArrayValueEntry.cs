@@ -12,7 +12,8 @@ namespace EternityEngine
 		public Transform eltsParent;
 		public ValueEntry<T>[] elts = new ValueEntry<T>[0];
 		public RectTransform collapseButtonRectTrs;
-		public GameObject addAndRemoveButtonsParentGo;
+		public GameObject addEltButtonGo;
+		public TMP_InputField resizeInputField;
 		public GameObject resizeInputFieldGo;
 		ValueEntry<T> dragging;
 		Vector2 offDrag;
@@ -21,7 +22,7 @@ namespace EternityEngine
 		{
 			if (((ArrayValue<T>) value).canResize)
 			{
-				addAndRemoveButtonsParentGo.SetActive(true);
+				addEltButtonGo.SetActive(true);
 				resizeInputFieldGo.SetActive(true);
 			}
 		}
@@ -47,7 +48,7 @@ namespace EternityEngine
 
 		public override void UpdateDisplay (T[] val)
 		{
-			Resize (val.Length);
+			Resize (val.Length, true);
 			for (int i = 0; i < elts.Length; i ++)
 			{
 				ValueEntry<T> elt = elts[i];
@@ -68,43 +69,68 @@ namespace EternityEngine
 
 		public void Resize (string sizeStr)
 		{
+			if (sizeStr == "")
+				sizeStr = "0";
 			Resize (int.Parse(sizeStr));
 		}
 
-		void Resize (int size)
+		void Resize (int size, bool justAFfectDisplay = false)
 		{
 			if (size < elts.Length)
 				for (int i = elts.Length - 1; i >= size; i --)
-					RemoveElement (i);
+					RemoveElement (i, justAFfectDisplay);
 			else if (size > elts.Length)
 				for (int i = elts.Length; i < size; i ++)
-					AddElement ();
+					AddElement (justAFfectDisplay);
 		}
 
-		public void AddElement ()
+		public void AddElement (bool justAFfectDisplay = false)
 		{
 			ValueEntry<T> elt = Instantiate(eltPrefab, eltsParent);
 			elts = elts.Add(elt);
 			elt.onMouseDown += OnElementMouseDown;
 			elt.onMouseUp += OnElementMouseUp;
+			elt.removeButton.onClick.AddListener(() => { RemoveElement (elt.rectTrs.GetSiblingIndex()); });
+			elt.removeButtonGo.SetActive(true);
+			elt.draggableIndicator.SetActive(true);
+			resizeInputField.text = "" + elts.Length;
+			if (justAFfectDisplay)
+				return;
+			Value<T[]>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			T[] val = value.val.Add(default(T));
+			for (int i = 0; i < targets.Length; i ++)
+			{
+				Value<T[]> target = targets[i];
+				if (target == null)
+					continue;
+				target.val = val;
+				target._OnChanged ();
+			}
 		}
 
-		void RemoveElement (int idx)
+		void RemoveElement (int idx, bool justAFfectDisplay = false)
 		{
 			ValueEntry<T> elt = elts[idx];
 			elts = elts.RemoveAt(idx);
 			elt.onMouseDown -= OnElementMouseDown;
 			elt.onMouseUp -= OnElementMouseUp;
 			DestroyImmediate(elt.gameObject);
-		}
-
-		public void RemoveSelectedElements ()
-		{
-			for (int i = 0; i < elts.Length; i ++)
+			resizeInputField.text = "" + elts.Length;
+			if (justAFfectDisplay)
+				return;
+			Value<T[]>[] targets = TargetValues;
+			if (targets.Length == 0)
+				return;
+			T[] val = value.val.RemoveAt(idx);
+			for (int i = 0; i < targets.Length; i ++)
 			{
-				ValueEntry<T> elt = elts[i];
-				if (elt.selected)
-					RemoveElement (elt.rectTrs.GetSiblingIndex());
+				Value<T[]> target = targets[i];
+				if (target == null)
+					continue;
+				target.val = val;
+				target._OnChanged ();
 			}
 		}
 
@@ -113,25 +139,27 @@ namespace EternityEngine
 			ValueEntry<T> elt = Instantiate(elts[idx], eltsParent);
 			InsertElement (elt, idx + 1);
 			elt.onMouseDown += OnElementMouseDown;
+			resizeInputField.text = "" + elts.Length;
 		}
 
 		void InsertElement (ValueEntry<T> elt, int idx)
 		{
 			elt.rectTrs.SetSiblingIndex(idx);
 			elts = elts.Insert(elt, idx);
+			
 		}
 
 		public void OnElementMouseDown (ValueEntry<T> elt)
 		{
 			dragging = elt;
 			offDrag = (Vector2) elt.rectTrs.position - Mouse.current.position.ReadValue();
-			elt.layoutElt.ignoreLayout = true;
+			elt.selectedIndicator.SetActive(true);
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
 		public void OnElementMouseUp (ValueEntry<T> elt)
 		{
-			elt.layoutElt.ignoreLayout = false;
+			elt.selectedIndicator.SetActive(false);
 			GameManager.updatables = GameManager.updatables.Remove(this);
 			dragging = null;
 		}

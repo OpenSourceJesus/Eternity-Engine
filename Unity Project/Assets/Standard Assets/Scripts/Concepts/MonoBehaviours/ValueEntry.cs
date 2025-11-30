@@ -7,10 +7,10 @@ namespace EternityEngine
 	public class ValueEntry<T> : ValueSetter
 	{
 		public RectTransform rectTrs;
+		public GameObject draggableIndicator;
 		public GameObject selectedIndicator;
-		[HideInInspector]
-		public bool selected;
-		public LayoutElement layoutElt;
+		public Button removeButton;
+		public GameObject removeButtonGo;
 		public Value<T> value;
 		public Value<T>[] values = new Value<T>[0];
 		public delegate void OnMouseDown(ValueEntry<T> valueEntry);

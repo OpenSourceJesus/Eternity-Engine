@@ -176,7 +176,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 130
   m_MinHeight: -1
-  m_PreferredWidth: 0
+  m_PreferredWidth: 9999999
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -338,7 +338,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 960945108605707729}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6952699251362984547, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
@@ -364,6 +364,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.StringValueEntry
   inputField: {fileID: 960945108605707742}
   rectTrs: {fileID: 8355699331202631784}
+  selectedIndicator: {fileID: 0}
+  removeButton: {fileID: 0}
+  removeButtonGo: {fileID: 0}
   value: {fileID: 0}
   values: []
 --- !u!224 &8355699331202631784 stripped

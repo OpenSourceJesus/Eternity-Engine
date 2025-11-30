@@ -196,7 +196,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 45
   m_MinHeight: -1
-  m_PreferredWidth: 0
+  m_PreferredWidth: 9999999
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -389,13 +389,18 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 960945108605707729}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6952699251362984547, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7782514256163345263}
   m_SourcePrefab: {fileID: 100100000, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+--- !u!1 &595950261614540729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8973569666340800494, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+  m_PrefabInstance: {fileID: 8416589487355932759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1491052848324952628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6952699251362984547, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
@@ -415,22 +420,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.FloatValueEntry
   inputField: {fileID: 960945108605707742}
   rectTrs: {fileID: 8355699331202631784}
-  selectedIndicator: {fileID: 0}
-  selected: 0
-  layoutElt: {fileID: 2048743017261340845}
+  draggableIndicator: {fileID: 595950261614540729}
+  selectedIndicator: {fileID: 3089051253351875303}
+  removeButton: {fileID: 4037844468854681451}
+  removeButtonGo: {fileID: 2326996093369881412}
   value: {fileID: 0}
   values: []
---- !u!114 &2048743017261340845 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7539909099959331066, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+--- !u!1 &2326996093369881412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6090728261819278099, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
   m_PrefabInstance: {fileID: 8416589487355932759}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491052848324952628}
+--- !u!1 &3089051253351875303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6778823660902855344, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+  m_PrefabInstance: {fileID: 8416589487355932759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4037844468854681451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5531816366207196988, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
+  m_PrefabInstance: {fileID: 8416589487355932759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2326996093369881412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &8355699331202631784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}

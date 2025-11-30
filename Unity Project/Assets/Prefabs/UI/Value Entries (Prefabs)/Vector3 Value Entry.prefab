@@ -921,13 +921,13 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 2435798522292502778}
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
-      insertIndex: -1
+      insertIndex: 4
       addedObject: {fileID: 3729981463278523434}
     - targetCorrespondingSourceObject: {fileID: 520398641906481215, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
-      insertIndex: -1
+      insertIndex: 5
       addedObject: {fileID: 8672501713124995273}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6952699251362984547, guid: 0120422a441f843d1a87d84d5d4d7a00, type: 3}
@@ -953,6 +953,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector3ValueEntry
   inputField: {fileID: 0}
   rectTrs: {fileID: 8355699331202631784}
+  selectedIndicator: {fileID: 0}
+  removeButton: {fileID: 0}
+  removeButtonGo: {fileID: 0}
   value: {fileID: 0}
   values: []
   xValueEntry: {fileID: 4483846794507213821}

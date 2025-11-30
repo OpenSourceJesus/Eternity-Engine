@@ -439,6 +439,73 @@ MonoBehaviour:
       - rid: 1405288684928368779
       - rid: 1405288684928368780
       - rid: 1405288684928368781
+      - rid: 1405288707459645440
+      - rid: 1405288707459645490
+      - rid: 1405288707459645491
+      - rid: 1405288707459645492
+      - rid: 1405288707459645493
+      - rid: 1405288707459645494
+      - rid: 1405288707459645495
+      - rid: 1405288707459645496
+      - rid: 1405288707459645497
+      - rid: 1405288707459645498
+      - rid: 1405288707459645499
+      - rid: 1405288707459645500
+      - rid: 1405288707459645501
+      - rid: 1405288707459645502
+      - rid: 1405288707459645503
+      - rid: 1405288708030070784
+      - rid: 1405288708030070834
+      - rid: 1405288708030070835
+      - rid: 1405288708030070836
+      - rid: 1405288708030070837
+      - rid: 1405288708030070838
+      - rid: 1405288708030070839
+      - rid: 1405288708030070840
+      - rid: 1405288708030070841
+      - rid: 1405288708030070842
+      - rid: 1405288708030070843
+      - rid: 1405288708030070844
+      - rid: 1405288708030070845
+      - rid: 1405288708030070846
+      - rid: 1405288708030070847
+      - rid: 1405288708030070848
+      - rid: 1405288708030070849
+      - rid: 1405288708030070850
+      - rid: 1405288708030070851
+      - rid: 1405288708030070852
+      - rid: 1405288708030070853
+      - rid: 1405288708030070854
+      - rid: 1405288708030070855
+      - rid: 1405288708030070856
+      - rid: 1405288708030070857
+      - rid: 1405288708030070858
+      - rid: 1405288708030070859
+      - rid: 1405288708030070860
+      - rid: 1405288708030070861
+      - rid: 1405288708030070862
+      - rid: 1405288708030070863
+      - rid: 1405288708030070864
+      - rid: 1405288708030070865
+      - rid: 1405288708030070866
+      - rid: 1405288708030070867
+      - rid: 1405288708030070868
+      - rid: 1405288708030070869
+      - rid: 1405288708030070870
+      - rid: 1405288708030070871
+      - rid: 1405288708030070872
+      - rid: 1405288708030070873
+      - rid: 1405288708030070874
+      - rid: 1405288708030070875
+      - rid: 1405288708030070876
+      - rid: 1405288708030070877
+      - rid: 1405288708030070878
+      - rid: 1405288708030070879
+      - rid: 1405288708030070880
+      - rid: 1405288708030070881
+      - rid: 1405288708030070882
+      - rid: 1405288708030070883
+      - rid: 1405288708030070884
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 10
@@ -2330,6 +2397,341 @@ MonoBehaviour:
         m_Version: 0
         m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
     - rid: 1405288684928368781
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645440
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645490
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645491
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645492
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645493
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645494
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645495
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645496
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645497
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645498
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645499
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645500
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645501
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645502
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288707459645503
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070784
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070834
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070835
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070836
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070837
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070838
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070839
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070840
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070841
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070842
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070843
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070844
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070845
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070846
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070847
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070848
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070849
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070850
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070851
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070852
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070853
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070854
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070855
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070856
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070857
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070858
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070859
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070860
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070861
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070862
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070863
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070864
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070865
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070866
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070867
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070868
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070869
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070870
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070871
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070872
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070873
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070874
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070875
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070876
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070877
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070878
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070879
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070880
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070881
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070882
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070883
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e, type: 3}
+    - rid: 1405288708030070884
       type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0

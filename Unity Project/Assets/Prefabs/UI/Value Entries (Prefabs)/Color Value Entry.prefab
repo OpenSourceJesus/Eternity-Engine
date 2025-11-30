@@ -80,7 +80,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 0
   m_MinHeight: -1
-  m_PreferredWidth: 0
+  m_PreferredWidth: 9999999
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -1759,6 +1759,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.ColorValueEntry
   inputField: {fileID: 0}
   rectTrs: {fileID: 8355699331202631784}
+  selectedIndicator: {fileID: 0}
+  removeButton: {fileID: 0}
+  removeButtonGo: {fileID: 0}
   value: {fileID: 0}
   values: []
   rValueEntry: {fileID: 5226886340254179062}
