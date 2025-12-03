@@ -128,7 +128,7 @@ namespace EternityEngine
 					}
 				}
 				if (addNewComponent)
-					component = EternityEngine.instance.AddComponent (this, componentData.prefabIdx);
+					component = EternityEngine.instance.AddComponent(this, componentData.prefabIdx);
 				componentData.Apply (component);
 			}
 		}
@@ -168,12 +168,6 @@ namespace EternityEngine
 				base.Apply (asset);
 				_Object ob = (_Object) asset;
 				ob.SetComponentsIdsFromData ();
-				for (int i = 0; i < ob.components.Length; i ++)
-				{
-					_Component component = ob.components[i];
-					ob.SetupComponent (component, i);
-					InspectorPanel.AddOrUpdateEntries (component);
-				}
 				ob.SetSelectedFromData ();
 			}
 		}

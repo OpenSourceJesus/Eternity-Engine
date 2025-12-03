@@ -20,7 +20,7 @@ namespace EternityEngine
 		public float borderRadius;
 		public Rect fitInScreenNormalizedRect;
 		public static Panel[] instances = new Panel[0];
-		static Panel panelOfContentsParentMouseIsIn;
+		public static Panel panelOfContentsParentMouseIsIn;
 		static Panel resizing;
 		static Panel panelOfTabMouseIsIn;
 		Vector2 offDrag;
@@ -377,12 +377,12 @@ namespace EternityEngine
 			}
 		}
 
-		public void OnMouseEnterContentsParent ()
+		public virtual void OnMouseEnterContentsParent ()
 		{
 			panelOfContentsParentMouseIsIn = this;
 		}
 
-		public void OnMouseExitContentsParent ()
+		public virtual void OnMouseExitContentsParent ()
 		{
 			Vector2 worldMousePos = Mouse.current.position.ReadValue();
 			for (int i = 0; i < instances.Length; i ++)

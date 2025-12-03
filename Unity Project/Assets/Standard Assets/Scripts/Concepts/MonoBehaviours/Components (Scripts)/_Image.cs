@@ -67,10 +67,11 @@ namespace EternityEngine
 			{
 				ImageConversion.LoadImage(tex, File.ReadAllBytes(Path.GetFullPath(imgPath)));
 				Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot.val, 1);
-				for (int i = 0; i < imgs.Length; i ++)
+				for (int i = 0; i < sceneEntries.Length; i ++)
 				{
-					Image img = imgs[i];
-					img.sprite = sprite;
+					SceneEntry sceneEntry = sceneEntries[i];
+					sceneEntry.rectTrs.sizeDelta = new Vector2(tex.width, tex.height);
+					sceneEntry.img.sprite = sprite;
 				}
 			}
 			else

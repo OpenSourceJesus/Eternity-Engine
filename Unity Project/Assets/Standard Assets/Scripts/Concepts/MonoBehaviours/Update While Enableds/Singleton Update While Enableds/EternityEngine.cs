@@ -31,6 +31,7 @@ namespace EternityEngine
 		public BoolValue debugMode;
 		public static string saveFilePaths;
 		public static _Object[] obs = new _Object[0];
+		public static bool isRenamingObs;
 		static bool prevDoDuplicate;
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
@@ -327,7 +328,7 @@ def ang_to_dir (ang):
 def rotate_surface (surface, deg, pivot, offset):
 	rotatedSurface = pygame.transform.rotate(surface, -deg)
 	rotatedOff = offset.rotate(deg)
-	rect = rotatedSurface.get_rect(center = pivot - rotatedOff)
+	rect = rotatedSurface.get_rect(mid = pivot - rotatedOff)
 	return rotatedSurface, rect
 
 def rotate_vector (v, pivot, deg):
@@ -515,10 +516,19 @@ while running:
 			if (doDuplicate && !prevDoDuplicate)
 				DuplicateSelected ();
 			prevDoDuplicate = doDuplicate;
-			if (Keyboard.current.f2Key.wasPressedThisFrame)
-				RenameSelected ();
-			if (Keyboard.current.deleteKey.wasPressedThisFrame)
-				DeleteSelected ();
+			if (Panel.panelOfContentsParentMouseIsIn != null)
+			{
+				bool mousedOverHierarchyPanelContentsParent = Panel.panelOfContentsParentMouseIsIn.GetType() == typeof(HierarchyPanel);
+				if (mousedOverHierarchyPanelContentsParent && Keyboard.current.f2Key.wasPressedThisFrame)
+					RenameSelected ();
+				if (!isRenamingObs && (mousedOverHierarchyPanelContentsParent || Panel.panelOfContentsParentMouseIsIn.GetType() == typeof(ScenePanel)))
+				{
+					if (Keyboard.current.fKey.wasPressedThisFrame)
+						FocusSelected ();
+					if (Keyboard.current.deleteKey.wasPressedThisFrame)
+						DeleteSelected ();
+				}
+			}
 		}
 		
 		void DoArrowKeySelection (bool upArrowPressed)
@@ -629,6 +639,7 @@ while running:
 
 		public void RenameSelected ()
 		{
+			isRenamingObs = true;
 			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
 			{
 				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
@@ -691,6 +702,134 @@ while running:
 				firstHierarchyPanel.selected = firstHierarchyPanel.selected.Remove(hierarchyEntry);
 			}
 			InspectorPanel.RegenEntries (prevSelectedCnt > 1);
+		}
+
+		public void FocusSelected ()
+		{
+			HierarchyPanel firstHierarchyPanel = HierarchyPanel.instances[0];
+			HierarchyEntry[] selected = firstHierarchyPanel.selected;
+			if (selected.Length == 0)
+				return;
+			Vector2? minBounds = null;
+			Vector2? maxBounds = null;
+			for (int i = 0; i < selected.Length; i ++)
+			{
+				HierarchyEntry hierarchyEntry = selected[i];
+				_Object ob = hierarchyEntry.ob;
+				_Transform trsComponent = null;
+				_Image imgComponent = null;
+				for (int i2 = 0; i2 < ob.components.Length; i2 ++)
+				{
+					_Component component = ob.components[i2];
+					if (component is _Transform)
+						trsComponent = (_Transform) component;
+					else if (component is _Image)
+						imgComponent = (_Image) component;
+				}
+				if (trsComponent == null)
+					continue;
+				Vector3 pos = trsComponent.pos.val;
+				if (imgComponent != null && imgComponent.tex != null)
+				{
+					Vector2 size = trsComponent.size.val;
+					Vector2 halfSize = size / 2;
+					Vector2 imageSize = new Vector2(imgComponent.tex.width, imgComponent.tex.height);
+					Vector2 pivot = imgComponent.pivot.val;
+					Vector2 offset = new Vector2((pivot.x - 0.5f) * imageSize.x * size.x, (pivot.y - 0.5f) * imageSize.y * size.y);
+					Vector2 scaledHalfSize = imageSize * size / 2;
+					Vector2 obMin = new Vector2(pos.x, pos.y) - scaledHalfSize - offset;
+					Vector2 obMax = new Vector2(pos.x, pos.y) + scaledHalfSize - offset;
+					if (!minBounds.HasValue)
+					{
+						minBounds = obMin;
+						maxBounds = obMax;
+					}
+					else
+					{
+						minBounds = Vector2.Min(minBounds.Value, obMin);
+						maxBounds = Vector2.Max(maxBounds.Value, obMax);
+					}
+				}
+				else
+				{
+					if (!minBounds.HasValue)
+					{
+						minBounds = pos;
+						maxBounds = pos;
+					}
+					else
+					{
+						minBounds = Vector2.Min(minBounds.Value, pos);
+						maxBounds = Vector2.Max(maxBounds.Value, pos);
+					}
+				}
+			}
+			if (minBounds.HasValue && maxBounds.HasValue)
+			{
+				Vector2 boundsSize = maxBounds.Value - minBounds.Value;
+				for (int i = 0; i < ScenePanel.instances.Length; i ++)
+				{
+					ScenePanel scenePanel = ScenePanel.instances[i];
+					RectTransform viewportRectTrs = scenePanel.viewportRectTrs;
+					RectTransform obsParentRectTrs = scenePanel.obsParentRectTrs;
+					Rect viewportRect = viewportRectTrs.rect;
+					float scale = 1;
+					if (boundsSize.x > 0 && boundsSize.y > 0)
+					{
+						float boundsAspect = boundsSize.x / boundsSize.y;
+						float viewportAspect = viewportRect.width / viewportRect.height;
+						if (boundsAspect > viewportAspect)
+							scale = viewportRect.width / boundsSize.x;
+						else
+							scale = viewportRect.height / boundsSize.y;
+					}
+					obsParentRectTrs.localScale = Vector3.one * scale;
+					Vector2 mid = (minBounds.Value + maxBounds.Value) / 2;
+					obsParentRectTrs.position = (-mid + viewportRect.size / 2) * scale + viewportRect.size / 2;
+				}
+			}
+			for (int i = 0; i < HierarchyPanel.instances.Length; i ++)
+			{
+				HierarchyPanel hierarchyPanel = HierarchyPanel.instances[i];
+				if (hierarchyPanel.selected.Length == 0)
+					continue;
+				RectTransform entriesParent = hierarchyPanel.entriesParent;
+				RectTransform contentsRectTrs = hierarchyPanel.contentsRectTrs;
+				Rect contentsViewportRect = contentsRectTrs.rect;
+				Vector2 contentsWorldPos = contentsRectTrs.position;
+				float viewportTop = contentsWorldPos.y + contentsViewportRect.height / 2;
+				float viewportBottom = contentsWorldPos.y - contentsViewportRect.height / 2;
+				HierarchyEntry nearestEntry = null;
+				float nearestDist = float.MaxValue;
+				bool anyEntryFullyVisible = false;
+				for (int i2 = 0; i2 < hierarchyPanel.selected.Length; i2 ++)
+				{
+					HierarchyEntry entry = hierarchyPanel.selected[i2];
+					RectTransform entryRectTrs = entry.rectTrs;
+					Vector2 entryWorldPos = entryRectTrs.position;
+					Rect entryRect = entryRectTrs.rect;
+					float entryTop = entryWorldPos.y + entryRect.height / 2;
+					float entryBottom = entryWorldPos.y - entryRect.height / 2;
+					if (entryTop <= viewportTop && entryBottom >= viewportBottom)
+					{
+						anyEntryFullyVisible = true;
+						break;
+					}
+					float dist = Mathf.Abs(entryWorldPos.y - contentsWorldPos.y);
+					if (dist < nearestDist)
+					{
+						nearestDist = dist;
+						nearestEntry = entry;
+					}
+				}
+				if (!anyEntryFullyVisible && nearestEntry != null)
+				{
+					RectTransform nearestEntryRectTrs = nearestEntry.rectTrs;
+					Vector2 nearestEntryLocalPos = nearestEntryRectTrs.localPosition;
+					float targetY = -nearestEntryLocalPos.y;
+					entriesParent.anchoredPosition = new Vector2(entriesParent.anchoredPosition.x, targetY);
+				}
+			}
 		}
 
 		public void Export ()
