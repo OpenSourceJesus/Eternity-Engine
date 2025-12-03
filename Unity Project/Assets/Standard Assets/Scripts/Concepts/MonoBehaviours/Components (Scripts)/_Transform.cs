@@ -19,9 +19,9 @@ namespace EternityEngine
 				data = value;
 			}
 		}
-        public Vector3Value pos;
-        public FloatValue rot;
-        public Vector2Value size;
+		public Vector3Value pos;
+		public FloatValue rot;
+		public Vector2Value size;
 
 		public override void Init ()
 		{

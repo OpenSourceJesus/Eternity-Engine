@@ -328,7 +328,7 @@ def ang_to_dir (ang):
 def rotate_surface (surface, deg, pivot, offset):
 	rotatedSurface = pygame.transform.rotate(surface, -deg)
 	rotatedOff = offset.rotate(deg)
-	rect = rotatedSurface.get_rect(mid = pivot - rotatedOff)
+	rect = rotatedSurface.get_rect(center = pivot - rotatedOff)
 	return rotatedSurface, rect
 
 def rotate_vector (v, pivot, deg):
@@ -732,22 +732,35 @@ while running:
 				if (imgComponent != null && imgComponent.tex != null)
 				{
 					Vector2 size = trsComponent.size.val;
-					Vector2 halfSize = size / 2;
-					Vector2 imageSize = new Vector2(imgComponent.tex.width, imgComponent.tex.height);
+					Vector2 imgSize = new Vector2(imgComponent.tex.width, imgComponent.tex.height);
 					Vector2 pivot = imgComponent.pivot.val;
-					Vector2 offset = new Vector2((pivot.x - 0.5f) * imageSize.x * size.x, (pivot.y - 0.5f) * imageSize.y * size.y);
-					Vector2 scaledHalfSize = imageSize * size / 2;
-					Vector2 obMin = (Vector2) pos - scaledHalfSize - offset;
-					Vector2 obMax = (Vector2) pos + scaledHalfSize - offset;
-					if (!minBounds.HasValue)
+					Vector2 scaledImgSize = imgSize * size;
+					Vector2 pivotOff = new Vector2((pivot.x - 0.5f) * scaledImgSize.x, (pivot.y - 0.5f) * scaledImgSize.y);
+					float rotDeg = trsComponent.rot.val;
+					float rotRad = rotDeg * Mathf.Deg2Rad;
+					float cosRot = Mathf.Cos(rotRad);
+					float sinRot = Mathf.Sin(rotRad);
+					Vector2[] corners = new Vector2[4];
+					corners[0] = new Vector2(-scaledImgSize.x / 2, -scaledImgSize.y / 2);
+					corners[1] = new Vector2(scaledImgSize.x / 2, -scaledImgSize.y / 2);
+					corners[2] = new Vector2(scaledImgSize.x / 2, scaledImgSize.y / 2);
+					corners[3] = new Vector2(-scaledImgSize.x / 2, scaledImgSize.y / 2);
+					for (int i2 = 0; i2 < 4; i2 ++)
 					{
-						minBounds = obMin;
-						maxBounds = obMax;
-					}
-					else
-					{
-						minBounds = Vector2.Min(minBounds.Value, obMin);
-						maxBounds = Vector2.Max(maxBounds.Value, obMax);
+						Vector2 corner = corners[i2];
+						float rotatedX = corner.x * cosRot - corner.y * sinRot;
+						float rotatedY = corner.x * sinRot + corner.y * cosRot;
+						Vector2 worldCorner = (Vector2) pos + new Vector2(rotatedX, rotatedY) - pivotOff;
+						if (!minBounds.HasValue)
+						{
+							minBounds = worldCorner;
+							maxBounds = worldCorner;
+						}
+						else
+						{
+							minBounds = Vector2.Min(minBounds.Value, worldCorner);
+							maxBounds = Vector2.Max(maxBounds.Value, worldCorner);
+						}
 					}
 				}
 				else
