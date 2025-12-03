@@ -737,8 +737,8 @@ while running:
 					Vector2 pivot = imgComponent.pivot.val;
 					Vector2 offset = new Vector2((pivot.x - 0.5f) * imageSize.x * size.x, (pivot.y - 0.5f) * imageSize.y * size.y);
 					Vector2 scaledHalfSize = imageSize * size / 2;
-					Vector2 obMin = new Vector2(pos.x, pos.y) - scaledHalfSize - offset;
-					Vector2 obMax = new Vector2(pos.x, pos.y) + scaledHalfSize - offset;
+					Vector2 obMin = (Vector2) pos - scaledHalfSize - offset;
+					Vector2 obMax = (Vector2) pos + scaledHalfSize - offset;
 					if (!minBounds.HasValue)
 					{
 						minBounds = obMin;

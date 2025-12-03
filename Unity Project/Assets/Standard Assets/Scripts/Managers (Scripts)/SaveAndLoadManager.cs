@@ -25,15 +25,20 @@ namespace EternityEngine
 			saveData.boolArrayDict = new Dictionary<string, bool[]>();
 			saveData.byteArrayDict = new Dictionary<string, byte[]>();
 			saveData.vector2IntArrayDict = new Dictionary<string, _Vector2Int[]>();
+#endif
+		}
+
+		public static void LoadAutoSave ()
+		{
 			string autoSaveFilePath = Path.Combine(Application.dataPath, "Auto Save.txt");
 			if (File.Exists(autoSaveFilePath))
 				Load (autoSaveFilePath);
-#endif
 		}
 
 		public static void Save (string saveFilePath)
 		{
 #if !UNITY_WEBGL
+			Init ();
 			for (int i = 0; i < GameManager.assets.Count; i ++)
 			{
 				Asset asset = GameManager.assets[i];

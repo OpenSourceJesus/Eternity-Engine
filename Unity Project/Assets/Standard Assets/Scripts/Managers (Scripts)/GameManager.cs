@@ -71,6 +71,7 @@ namespace EternityEngine
 			{
 #if !UNITY_WEBGL
 				SaveAndLoadManager.Init ();
+				SaveAndLoadManager.LoadAutoSave ();
 #endif
 #if UNITY_EDITOR
 				paused = false;
