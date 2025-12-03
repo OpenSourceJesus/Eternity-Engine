@@ -673,3 +673,6 @@ MonoBehaviour:
     height: 0.97
   viewportRectTrs: {fileID: 1899490349738056787}
   obsParentRectTrs: {fileID: 1356170048599141182}
+  entries: []
+  selected: []
+  zoomSpeed: 0.05

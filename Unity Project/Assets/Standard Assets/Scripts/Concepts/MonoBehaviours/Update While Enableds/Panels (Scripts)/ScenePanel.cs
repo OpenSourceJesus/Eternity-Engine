@@ -13,6 +13,7 @@ namespace EternityEngine
 		public SceneEntry[] entries = new SceneEntry[0];
 		[HideInInspector]
 		public SceneEntry[] selected = new SceneEntry[0];
+		public float zoomSpeed;
 		public new static ScenePanel[] instances = new ScenePanel[0];
 		Updater updater;
 
@@ -28,14 +29,16 @@ namespace EternityEngine
 			instances = instances.Remove(this);
 		}
 
-		public void OnMouseEnterViewport ()
+		public override void OnMouseEnterContentsParent ()
 		{
+			base.OnMouseEnterContentsParent ();
 			updater = new Updater(this);
 			GameManager.updatables = GameManager.updatables.Add(updater);
 		}
 
-		public void OnMouseExitViewport ()
+		public override void OnMouseExitContentsParent ()
 		{
+			base.OnMouseExitContentsParent ();
 			GameManager.updatables = GameManager.updatables.Remove(updater);
 		}
 
@@ -54,6 +57,17 @@ namespace EternityEngine
 				Vector2 mousePos = Mouse.current.position.ReadValue();
 				if (Mouse.current.middleButton.isPressed)
 					scenePanel.obsParentRectTrs.position += (Vector3) (mousePos - prevMousePos);
+				float scrollDelta = Mouse.current.scroll.ReadValue().y;
+				if (scrollDelta != 0)
+				{
+					float zoomFactor = 1f + (scrollDelta * scenePanel.zoomSpeed);
+					Vector3 oldScale = scenePanel.obsParentRectTrs.localScale;
+					Vector3 newScale = oldScale * zoomFactor;
+					scenePanel.obsParentRectTrs.localScale = newScale;
+					Vector3 oldPosition = scenePanel.obsParentRectTrs.position;
+					Vector3 newPosition = oldPosition + ((Vector3) mousePos - oldPosition) * (1f - zoomFactor);
+					scenePanel.obsParentRectTrs.position = newPosition;
+				}
 				prevMousePos = mousePos;
 				if (Mouse.current.leftButton.wasPressedThisFrame)
 				{
