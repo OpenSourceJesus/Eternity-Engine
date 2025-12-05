@@ -352,6 +352,8 @@ MonoBehaviour:
   dependsOn: []
   dependsOnMe: []
   export: {fileID: 2577550295634580041}
+  boolAttributes: {fileID: 5263298375268446305}
+  stringAttributes: {fileID: 1100996111730436964}
 --- !u!4 &7335552380223399591 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 311542800848920874, guid: 552b994166718d114809ee820a481314, type: 3}

@@ -56,6 +56,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3440976747615438974}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EternityEngine.StringAttributeElementValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 960945108605707742, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1491052848324952628, guid: a1dee0933ff3dc04d88e4a8525d6b0e3, type: 3}
       propertyPath: m_Name
       value: String Value Entry
@@ -478,16 +506,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3440976747615438974}
+    - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TrySet
+      value: SetKey
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.StringValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.StringAttributeElementValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

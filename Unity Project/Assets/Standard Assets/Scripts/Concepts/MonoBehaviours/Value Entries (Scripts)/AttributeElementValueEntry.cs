@@ -10,12 +10,18 @@ namespace EternityEngine
 
 		public void SetKey (string key)
 		{
-			keyValuePair = new KeyValuePair<string, T>(key, default(T));
+			keyValuePair = new KeyValuePair<string, T>(key, keyValuePair.Value);
+			UpdateTargets ();
 		}
 
 		public void SetValue (T value)
 		{
 			keyValuePair = new KeyValuePair<string, T>(keyValuePair.Key, value);
+			UpdateTargets ();
+		}
+
+		void UpdateTargets ()
+		{
 			Value<KeyValuePair<string, T>>[] targets = TargetValues;
 			if (targets.Length == 0)
 				return;

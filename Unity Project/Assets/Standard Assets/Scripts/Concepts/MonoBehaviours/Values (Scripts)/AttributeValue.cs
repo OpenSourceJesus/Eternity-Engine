@@ -6,6 +6,12 @@ namespace EternityEngine
 {
 	public class AttributeValue<T> : Value<Dictionary<string, T>>
 	{
+		public override void Awake ()
+		{
+			base.Awake ();
+			val = new Dictionary<string, T>();
+		}
+
 		public override void Set (Dictionary<string, T> val)
 		{
 			Dictionary<string, T> prevVal = this.val;

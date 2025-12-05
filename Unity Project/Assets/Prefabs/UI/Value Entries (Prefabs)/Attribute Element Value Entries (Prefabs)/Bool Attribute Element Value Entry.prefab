@@ -34,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -46,15 +46,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7440175245011056720, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -15
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 7487555005979733178}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EternityEngine.BoolAttributeElementValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440175245011056723, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8355699331202631784, guid: de9b9c4bcbebcc59cb7552ab00ae5ed9, type: 3}
       propertyPath: m_Pivot.x
@@ -282,16 +310,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7487555005979733178}
+    - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TrySet
+      value: SetKey
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.StringValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.BoolAttributeElementValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 2133825286720685338, guid: 90fefda735fd8d3419b733fc55bd85b1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

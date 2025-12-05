@@ -2,6 +2,7 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace EternityEngine
 {
@@ -89,6 +90,16 @@ namespace EternityEngine
 				floatArrayValuesEntries[i].UpdateDisplay (component.floatArrayValues[i].val);
 			for (int i = 0; i < vector2ArrayValuesEntries.Length; i ++)
 				vector2ArrayValuesEntries[i].UpdateDisplay (component.vector2ArrayValues[i].val);
+			for (int i = 0; i < boolAttributeValuesEntries.Length; i ++)
+				boolAttributeValuesEntries[i].UpdateDisplay (component.boolAttributeValues[i].val);
+			for (int i = 0; i < stringAttributeValuesEntries.Length; i ++)
+				stringAttributeValuesEntries[i].UpdateDisplay (component.stringAttributeValues[i].val);
+			for (int i = 0; i < vector2AttributeValuesEntries.Length; i ++)
+				vector2AttributeValuesEntries[i].UpdateDisplay (component.vector2AttributeValues[i].val);
+			for (int i = 0; i < vector3AttributeValuesEntries.Length; i ++)
+				vector3AttributeValuesEntries[i].UpdateDisplay (component.vector3AttributeValues[i].val);
+			for (int i = 0; i < colorAttributeValuesEntries.Length; i ++)
+				colorAttributeValuesEntries[i].UpdateDisplay (component.colorAttributeValues[i].val);
 		}
 
 		public void SetValueEntries (params _Component[] components)
@@ -232,6 +243,66 @@ namespace EternityEngine
 					values[i2] = component.vector2ArrayValues[i];
 				}
 				vector2ArrayValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < boolAttributeValuesEntries.Length; i ++)
+			{
+				BoolAttributeValueEntry boolAttributeValueEntry = boolAttributeValuesEntries[i];
+				boolAttributeValueEntry.DetachValues ();
+				Value<Dictionary<string, bool>>[] values = new Value<Dictionary<string, bool>>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.boolAttributeValues[i];
+				}
+				boolAttributeValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < stringAttributeValuesEntries.Length; i ++)
+			{
+				StringAttributeValueEntry stringAttributeValueEntry = stringAttributeValuesEntries[i];
+				stringAttributeValueEntry.DetachValues ();
+				Value<Dictionary<string, string>>[] values = new Value<Dictionary<string, string>>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.stringAttributeValues[i];
+				}
+				stringAttributeValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < vector2AttributeValuesEntries.Length; i ++)
+			{
+				Vector2AttributeValueEntry vector2AttributeValueEntry = vector2AttributeValuesEntries[i];
+				vector2AttributeValueEntry.DetachValues ();
+				Value<Dictionary<string, Vector2>>[] values = new Value<Dictionary<string, Vector2>>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.vector2AttributeValues[i];
+				}
+				vector2AttributeValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < vector3AttributeValuesEntries.Length; i ++)
+			{
+				Vector3AttributeValueEntry vector3AttributeValueEntry = vector3AttributeValuesEntries[i];
+				vector3AttributeValueEntry.DetachValues ();
+				Value<Dictionary<string, Vector3>>[] values = new Value<Dictionary<string, Vector3>>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.vector3AttributeValues[i];
+				}
+				vector3AttributeValueEntry.SetValues (values);
+			}
+			for (int i = 0; i < colorAttributeValuesEntries.Length; i ++)
+			{
+				ColorAttributeValueEntry colorAttributeValueEntry = colorAttributeValuesEntries[i];
+				colorAttributeValueEntry.DetachValues ();
+				Value<Dictionary<string, Color>>[] values = new Value<Dictionary<string, Color>>[components.Length];
+				for (int i2 = 0; i2 < components.Length; i2 ++)
+				{
+					_Component component = components[i2];
+					values[i2] = component.colorAttributeValues[i];
+				}
+				colorAttributeValueEntry.SetValues (values);
 			}
 			component = firstComponent;
 		}

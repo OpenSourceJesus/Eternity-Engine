@@ -167,6 +167,31 @@ namespace EternityEngine
 							Vector2ArrayValueEntry vector2ArrayValueEntry = entry.vector2ArrayValuesEntries[i3];
 							vector2ArrayValueEntry.DetachValues ();
 						}
+						for (int i3 = 0; i3 < entry.boolAttributeValuesEntries.Length; i3 ++)
+						{
+							BoolAttributeValueEntry boolAttributeValueEntry = entry.boolAttributeValuesEntries[i3];
+							boolAttributeValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.stringAttributeValuesEntries.Length; i3 ++)
+						{
+							StringAttributeValueEntry stringAttributeValueEntry = entry.stringAttributeValuesEntries[i3];
+							stringAttributeValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.vector2AttributeValuesEntries.Length; i3 ++)
+						{
+							Vector2AttributeValueEntry vector2AttributeValueEntry = entry.vector2AttributeValuesEntries[i3];
+							vector2AttributeValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.vector3AttributeValuesEntries.Length; i3 ++)
+						{
+							Vector3AttributeValueEntry vector3AttributeValueEntry = entry.vector3AttributeValuesEntries[i3];
+							vector3AttributeValueEntry.DetachValues ();
+						}
+						for (int i3 = 0; i3 < entry.colorAttributeValuesEntries.Length; i3 ++)
+						{
+							ColorAttributeValueEntry colorAttributeValueEntry = entry.colorAttributeValuesEntries[i3];
+							colorAttributeValueEntry.DetachValues ();
+						}
 						Destroy(entry.gameObject);
 						_Component component = entry.component;
 						if (component != null)
