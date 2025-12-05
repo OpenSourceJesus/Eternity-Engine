@@ -73,7 +73,6 @@ else:
 	TMP_DIR = '/tmp'
 pivots : dict[str, List[float]] = {}
 attributes : dict[str, pyobj] = {}
-attributes = {}
 # Attributes
 mousePos = pygame.math.Vector2()
 mousePosWorld = pygame.math.Vector2()
@@ -735,16 +734,17 @@ while running:
 					Vector2 imgSize = new Vector2(imgComponent.tex.width, imgComponent.tex.height);
 					Vector2 pivot = imgComponent.pivot.val;
 					Vector2 scaledImgSize = imgSize * size;
+					Vector2 halfScaledImgSize = scaledImgSize / 2;
 					Vector2 pivotOff = new Vector2((pivot.x - 0.5f) * scaledImgSize.x, (pivot.y - 0.5f) * scaledImgSize.y);
 					float rotDeg = trsComponent.rot.val;
 					float rotRad = rotDeg * Mathf.Deg2Rad;
 					float cosRot = Mathf.Cos(rotRad);
 					float sinRot = Mathf.Sin(rotRad);
 					Vector2[] corners = new Vector2[4];
-					corners[0] = new Vector2(-scaledImgSize.x / 2, -scaledImgSize.y / 2);
-					corners[1] = new Vector2(scaledImgSize.x / 2, -scaledImgSize.y / 2);
-					corners[2] = new Vector2(scaledImgSize.x / 2, scaledImgSize.y / 2);
-					corners[3] = new Vector2(-scaledImgSize.x / 2, scaledImgSize.y / 2);
+					corners[0] = -halfScaledImgSize;
+					corners[1] = new Vector2(halfScaledImgSize.x, -halfScaledImgSize.y);
+					corners[2] = halfScaledImgSize;
+					corners[3] = new Vector2(-halfScaledImgSize.x, halfScaledImgSize.y);
 					for (int i2 = 0; i2 < 4; i2 ++)
 					{
 						Vector2 corner = corners[i2];

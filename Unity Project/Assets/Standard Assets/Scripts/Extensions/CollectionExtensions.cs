@@ -259,6 +259,18 @@ namespace Extensions
 			return arr;
 		}
 
+		public static T1 GetKey<T1, T2> (this Dictionary<T1, T2> dict, int idx)
+		{
+			IEnumerator keyEnumerator = dict.Keys.GetEnumerator();
+			while (keyEnumerator.MoveNext() && idx > 0)
+			{
+				if (idx == 0)
+					return (T1) keyEnumerator.Current;
+				idx --;
+			}
+			throw new IndexOutOfRangeException();
+		}
+
 		public static T1[] GetKeys<T1, T2> (this Dictionary<T1, T2> dict)
 		{
 			List<T1> output = new List<T1>();
