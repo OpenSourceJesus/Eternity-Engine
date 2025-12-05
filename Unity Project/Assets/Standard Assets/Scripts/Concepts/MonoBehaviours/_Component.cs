@@ -38,6 +38,11 @@ namespace EternityEngine
 		public IntArrayValue[] intArrayValues = new IntArrayValue[0];
 		public FloatArrayValue[] floatArrayValues = new FloatArrayValue[0];
 		public Vector2ArrayValue[] vector2ArrayValues = new Vector2ArrayValue[0];
+		public BoolAttributeValue[] boolAttributeValues = new BoolAttributeValue[0];
+		public StringAttributeValue[] stringAttributeValues = new StringAttributeValue[0];
+		public Vector2AttributeValue[] vector2AttributeValues = new Vector2AttributeValue[0];
+		public Vector3AttributeValue[] vector3AttributeValues = new Vector3AttributeValue[0];
+		public ColorAttributeValue[] colorAttributeValues = new ColorAttributeValue[0];
 		[HideInInspector]
         public InspectorEntry[] inspectorEntries = new InspectorEntry[0];
 		[HideInInspector]

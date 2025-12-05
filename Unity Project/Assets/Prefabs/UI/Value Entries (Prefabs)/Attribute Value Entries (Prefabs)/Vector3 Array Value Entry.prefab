@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_Name
-      value: Int Array Value Entry
+      value: Vector3 Array Value Entry
       objectReference: {fileID: 0}
     - target: {fileID: 419803788951083511, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -92,13 +92,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 201000335095545766}
     - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RemoveSelectedElements
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475040958779739190, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.Vector2ArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -122,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1808271965849574492, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2090647797953438552, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -162,27 +162,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2191000550910164899, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 71.91667
       objectReference: {fileID: 0}
     - target: {fileID: 2191000550910164899, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -51
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2379506380485253494, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_fontSize
       value: 21.45
       objectReference: {fileID: 0}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 201000335095545766}
-    - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToggleCollapse
       objectReference: {fileID: 0}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.IntArrayValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.Vector2ArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 3831346979555150081, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -190,27 +186,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 290.6667
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 145.33334
       objectReference: {fileID: 0}
     - target: {fileID: 3899578077562332752, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 4372578713630449661, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -260,6 +256,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5616031899625958900, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5669426938262354918, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -289,16 +289,12 @@ PrefabInstance:
       value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-      propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 201000335095545766}
-    - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Resize
       objectReference: {fileID: 0}
     - target: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: EternityEngine.IntArrayValueEntry, Assembly-CSharp-firstpass
+      value: EternityEngine.Vector2ArrayValueEntry, Assembly-CSharp-firstpass
       objectReference: {fileID: 0}
     - target: {fileID: 5669426938541703418, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_fontSize
@@ -309,12 +305,16 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 201000335095545766}
-    - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddElement
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EternityEngine.Vector2ArrayValueEntry, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017091124276693456, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7157517526836041642, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_Pivot.x
@@ -398,27 +398,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 218.75002
       objectReference: {fileID: 0}
     - target: {fileID: 7745678678789962309, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 8491349666524764610, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       propertyPath: m_AnchorMax.y
@@ -531,14 +531,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 201000335095545766}
+      addedObject: {fileID: 2936096114190273023}
   m_SourcePrefab: {fileID: 100100000, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
 --- !u!1 &1983351236682538750 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 292941421344906742, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
   m_PrefabInstance: {fileID: 2276283578223002376}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &201000335095545766
+--- !u!114 &2936096114190273023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -547,57 +547,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1983351236682538750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c553a693b9496c28a28e44193b7a2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ec9004f02444c2c94ba7cddb0c1cda, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.IntArrayValueEntry
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::EternityEngine.Vector3AttributeValueEntry
   inputField: {fileID: 0}
-  rectTrs: {fileID: 8989861734835049634}
+  rectTrs: {fileID: 0}
   draggableIndicator: {fileID: 0}
   selectedIndicator: {fileID: 0}
   removeButton: {fileID: 0}
   removeButtonGo: {fileID: 0}
   value: {fileID: 0}
   values: []
-  eltPrefab: {fileID: 7408058619071085526, guid: f2faa0dcaf18aca9d8a8ea001e7fb3a4, type: 3}
-  eltsParent: {fileID: 2537917989251521781}
+  eltPrefab: {fileID: 0}
+  eltsParent: {fileID: 0}
   elts: []
-  collapseButtonRectTrs: {fileID: 6177564618908466298}
-  addEltButtonGo: {fileID: 7400861493909386999}
-  resizeInputField: {fileID: 5853309633734768864}
-  resizeInputFieldGo: {fileID: 5853309633734768878}
---- !u!224 &2537917989251521781 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4372578713630449661, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5853309633734768864 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5669426938262354920, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853309633734768878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &5853309633734768878 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5669426938262354918, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &6177564618908466298 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5345180742735822706, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7400861493909386999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8729066293289580031, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &8989861734835049634 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7157517526836041642, guid: b9c7f82d6909c423c869d1bae27a4345, type: 3}
-  m_PrefabInstance: {fileID: 2276283578223002376}
-  m_PrefabAsset: {fileID: 0}
+  collapseButtonRectTrs: {fileID: 0}
+  resizeInputField: {fileID: 0}

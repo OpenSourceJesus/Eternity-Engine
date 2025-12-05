@@ -29,6 +29,11 @@ namespace EternityEngine
 		public IntArrayValueEntry[] intArrayValuesEntries = new IntArrayValueEntry[0];
 		public FloatArrayValueEntry[] floatArrayValuesEntries = new FloatArrayValueEntry[0];
 		public Vector2ArrayValueEntry[] vector2ArrayValuesEntries = new Vector2ArrayValueEntry[0];
+		public BoolAttributeValueEntry[] boolAttributeValuesEntries = new BoolAttributeValueEntry[0];
+		public StringAttributeValueEntry[] stringAttributeValuesEntries = new StringAttributeValueEntry[0];
+		public Vector2AttributeValueEntry[] vector2AttributeValuesEntries = new Vector2AttributeValueEntry[0];
+		public Vector3AttributeValueEntry[] vector3AttributeValuesEntries = new Vector3AttributeValueEntry[0];
+		public ColorAttributeValueEntry[] colorAttributeValuesEntries = new ColorAttributeValueEntry[0];
 		public RectTransform optionsRectTrs;
 		OptionsUpdater optionsUpdater;
 		int insertAt;
