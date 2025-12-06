@@ -1188,7 +1188,14 @@ while running:
 		Dictionary<string, string> GetAttributes (_Object ob)
 		{
 			Dictionary<string, string> output = new Dictionary<string, string>();
-			
+			ObjectData obData = ob.obData;
+			foreach (KeyValuePair<string, bool> keyValuePair in obData.boolAttributes.val)
+			{
+				string valueStr = "" + keyValuePair.Value;
+				output[keyValuePair.Key] = char.ToUpper(valueStr[0]) + valueStr.Substring(1);
+			}
+			foreach (KeyValuePair<string, string> keyValuePair in obData.stringAttributes.val)
+				output[keyValuePair.Key] = keyValuePair.Value;
 			return output;
 		}
 

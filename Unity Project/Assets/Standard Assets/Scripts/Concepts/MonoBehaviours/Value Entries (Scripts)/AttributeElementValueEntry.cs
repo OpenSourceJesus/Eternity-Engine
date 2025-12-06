@@ -8,13 +8,13 @@ namespace EternityEngine
 		public ValueEntry<T> valueEntry;
 		KeyValuePair<string, T> keyValuePair = new KeyValuePair<string, T>();
 
-		public void SetKey (string key)
+		public void SetKeyValuePairKey (string key)
 		{
 			keyValuePair = new KeyValuePair<string, T>(key, keyValuePair.Value);
 			UpdateTargets ();
 		}
 
-		public void SetValue (T value)
+		public void SetKeyValuePairValue (T value)
 		{
 			keyValuePair = new KeyValuePair<string, T>(keyValuePair.Key, value);
 			UpdateTargets ();
@@ -32,7 +32,7 @@ namespace EternityEngine
 					continue;
 				KeyValuePair<string, T> prevVal = target.val;
 				target.val = keyValuePair;
-				if (!target.val.Equals(prevVal))
+				if (!keyValuePair.Equals(prevVal))
 					target._OnChanged ();
 			}
 		}

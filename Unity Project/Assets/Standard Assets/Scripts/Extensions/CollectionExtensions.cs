@@ -262,7 +262,7 @@ namespace Extensions
 		public static T1 GetKey<T1, T2> (this Dictionary<T1, T2> dict, int idx)
 		{
 			IEnumerator keyEnumerator = dict.Keys.GetEnumerator();
-			while (keyEnumerator.MoveNext() && idx > 0)
+			while (keyEnumerator.MoveNext() && idx >= 0)
 			{
 				if (idx == 0)
 					return (T1) keyEnumerator.Current;

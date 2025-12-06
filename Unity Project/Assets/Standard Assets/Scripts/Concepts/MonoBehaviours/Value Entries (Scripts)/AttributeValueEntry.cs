@@ -39,12 +39,17 @@ namespace EternityEngine
 		public override void UpdateDisplay (Dictionary<string, T> val)
 		{
 			Resize (val.Count, true);
+			KeyValuePair<string, T>[] keyValuePairs = new KeyValuePair<string, T>[val.Count];
 			int i = 0;
 			foreach (KeyValuePair<string, T> keyValuePair in val)
 			{
-				ValueEntry<KeyValuePair<string, T>> elt = elts[i];
-				elt.UpdateDisplay (keyValuePair);
+				keyValuePairs[i] = keyValuePair;
 				i ++;
+			}
+			for (i = 0; i < val.Count; i ++)
+			{
+				ValueEntry<KeyValuePair<string, T>> elt = elts[i];
+				elt.UpdateDisplay (keyValuePairs[i]);
 			}
 		}
 
@@ -66,27 +71,21 @@ namespace EternityEngine
 			Resize (int.Parse(sizeStr));
 		}
 
-		void Resize (int size, bool justAFfectDisplay = false)
+		void Resize (int size, bool justAffectDisplay = false)
 		{
 			if (size < elts.Length)
 				for (int i = elts.Length - 1; i >= size; i --)
-					RemoveElement (i, justAFfectDisplay);
+					RemoveElement (i, justAffectDisplay);
 			else if (size > elts.Length)
 				for (int i = elts.Length; i < size; i ++)
-					AddElement (justAFfectDisplay);
+					AddElement (justAffectDisplay);
 		}
 
-		public void AddElement (bool justAFfectDisplay = false)
+		public void AddElement (bool justAffectDisplay = false)
 		{
-			ValueEntry<KeyValuePair<string, T>> elt = Instantiate(eltPrefab, eltsParent);
-			elts = elts.Add(elt);
-			elt.onMouseDown += OnElementMouseDown;
-			elt.onMouseUp += OnElementMouseUp;
-			elt.removeButton.onClick.AddListener(() => { RemoveElement (elt.rectTrs.GetSiblingIndex()); });
-			elt.removeButtonGo.SetActive(true);
-			elt.draggableIndicator.SetActive(true);
+			ValueEntry<KeyValuePair<string, T>> elt = AddElement();			
 			resizeInputField.text = "" + elts.Length;
-			if (justAFfectDisplay)
+			if (justAffectDisplay)
 				return;
 			Value<Dictionary<string, T>>[] targets = TargetValues;
 			if (targets.Length == 0)
@@ -103,7 +102,18 @@ namespace EternityEngine
 			}
 		}
 
-		void RemoveElement (int idx, bool justAFfectDisplay = false)
+		public virtual ValueEntry<KeyValuePair<string, T>> AddElement ()
+		{
+			ValueEntry<KeyValuePair<string, T>> elt = Instantiate(eltPrefab, eltsParent);
+			elts = elts.Add(elt);
+			elt.onMouseDown += OnElementMouseDown;
+			elt.onMouseUp += OnElementMouseUp;
+			elt.removeButton.onClick.AddListener(() => { RemoveElement (elt.rectTrs.GetSiblingIndex()); });
+			elt.inputField.onValueChanged.AddListener((string s) => { OnElementValueChanged (elt); });
+			return elt;
+		}
+
+		void RemoveElement (int idx, bool justAffectDisplay = false)
 		{
 			ValueEntry<KeyValuePair<string, T>> elt = elts[idx];
 			elts = elts.RemoveAt(idx);
@@ -111,7 +121,7 @@ namespace EternityEngine
 			elt.onMouseUp -= OnElementMouseUp;
 			DestroyImmediate(elt.gameObject);
 			resizeInputField.text = "" + elts.Length;
-			if (justAFfectDisplay)
+			if (justAffectDisplay)
 				return;
 			Value<Dictionary<string, T>>[] targets = TargetValues;
 			if (targets.Length == 0)

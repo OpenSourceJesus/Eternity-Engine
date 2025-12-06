@@ -9,7 +9,10 @@ namespace EternityEngine
 		public override void Awake ()
 		{
 			base.Awake ();
-			val = new Dictionary<string, T>();
+			if (val == null)
+				val = new Dictionary<string, T>();
+			else
+				print(val.Count);
 		}
 
 		public override void Set (Dictionary<string, T> val)
