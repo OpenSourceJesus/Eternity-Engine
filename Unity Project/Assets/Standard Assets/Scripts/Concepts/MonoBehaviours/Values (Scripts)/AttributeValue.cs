@@ -9,23 +9,7 @@ namespace EternityEngine
 		public override void Awake ()
 		{
 			base.Awake ();
-			if (val == null)
-				val = new Dictionary<string, T>();
-			else
-				print(val.Count);
-		}
-
-		public override void Set (Dictionary<string, T> val)
-		{
-			Dictionary<string, T> prevVal = this.val;
-			this.val = val;
-			for (int i = 0; i < entries.Length; i ++)
-			{
-				ValueEntry<Dictionary<string, T>> entry = entries[i];
-				entry.UpdateDisplay (val);
-			}
-			if (!prevVal.Equals(val))
-				_OnChanged ();
+			val = new Dictionary<string, T>();
 		}
 	}
 }

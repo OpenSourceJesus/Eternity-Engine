@@ -55,21 +55,24 @@ namespace EternityEngine
 
 		public virtual void Init ()
 		{
-			List<InspectorEntry> inspectorEntriesPrefabs = new List<InspectorEntry>();
-			for (int i = 0; i < ob.components.Length; i ++)
+			if (!SaveAndLoadManager.isLoading)
 			{
-				_Component component = ob.components[i];
-				inspectorEntriesPrefabs.Add(component.inspectorEntryPrefab);
-			}
-			for (int i = 0; i < requiredComponentsIdxs.Length; i ++)
-			{
-				int requiredComponentIdx = requiredComponentsIdxs[i];
-				_Component componentPrefab = EternityEngine.instance.componentsPrefabs[requiredComponentIdx];
-				if (!inspectorEntriesPrefabs.Contains(componentPrefab.inspectorEntryPrefab))
+				List<InspectorEntry> inspectorEntriesPrefabs = new List<InspectorEntry>();
+				for (int i = 0; i < ob.components.Length; i ++)
 				{
-					_Component component = EternityEngine.instance.AddComponent(ob, requiredComponentIdx);
-					component.dependsOnMe.Add(this);
-					dependsOn.Add(component);
+					_Component component = ob.components[i];
+					inspectorEntriesPrefabs.Add(component.inspectorEntryPrefab);
+				}
+				for (int i = 0; i < requiredComponentsIdxs.Length; i ++)
+				{
+					int requiredComponentIdx = requiredComponentsIdxs[i];
+					_Component componentPrefab = EternityEngine.instance.componentsPrefabs[requiredComponentIdx];
+					if (!inspectorEntriesPrefabs.Contains(componentPrefab.inspectorEntryPrefab))
+					{
+						_Component component = EternityEngine.instance.AddComponent(ob, requiredComponentIdx);
+						component.dependsOnMe.Add(this);
+						dependsOn.Add(component);
+					}
 				}
 			}
 			if (sceneEntry == null)

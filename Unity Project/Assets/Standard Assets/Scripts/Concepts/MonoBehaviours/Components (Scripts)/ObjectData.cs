@@ -21,7 +21,7 @@ namespace EternityEngine
 		public BoolValue export;
 		public BoolAttributeValue boolAttributes;
 		public StringAttributeValue stringAttributes;
-
+		
 		[Serializable]
 		public class Data : _Component.Data
 		{

@@ -36,7 +36,7 @@ namespace EternityEngine
 		static bool prevSelectAll;
 		static string BUILD_SCRIPT_PATH = Path.Combine(Application.dataPath, "Others", "Python", "Build.py");
 		static StreamReader errorReader;
-		static Dictionary<string, string> attributes = new Dictionary<string, string>();
+		static Dictionary<string, Dictionary<string, string>> attributes = new Dictionary<string, Dictionary<string, string>>();
 		static string apiCode;
 		static string initCode;
 		static string updateCode;
@@ -853,7 +853,7 @@ while running:
 				UnityEngine.Debug.LogError("Python not found. Please install Python to use the Export feature.");
 				return;
 			}
-			attributes = new Dictionary<string, string>();
+			attributes = new Dictionary<string, Dictionary<string, string>>();
 			apiCode = "";
 			initCode = "";
 			updateCode = "";
@@ -874,11 +874,16 @@ while running:
 					Export (ob);
 			}
 			string code = PYTHON;
-			string _attributes = "{";
-			foreach (KeyValuePair<string, string> keyValuePair in attributes)
-				_attributes += "'" + keyValuePair.Key + "':'" + keyValuePair.Value + "',";
-			_attributes += '}';
-			code = code.Replace("# Attributes", $"attributes = {_attributes}");
+			string attributesStr = "{";
+			foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in attributes)
+			{
+				attributesStr += "'" + keyValuePair.Key + "':{";
+				foreach (KeyValuePair<string, string> keyValuePair2 in keyValuePair.Value)
+					attributesStr += "'" + keyValuePair2.Key + "':'" + keyValuePair2.Value + "',";
+				attributesStr += "},";
+			}
+			attributesStr += '}';
+			code = code.Replace("# Attributes", $"attributes = {attributesStr}");
 			code = code.Replace("# API", apiCode);
 			code = code.Replace("# Vars", string.Join('\n', vars));
 			code = code.Replace("# UI Methods", string.Join('\n', uiMethods));
@@ -941,7 +946,7 @@ while running:
 			foreach (KeyValuePair<string, Vector2> keyValuePair in pivots)
 				_pivots += "'" + keyValuePair.Key + "':[" + keyValuePair.Value.x + ',' + keyValuePair.Value.y + "],";
 			_pivots += '}';
-			code = code.Replace("# Init Pivots, Attributes, UI", $"	pivots = {_pivots}\n	attributes = {_attributes}\n{uiCode}");
+			code = code.Replace("# Init Pivots, Attributes, UI", $"	pivots = {_pivots}\n	attributes = {attributesStr}\n{uiCode}");
 			code = code.Replace("# Init Physics", physicsInitCode);
 			code = code.Replace("# Init Rendering", string.Join('\n', renderCode));
 			code = code.Replace("# Init Particle Systems", particleSystemsCode);
@@ -983,7 +988,17 @@ while running:
 		void Export (_Object ob)
 		{
 			string obVarName = GetVarNameForObject(ob);
-			Dictionary<string, string> attributes = GetAttributes(ob);
+			ObjectData obData = ob.obData;
+			Dictionary<string, string> obAttributes = new Dictionary<string, string>();
+			foreach (KeyValuePair<string, bool> keyValuePair in obData.boolAttributes.val)
+			{
+				string valueStr = "" + keyValuePair.Value;
+				obAttributes[keyValuePair.Key] = char.ToUpper(valueStr[0]) + valueStr.Substring(1);
+			}
+			foreach (KeyValuePair<string, string> keyValuePair in obData.stringAttributes.val)
+				obAttributes[keyValuePair.Key] = keyValuePair.Value;
+			print(obAttributes.Count);
+			attributes[obVarName] = obAttributes;
 			RigidBody rigidBody = null;
 			for (int i = 0; i < ob.components.Length; i ++)
 			{
@@ -1182,20 +1197,6 @@ while running:
 			string disallowedChars = " /\\`~?|!@#$%^&*()[]{}<>=+-;:',.\'";
 			foreach (char disallowedChar in disallowedChars)
 				output = output.Replace("" + disallowedChar, "");
-			return output;
-		}
-
-		Dictionary<string, string> GetAttributes (_Object ob)
-		{
-			Dictionary<string, string> output = new Dictionary<string, string>();
-			ObjectData obData = ob.obData;
-			foreach (KeyValuePair<string, bool> keyValuePair in obData.boolAttributes.val)
-			{
-				string valueStr = "" + keyValuePair.Value;
-				output[keyValuePair.Key] = char.ToUpper(valueStr[0]) + valueStr.Substring(1);
-			}
-			foreach (KeyValuePair<string, string> keyValuePair in obData.stringAttributes.val)
-				output[keyValuePair.Key] = keyValuePair.Value;
 			return output;
 		}
 

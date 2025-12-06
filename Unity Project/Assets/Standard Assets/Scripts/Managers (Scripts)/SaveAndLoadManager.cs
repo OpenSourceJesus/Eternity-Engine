@@ -12,6 +12,7 @@ namespace EternityEngine
 	{
 		public static SaveData saveData = new SaveData();
 		public static bool isLoading;
+		public static string AUTO_SAVE_PATH;
 
 		public static void Init ()
 		{
@@ -25,14 +26,14 @@ namespace EternityEngine
 			saveData.boolArrayDict = new Dictionary<string, bool[]>();
 			saveData.byteArrayDict = new Dictionary<string, byte[]>();
 			saveData.vector2IntArrayDict = new Dictionary<string, _Vector2Int[]>();
+			AUTO_SAVE_PATH = Path.Combine(Application.dataPath, "Auto Save.txt");
 #endif
 		}
 
 		public static void LoadAutoSave ()
 		{
-			string autoSaveFilePath = Path.Combine(Application.dataPath, "Auto Save.txt");
-			if (File.Exists(autoSaveFilePath))
-				Load (autoSaveFilePath);
+			if (File.Exists(AUTO_SAVE_PATH))
+				Load (AUTO_SAVE_PATH);
 		}
 
 		public static void Save (string saveFilePath)

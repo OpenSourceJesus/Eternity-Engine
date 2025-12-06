@@ -106,30 +106,45 @@ namespace EternityEngine
 				dataAndComponent.data.Set (dataAndComponent.component);
 				componentsDatas.Add(dataAndComponent.data);
 			}
-			componentsDatas.Sort(new ComponentDataComparer());
 			_Data.componentsDatas = componentsDatas.ToArray();
 		}
 
 		void SetComponentsIdsFromData ()
 		{
+			List<_Component> unmatchedComponents = new List<_Component>(components);
 			for (int i = 0; i < _Data.componentsDatas.Length; i ++)
 			{
 				_Component.Data componentData = _Data.componentsDatas[i];
 				_Component component = null;
 				bool addNewComponent = true;
-				for (int i2 = 0; i2 < components.Length; i2 ++)
+				for (int i2 = 0; i2 < unmatchedComponents.Count; i2 ++)
 				{
-					_Component _component = components[i2];
+					_Component _component = unmatchedComponents[i2];
 					if (_component.prefabIdx == componentData.prefabIdx)
 					{
-						component = _component.GetDataAndComponent().component;
+						component = _component;
 						addNewComponent = false;
+						unmatchedComponents.RemoveAt(i2);
 						break;
 					}
 				}
 				if (addNewComponent)
 					component = EternityEngine.instance.AddComponent(this, componentData.prefabIdx);
 				componentData.Apply (component);
+			}
+			for (int i = 0; i < components.Length; i ++)
+			{
+				_Component component = components[i];
+				for (int i2 = i + 1; i2 < components.Length; i2 ++)
+				{
+					_Component component2 = components[i2];
+					if (component.requiredComponentsIdxs.Contains(component2.prefabIdx))
+					{
+						component.dependsOn.Add(component2);
+						component2.dependsOnMe.Add(component);
+						break;
+					}
+				}
 			}
 		}
 
@@ -169,21 +184,6 @@ namespace EternityEngine
 				_Object ob = (_Object) asset;
 				ob.SetComponentsIdsFromData ();
 				ob.SetSelectedFromData ();
-			}
-		}
-
-		class ComponentDataComparer : IComparer<_Component.Data>
-		{
-			public int Compare (_Component.Data componentData, _Component.Data componentData2)
-			{
-				_Component componentPrefab = EternityEngine.instance.componentsPrefabs[componentData.prefabIdx];
-				_Component componentPrefab2 = EternityEngine.instance.componentsPrefabs[componentData2.prefabIdx];
-				if (componentPrefab.requiredComponentsIdxs.Contains(componentData2.prefabIdx))
-					return -1;
-				else if (componentPrefab2.requiredComponentsIdxs.Contains(componentData.prefabIdx))
-					return 1;
-				else
-					return 0;
 			}
 		}
 	}

@@ -133,7 +133,7 @@ namespace EternityEngine
 
 		bool OnWantToQuit ()
 		{
-			SaveAndLoadManager.Save (Path.Combine(Application.dataPath, "Auto Save.txt"));
+			SaveAndLoadManager.Save (SaveAndLoadManager.AUTO_SAVE_PATH);
 			Application.wantsToQuit -= OnWantToQuit;
 			return true;
 		}
