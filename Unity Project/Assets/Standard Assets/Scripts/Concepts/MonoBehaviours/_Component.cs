@@ -125,27 +125,27 @@ namespace EternityEngine
 			return true;
 		}
 
-		public (Data data, _Component component) GetDataAndComponent ()
+		public Data GetData ()
 		{
 			ObjectData obData = this as ObjectData;
 			if (obData != null)
-				return (obData._Data, obData);
+				return obData._Data;
 			_Transform trs = this as _Transform;
 			if (trs != null)
-				return (trs._Data, trs);
+				return trs._Data;
 			_Image img = this as _Image;
 			if (img != null)
-				return (img._Data, img);
+				return img._Data;
 			RigidBody rigidBody = this as RigidBody;
 			if (rigidBody != null)
-				return (rigidBody._Data, rigidBody);
+				return rigidBody._Data;
 			_Collider collider = this as _Collider;
 			if (collider != null)
-				return (collider._Data, collider);
+				return collider._Data;
 			Script script = this as Script;
 			if (script != null)
-				return (script._Data, script);
-			return (null, null);
+				return script._Data;
+			return null;
 		}
 
 		[Serializable]

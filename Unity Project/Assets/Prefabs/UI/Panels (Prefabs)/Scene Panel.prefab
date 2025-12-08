@@ -670,7 +670,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1
-    height: 0.97
+    height: 0.98
   viewportRectTrs: {fileID: 1899490349738056787}
   obsParentRectTrs: {fileID: 1356170048599141182}
   entries: []

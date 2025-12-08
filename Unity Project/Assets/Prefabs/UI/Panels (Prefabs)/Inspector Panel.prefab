@@ -749,7 +749,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1
-    height: 0.97
+    height: 0.98
   entriesParent: {fileID: 239391998858127765}
   entries: []
   insertionIndicator: {fileID: 0}

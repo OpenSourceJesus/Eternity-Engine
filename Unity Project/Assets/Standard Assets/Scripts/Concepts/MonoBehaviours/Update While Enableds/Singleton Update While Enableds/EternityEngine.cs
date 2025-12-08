@@ -997,7 +997,6 @@ while running:
 			}
 			foreach (KeyValuePair<string, string> keyValuePair in obData.stringAttributes.val)
 				obAttributes[keyValuePair.Key] = keyValuePair.Value;
-			print(obAttributes.Count);
 			attributes[obVarName] = obAttributes;
 			RigidBody rigidBody = null;
 			for (int i = 0; i < ob.components.Length; i ++)

@@ -102,9 +102,9 @@ namespace EternityEngine
 			for (int i = 0; i < components.Length; i ++)
 			{
 				_Component component = components[i];
-				(_Component.Data data, _Component component) dataAndComponent = component.GetDataAndComponent();
-				dataAndComponent.data.Set (dataAndComponent.component);
-				componentsDatas.Add(dataAndComponent.data);
+				_Component.Data data = component.GetData();
+				data.Set (component);
+				componentsDatas.Add(component._Data);
 			}
 			_Data.componentsDatas = componentsDatas.ToArray();
 		}

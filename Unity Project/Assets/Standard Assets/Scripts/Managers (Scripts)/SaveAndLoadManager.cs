@@ -71,6 +71,7 @@ namespace EternityEngine
 				if (Asset.Get<Asset>(keyValuePair.Key) == null)
 					keyValuePair.Value.GenAsset ();
 			EternityEngine.instance.backgroundColor.Set (saveData.exportBackgroundColor.ToColor());
+			EternityEngine.instance.backgroundColor.entries[0].UpdateDisplay (saveData.exportBackgroundColor.ToColor());
 			EternityEngine.instance.useGravity.Set (saveData.useGravity);
 			EternityEngine.instance.gravity.Set (saveData.gravity.ToVec3());
 			EternityEngine.instance.unitLen.Set (saveData.unitLen);
